@@ -93,6 +93,7 @@ gulp.task('watch', function () {
     gulp.watch(['./src/js/common/*.js','./src/js/*.js'], ['js']);
     gulp.watch(['./src/css/common/*.css','./src/css/*.css', './src/css/prototype/*.css'], ['css']);
     gulp.watch(['./src/jade/**/*.jade'], ['html']);
+    gulp.watch(['./src/jade/*.jade'], ['html']);
     gulp.watch("./css/*.*").on('change', browserSync.reload);
     gulp.watch("./js/*.*").on('change', browserSync.reload);
     gulp.watch("./*.html").on('change', browserSync.reload);

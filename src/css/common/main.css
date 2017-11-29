@@ -181,50 +181,8 @@ body > .container {
     }
   }
 }
-.topbar {
-  display: none;
-  @media (--tablet) {
-    display: inherit;
-  }
-}
-.main-body {
-  lost-utility: clearfix;
-  .main-content, .sidebar {
-    position: relative;
-    @media (--tablet) {
-      float: left;
-    }
-  }
-  .main-content {
-    width: 100%;
-    position: static;
-    margin-bottom: 20px;
-    @media (--tablet) {
-      width: calc(100% - var(--sideWidthM) - var(--marginWidth));
-      margin-bottom: 0;
-    }
-    @media (--notebook) {
-      width: calc(100% - var(--sideWidthL) - var(--marginWidth));
-    }
-  }
-  .sidebar {
-    position: static;
-    @media (--tablet) {
-      width: var(--sideWidthM);
-      .r-sticky {
-        z-index: 100;
-      }
-    }
-    @media (--notebook) {
-      width: var(--sideWidthL);
-    }
-  }
-  > div + div {
-    @media (--tablet) {
-      margin-left: var(--marginWidth);
-    }
-  }
-}
+
+
 
 .is--shown {
   display: inherit;
