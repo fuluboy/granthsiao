@@ -3,8 +3,34 @@ block css
   link(rel="stylesheet" type="text/css" href='css/main.css')
 block title
   title Grant Hsiao Portfolio
-block content
-  h1 grant hsiao
+  main
+    .content
+      div.content__inner
+        h1
+          .logo
+            img.logo(src="imgs/logo.svg")
+          | grant hsiao
+        h2 UI & UX / Frontend / Graphic Designer
+
+        svg.svg-filters(xmlns="http://www.w3.org/2000/svg", version="1.1")
+          defs
+            filter#filter-goo-1
+              fegaussianblur(in="SourceGraphic", stddeviation="7", result="blur")
+              fecolormatrix(in="blur", mode="matrix", values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9", result="goo")
+              fecomposite(in="SourceGraphic", in2="goo")
+        button#component-1.button.button--1 Click me
+          span.button__container
+            span.circle.top-left
+            span.circle.top-left
+            span.circle.top-left
+            span.button__bg
+            span.circle.bottom-right
+            span.circle.bottom-right
+            span.circle.bottom-right
+
+
+
 block js
-  script(src="js/plugin/slick.min.js")
+  script(src="js/plugin/TweenMax.min.js")
+  script(src="js/plugin/button.js")
   script(src="js/main.js")

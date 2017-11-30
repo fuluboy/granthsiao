@@ -9,14 +9,34 @@
     <script src="http://code.jquery.com/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <title>Grant Hsiao Portfolio</title>
+    <main>
+      <div class="content">
+        <div class="content__inner">
+          <h1>
+            <div class="logo"><img src="imgs/logo.svg" class="logo"></div>grant hsiao
+          </h1>
+          <h2>UI & UX / Frontend / Graphic Designer</h2>
+          <svg xmlns="http://www.w3.org/2000/svg" version="1.1" class="svg-filters">
+            <defs>
+              <filter id="filter-goo-1">
+                <fegaussianblur in="SourceGraphic" stddeviation="7" result="blur"></fegaussianblur>
+                <fecolormatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo"></fecolormatrix>
+                <fecomposite in="SourceGraphic" in2="goo"></fecomposite>
+              </filter>
+            </defs>
+          </svg>
+          <button id="component-1" class="button button--1">Click me<span class="button__container"><span class="circle top-left"></span><span class="circle top-left"></span><span class="circle top-left"></span><span class="button__bg"></span><span class="circle bottom-right"></span><span class="circle bottom-right"></span><span class="circle bottom-right"></span></span></button>
+        </div>
+      </div>
+    </main>
   </head>
   <body>
     <div class="header">
       <div class="menu"></div>
     </div>
-    <h1>grant hsiao</h1>
     <div class="copyright"></div>
-    <script src="js/plugin/slick.min.js"></script>
+    <script src="js/plugin/TweenMax.min.js"></script>
+    <script src="js/plugin/button.js"></script>
     <script src="js/main.js"></script>
   </body>
 </html>

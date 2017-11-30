@@ -80,7 +80,6 @@ gulp.task('js', function() {
                   .pipe(gulp.dest('./js/plugin'))
                   .pipe(browserSync.reload({stream:true}))];
   var jscustom = [gulp.src('./src/js/*.js')
-                  .pipe(uglify())
                   .pipe(gulp.dest('./js'))
                   .pipe(browserSync.reload({stream:true}))];
 
@@ -90,7 +89,7 @@ gulp.task('js', function() {
 // 監控
 
 gulp.task('watch', function () {
-    gulp.watch(['./src/js/common/*.js','./src/js/*.js'], ['js']);
+    gulp.watch(['./src/js/common/*.js','./src/js/*.js','./src/js/plugin/*.js'], ['js']);
     gulp.watch(['./src/css/common/*.css','./src/css/*.css', './src/css/prototype/*.css'], ['css']);
     gulp.watch(['./src/jade/**/*.jade'], ['html']);
     gulp.watch(['./src/jade/*.jade'], ['html']);
