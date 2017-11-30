@@ -9,6 +9,17 @@
     <script src="http://code.jquery.com/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <title>Grant Hsiao Portfolio</title>
+  </head>
+  <body>
+    <header>
+      <nav class="menu">
+        <ul class="menu__list">
+          <li class="menu__list__item"><a class="list__item--link" href="#">ABOUT</a></li>
+          <li class="menu__list__item"><a class="list__item--link" href="#">WORKS</a></li>
+          <li class="menu__list__item"><a class="list__item--link" href="#">CONTACT</a></li>
+        </ul>
+      </nav>
+    </header>
     <main>
       <div class="content">
         <div class="content__inner">
@@ -16,25 +27,22 @@
             <div class="logo"><img class="logo" src="imgs/logo.svg"></div>grant hsiao
           </h1>
           <h2>UI & UX / Frontend / Graphic Designer</h2>
-          <svg class="svg-filters" xmlns="http://www.w3.org/2000/svg" version="1.1">
-            <defs>
-              <filter id="filter-goo-1">
-                <fegaussianblur in="SourceGraphic" stddeviation="7" result="blur"></fegaussianblur>
-                <fecolormatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo"></fecolormatrix>
-                <fecomposite in="SourceGraphic" in2="goo"></fecomposite>
-              </filter>
-            </defs>
-          </svg>
-          <button class="button button--1" id="component-1">Let's Go<span class="button__container"><span class="circle top-left"></span><span class="circle top-left"></span><span class="circle top-left"></span><span class="button__bg"></span><span class="circle bottom-right"></span><span class="circle bottom-right"></span><span class="circle bottom-right"></span></span></button>
+          <div class="action">
+            <svg class="svg-filters" xmlns="http://www.w3.org/2000/svg" version="1.1">
+              <defs>
+                <filter id="filter-goo-1">
+                  <fegaussianblur in="SourceGraphic" stddeviation="7" result="blur"></fegaussianblur>
+                  <fecolormatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo"></fecolormatrix>
+                  <fecomposite in="SourceGraphic" in2="goo"></fecomposite>
+                </filter>
+              </defs>
+            </svg>
+            <button class="button button--1" id="component-1">Let's Go<span class="button__container"><span class="circle top-left"></span><span class="circle top-left"></span><span class="circle top-left"></span><span class="button__bg"></span><span class="circle bottom-right"></span><span class="circle bottom-right"></span><span class="circle bottom-right"></span></span></button>
+          </div>
         </div>
       </div>
     </main>
-  </head>
-  <body>
-    <div class="header">
-      <div class="menu"></div>
-    </div>
-    <div class="copyright"></div>
+    <footer class="copyright"></footer>
     <script src="js/plugin/TweenMax.min.js"></script>
     <script src="js/plugin/button.js"></script>
     <script src="js/main.js"></script>

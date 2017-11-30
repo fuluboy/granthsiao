@@ -6,7 +6,7 @@ var pug = require('gulp-pug');
 var uglify = require('gulp-uglify');
 var concat = require('gulp-concat');
 var postcss = require('gulp-postcss');
-var autoprefixer = require('autoprefixer');
+// var autoprefixer = require('autoprefixer');
 var cssnext = require('postcss-cssnext');
 var precss = require('precss');
 var atImport = require('postcss-import');
@@ -54,7 +54,7 @@ gulp.task('css', function () {
   cssnano({zindex: false}),
   lost,
   clearfix,
-  autoprefixer({browsers: ['last 1 version']}),
+  // autoprefixer({browsers: ['last 1 version']}),
   ];
   var csscommon =  [gulp.src('./src/css/common/main.css')
                     .pipe(postcss(processors))
@@ -91,7 +91,7 @@ gulp.task('js', function() {
 
 gulp.task('watch', function () {
     gulp.watch(['./src/js/common/*.js','./src/js/*.js','./src/js/plugin/*.js'], ['js']);
-    gulp.watch(['./src/css/common/*.css','./src/css/*.css', './src/css/prototype/*.css'], ['css']);
+    gulp.watch(['./src/css/common/*.css','./src/css/*.css', './src/css/components/*.css'], ['css']);
     gulp.watch(['./src/pug/**/*.pug'], ['html']);
     gulp.watch(['./src/pug/*.pug'], ['html']);
     gulp.watch("./css/*.*").on('change', browserSync.reload);

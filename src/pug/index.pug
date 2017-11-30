@@ -3,6 +3,7 @@ block css
   link(rel="stylesheet" type="text/css" href='css/main.css')
 block title
   title Grant Hsiao Portfolio
+block content
   main
     .content
       div.content__inner
@@ -12,21 +13,22 @@ block title
           | grant hsiao
         h2 UI & UX / Frontend / Graphic Designer
 
-        svg.svg-filters(xmlns="http://www.w3.org/2000/svg", version="1.1")
-          defs
-            filter#filter-goo-1
-              fegaussianblur(in="SourceGraphic", stddeviation="7", result="blur")
-              fecolormatrix(in="blur", mode="matrix", values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9", result="goo")
-              fecomposite(in="SourceGraphic", in2="goo")
-        button#component-1.button.button--1 Let's Go
-          span.button__container
-            span.circle.top-left
-            span.circle.top-left
-            span.circle.top-left
-            span.button__bg
-            span.circle.bottom-right
-            span.circle.bottom-right
-            span.circle.bottom-right
+        .action
+          svg.svg-filters(xmlns="http://www.w3.org/2000/svg", version="1.1")
+            defs
+              filter#filter-goo-1
+                fegaussianblur(in="SourceGraphic", stddeviation="7", result="blur")
+                fecolormatrix(in="blur", mode="matrix", values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9", result="goo")
+                fecomposite(in="SourceGraphic", in2="goo")
+          button#component-1.button.button--1 Let's Go
+            span.button__container
+              span.circle.top-left
+              span.circle.top-left
+              span.circle.top-left
+              span.button__bg
+              span.circle.bottom-right
+              span.circle.bottom-right
+              span.circle.bottom-right
 
 
 

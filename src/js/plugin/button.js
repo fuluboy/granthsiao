@@ -1,21 +1,6 @@
-function getRandom(min, max){
-  return Math.random() * (max - min) + min;
-}
 
-var isSafari = /constructor/i.test(window.HTMLElement);
-var isFF = !!navigator.userAgent.match(/firefox/i);
-
-if (isSafari) {
-  document.getElementsByTagName('html')[0].classList.add('safari');
-}
 
 // Remove click on button for demo purpose
-Array.prototype.slice.call(document.querySelectorAll('.button'), 0).forEach(function(bt) {
-  bt.addEventListener('click', function(e) {
-    e.preventDefault();
-  });
-});
-
 initBt1();
 
 // Button 1

@@ -7,7 +7,7 @@
 }
 
 .button--1, .button--1 .button__bg{
-  background-color: #222;
+  background: #2CD892;
   border: none;
   display: inline-block;
   font-family: 'Montserrat', sans-serif;
@@ -20,6 +20,7 @@
   padding: 20px 40px;
   text-transform: uppercase;
   transition: background-color 0.1s ease-out;
+  border-radius: 30px;
 }
 
 .button--1:hover, .button--1 .button__bg:hover{
@@ -97,7 +98,7 @@
   width: 25px;
   height: 25px;
   border-radius: 15px;
-  background: #222;
+  background: #2CD892;
   transition: background-color 0.1s ease-out;
 }
 
