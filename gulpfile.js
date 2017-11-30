@@ -1,6 +1,5 @@
 var gulp = require('gulp');
 var stylus = require('gulp-stylus');
-var autoprefixer = require('gulp-autoprefixer');
 var minifyCSS = require('gulp-minify-css');
 var jade = require('gulp-jade');
 var uglify = require('gulp-uglify');
@@ -11,7 +10,6 @@ var cssnext = require('cssnext');
 var precss = require('precss');
 var atImport = require('postcss-import');
 var cssnano = require('cssnano');
-var rename = require("gulp-rename");
 var browserSync = require('browser-sync');
 var lost = require('lost');
 var clearfix = require('postcss-clearfix');
