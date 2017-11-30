@@ -1,12 +1,13 @@
 var gulp = require('gulp');
 var stylus = require('gulp-stylus');
-var minifyCSS = require('gulp-minify-css');
-var jade = require('gulp-jade');
+
+// var cleanCSS = require('gulp-clean-css');
+var pug = require('gulp-pug');
 var uglify = require('gulp-uglify');
 var concat = require('gulp-concat');
 var postcss = require('gulp-postcss');
 var autoprefixer = require('autoprefixer');
-var cssnext = require('cssnext');
+var cssnext = require('postcss-cssnext');
 var precss = require('precss');
 var atImport = require('postcss-import');
 var cssnano = require('cssnano');
@@ -33,21 +34,23 @@ gulp.task('browser-sync', function() {
 });
 
 //PUG
-gulp.task('html', function() {
-  gulp.src('./src/jade/*.jade')
-    .pipe(jade({
-      pretty: true
-    }))
-    .pipe(gulp.dest('./'))
-    .pipe(browserSync.reload({stream:true}));
+gulp.task('html', function buildHTML() {
+  return gulp.src('./src/pug/*.pug')
+  .pipe(pug({
+    pretty: true
+  }))
+  .pipe(gulp.dest('./'))
+  .pipe(browserSync.reload({stream:true}));
 });
+
+
 
 // CSS 整理輸出
 gulp.task('css', function () {
   var processors = [
   atImport,
   precss,
-  cssnext,
+  cssnext({browsers: ['last 1 version']}),
   cssnano({zindex: false}),
   lost,
   clearfix,
@@ -89,8 +92,8 @@ gulp.task('js', function() {
 gulp.task('watch', function () {
     gulp.watch(['./src/js/common/*.js','./src/js/*.js','./src/js/plugin/*.js'], ['js']);
     gulp.watch(['./src/css/common/*.css','./src/css/*.css', './src/css/prototype/*.css'], ['css']);
-    gulp.watch(['./src/jade/**/*.jade'], ['html']);
-    gulp.watch(['./src/jade/*.jade'], ['html']);
+    gulp.watch(['./src/pug/**/*.pug'], ['html']);
+    gulp.watch(['./src/pug/*.pug'], ['html']);
     gulp.watch("./css/*.*").on('change', browserSync.reload);
     gulp.watch("./js/*.*").on('change', browserSync.reload);
     gulp.watch("./*.html").on('change', browserSync.reload);
