@@ -1,9 +1,8 @@
 
 
-// Remove click on button for demo purpose
 initBt1();
 
-// Button 1
+// Button
 function initBt1() {
   var bt1 = document.querySelectorAll('#component-1')[0];
   var bt1c = document.querySelector('.button__container');
@@ -24,7 +23,7 @@ function initBt1() {
     }
   });
 
-  tl.to($circlesTopLeft, 1.2, { x: -25, y: -25, scaleY: 2, ease: SlowMo.ease.config(0.1, 0.7, false) });
+  tl.to($circlesTopLeft, 1.2, { x: -35, y: -35, scaleY: 2, ease: SlowMo.ease.config(0.1, 0.7, false) });
   tl.to($circlesTopLeft[0], 0.1, { scale: 0.2, x: '+=6', y: '-=2' });
   tl.to($circlesTopLeft[1], 0.1, { scaleX: 1, scaleY: 0.8, x: '-=10', y: '-=7' }, '-=0.1');
   tl.to($circlesTopLeft[2], 0.1, { scale: 0.2, x: '-=15', y: '+=6' }, '-=0.1');
@@ -38,7 +37,7 @@ function initBt1() {
   tlBt1.set($circlesTopLeft, { x: 0, y: 0, rotation: -45 });
   tlBt1.add(tl);
 
-  tl2.to($circlesBottomRight, 1.2, { x: 25, y: 25, scaleY: 2, ease: SlowMo.ease.config(0.1, 0.7, false) });
+  tl2.to($circlesBottomRight, 1.2, { x: 35, y: 35, scaleY: 2, ease: SlowMo.ease.config(0.1, 0.7, false) });
   tl2.to($circlesBottomRight[0], 0.1, { scale: 0.2, x: '-=6', y: '+=3' });
   tl2.to($circlesBottomRight[1], 0.1, { scale: 0.8, x: '+=7', y: '+=3' }, '-=0.1');
   tl2.to($circlesBottomRight[2], 0.1, { scale: 0.2, x: '+=15', y: '-=6' }, '-=0.1');

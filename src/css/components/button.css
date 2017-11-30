@@ -95,9 +95,9 @@
 
 .button--1 .circle {
   position: absolute;
-  width: 25px;
-  height: 25px;
-  border-radius: 15px;
+  width: 35px;
+  height: 35px;
+  border-radius: 20px;
   background: #2CD892;
   transition: background-color 0.1s ease-out;
 }
