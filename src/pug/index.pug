@@ -7,10 +7,12 @@ block content
   main
     .content
       div.content__inner
+        .logo
+          img.logo(src="imgs/logo.svg")
         h1
-          .logo
-            img.logo(src="imgs/logo.svg")
-          | grant hsiao
+
+          | grant / hsiao
+
         h2 UI & UX / Frontend / Graphic Designer
 
         .action
@@ -33,6 +35,7 @@ block content
 
 
 block js
+  script(src="https://code.jquery.com/jquery-3.2.1.min.js")
   script(src="js/plugin/TweenMax.min.js")
   script(src="js/plugin/button.js")
   script(src="js/main.js")

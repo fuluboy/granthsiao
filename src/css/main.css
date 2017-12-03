@@ -1,130 +1,244 @@
 @import "components/_root.css";
 @import "components/button.css";
 @import url('https://fonts.googleapis.com/css?family=Lato');
-
-*,
-*::after,
-*::before {
-	box-sizing: border-box;
+*, *::after, *::before {
+  box-sizing: border-box;
 }
 
 @keyframes Gradient {
-	0% {
-		background-position: 0% 55%;
-	}
-	50% {
-		background-position: 100% 55%;
-	}
-	100% {
-		background-position: 0% 55%;
-	}
+  0% {
+    background-position: 0% 55%;
+  }
+  50% {
+    background-position: 100% 55%;
+  }
+  100% {
+    background-position: 0% 55%;
+  }
 }
 
 @font-face {
   font-family: 'KozGoPro-ExtraLight-AlphaNum';
-  src: url('../fonts/KozGoPro-ExtraLight-AlphaNum.eot?#iefix') format('embedded-opentype'),
-       url('../fonts/KozGoPro-ExtraLight-AlphaNum.otf')  format('opentype'),
-	     url('../fonts/KozGoPro-ExtraLight-AlphaNum.woff') format('woff'),
-       url('../fonts/KozGoPro-ExtraLight-AlphaNum.ttf')  format('truetype'),
-       url('KozGoPro-ExtraLight-AlphaNum.svg#KozGoPro-ExtraLight-AlphaNum') format('svg');
+  src: url('../fonts/KozGoPro-ExtraLight-AlphaNum.eot?#iefix') format('embedded-opentype'), url('../fonts/KozGoPro-ExtraLight-AlphaNum.otf') format('opentype'), url('../fonts/KozGoPro-ExtraLight-AlphaNum.woff') format('woff'), url('../fonts/KozGoPro-ExtraLight-AlphaNum.ttf') format('truetype'), url('KozGoPro-ExtraLight-AlphaNum.svg#KozGoPro-ExtraLight-AlphaNum') format('svg');
   font-weight: normal;
   font-style: normal;
 }
+
 /* Page */
 
-
 main {
-	height: 100vh;
-	width: 100%;
-	overflow: hidden;
-	position: relative;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
 }
 
 .content {
-	width: 100%;
-	height: 100vh;
-	position: relative;
+  width: 100%;
+  height: 100vh;
+  position: relative;
 }
 
 .content__inner {
-	width: 100%;
-	height: 100vh;
-	position: relative;
-	padding-top: 27vh;
-	color: #fff;
-	background: linear-gradient(-45deg, #f4e757, #fbb3d8, #5526ac, #97f6ec);
-	background-size: 400% 400%;
-	-webkit-animation: Gradient 60 ease infinite;
-	-moz-animation: Gradient 60s ease infinite;
-	animation: Gradient 60s ease infinite;
-
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  padding-top: 27vh;
+  color: #fff;
+  background: linear-gradient(-45deg, #68c8ff, #5526ac, #00e18a, #fbb3d8);
+  background-size: 400% 400%;
+  -webkit-animation: Gradient 40 ease infinite;
+  -moz-animation: Gradient 40s ease infinite;
+  animation: Gradient 40s ease infinite;
 }
+
 .logo {
-	width: 11vw;
-	@media (--desktop) {
-		width: 6vw;
-	}
+  width: 35.5vw;
+  z-index: 1;
+  position: absolute;
+  left: 19vw;
+  top: 2vh;
+  opacity: 0.3;
+  @media (--desktop) {}
 }
 
 header {
-	position: absolute;
-	right: 5vw;
-	top: 5vh;
-	z-index: 99;
-
-	li.menu__list__item {
-		float: right;
-		margin: 0 20px 0 0;
-		a {
-			color: #fff;
+  position: relative;
+  width: 100vw;
+  z-index: 99;
+  /*Main Menu*/
+  nav {
+    position: absolute;
+    right: 5vw;
+    top: 5vh;
+		display: none;
+		@media (--notebook) {
+			display: block;
 		}
-		&::after {
-    	background-color: orangered;
-    	content: '';
-    	display: block;
-    	height: 2px;
-    	transition: width 280ms ease-in;
-    	width: 0;
-  	}
-  	&:hover,
-  	&:focus {
-    	&::after {
-      	width: 100%;
-    	}
+    li {
+      float: right;
+      margin: 0 30px 0 0;
+      a {
+        color: #fff;
+        &:hover {
+          color: #fff;
+        }
+        &:active, &:focus {
+          color: #fff;
+          font-weight: 600
+        }
+      }
+      &::after {
+        background-color: #ff3d3d;
+        content: '';
+        display: block;
+        height: 2px;
+        transition: width 280ms ease-in;
+        width: 0;
+      }
+      &:hover, &:focus {
+        &::after {
+          width: 100%;
+        }
+      }
+    }
+  }
+  /*Mobile Burger Menu*/
+  .m-menu {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    height: 46px;
+    width: 46px;
+		@media (--notebook) {
+			display: none;
 		}
-	}
+    &:hover {
+      .menu-circle {
+        transform: scale(1.4);
+      }
+    }
+    &.active {
+      .menu-circle {
+        transform: scale(30);
+      }
+      .menu-line-2 {
+        opacity: 0;
+      }
+      .menu-line-1 {
+        transform: translateY(7px) translateY(-50%) rotate(-45deg);
+      }
+      .menu-line-3 {
+        transform: translateY(-7px) translateY(50%) rotate(45deg);
+      }
+    }
+  }
+  .menu-link {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 1002;
+  }
+  .menu-icon {
+    position: absolute;
+    width: 20px;
+    height: 14px;
+    margin: auto;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 1px;
+  }
+  .menu-circle {
+    background-color: #fff;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    border-radius: 50%;
+    transform: scale(1);
+    z-index: 1000;
+    transition: all 0.2s ease-in-out;
+  }
+  .menu-line {
+    background-color: #333;
+    height: 2px;
+    width: 100%;
+    border-radius: 2px;
+    position: absolute;
+    left: 0;
+    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    &.menu-line-1 {
+      top: 0;
+    }
+    &.menu-line-2 {
+      top: 0;
+      bottom: 0;
+      margin: auto;
+    }
+    &.menu-line-3 {
+      bottom: 0;
+    }
+  }
+  .menu-overlay {
+    visibility: hidden;
+    background-color: rgba(0, 0, 0, 0);
+    color: #333;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    text-align: center;
+    transition: opacity 0.2s ease-in-out;
+    z-index: 1001;
+		font-family: 'Lato', sans-serif;
+		ul{
+			margin: 100px 0 0 35vw;
+			width: 200px;
+			li{
+				margin: 20px 0 0 0;
+				text-align: left;
+			}
+			a {
+	      color: #333;
+	      font-weight: 600;
+	      font-size: 30px;
+				text-align: left;
+	    }
+		}
+    &.active {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
 }
 
-
 h1 {
-	font-family: 'KozGoPro-ExtraLight-AlphaNum' !important;
-	font-style: normal;
-	font-weight: 200;
-	color: #fff;
-	font-size: 10vw;
-	text-align: left;
-	text-shadow: 0px 0px 20px #fff;
-	max-width: 590px;
-	line-height: 80%;
-	margin: 0 auto;
-	justify-content: center;
-	@media (--desktop) {
-		font-size: 6vw;
-	}
+  font-family: 'KozGoPro-ExtraLight-AlphaNum' !important;
+  font-style: normal;
+  font-weight: 200;
+  color: #fff;
+  font-size: 6vw;
+  text-shadow: 0px 0px 20px #fff;
+  max-width: 650px;
+  line-height: 80%;
+  position: absolute;
+  left: 33vw;
+  top: 39vh;
+  z-index: 5;
+  @media (--desktop) {}
 }
 
 h2 {
-	text-align: center;
-	margin: 3vh auto;
-	font-size: 15px;
-	color: #fff;
-	font-family: 'Lato', sans-serif;
-	font-weight: 300;
-	letter-spacing: 1px;
+  text-align: center;
+  margin: 25vh auto 0;
+  font-size: 15px;
+  color: #fff;
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+  letter-spacing: 1px;
 }
 
 .action {
-	width: 250px;
-	margin: 15vh auto;
-	text-align: center;
+  width: 250px;
+  margin: 15vh auto;
+  text-align: center;
 }

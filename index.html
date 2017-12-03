@@ -12,20 +12,27 @@
   </head>
   <body>
     <header>
+      <div class="m-menu"><span class="menu-circle"></span><a class="menu-link" href="#"><span class="menu-icon"><span class="menu-line menu-line-1"></span><span class="menu-line menu-line-2"></span><span class="menu-line menu-line-3"></span></span></a></div>
+      <div class="menu-overlay">
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Works</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
       <nav class="menu">
-        <ul class="menu__list">
-          <li class="menu__list__item"><a class="list__item--link" href="#">ABOUT</a></li>
-          <li class="menu__list__item"><a class="list__item--link" href="#">WORKS</a></li>
-          <li class="menu__list__item"><a class="list__item--link" href="#">CONTACT</a></li>
+        <ul>
+          <li><a class="list__item--link" href="#">ABOUT</a></li>
+          <li><a class="list__item--link" href="#">WORKS</a></li>
+          <li><a class="list__item--link" href="#">CONTACT</a></li>
         </ul>
       </nav>
     </header>
     <main>
       <div class="content">
         <div class="content__inner">
-          <h1>
-            <div class="logo"><img class="logo" src="imgs/logo.svg"></div>grant hsiao
-          </h1>
+          <div class="logo"><img class="logo" src="imgs/logo.svg"></div>
+          <h1>grant / hsiao</h1>
           <h2>UI & UX / Frontend / Graphic Designer</h2>
           <div class="action">
             <svg class="svg-filters" xmlns="http://www.w3.org/2000/svg" version="1.1">
@@ -43,6 +50,7 @@
       </div>
     </main>
     <footer class="copyright"></footer>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="js/plugin/TweenMax.min.js"></script>
     <script src="js/plugin/button.js"></script>
     <script src="js/main.js"></script>
