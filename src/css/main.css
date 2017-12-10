@@ -1,6 +1,7 @@
 @import "components/_root.css";
 @import "components/button.css";
 @import url('https://fonts.googleapis.com/css?family=Lato');
+@import url('https://fonts.googleapis.com/earlyaccess/notosanstc.css');
 *, *::after, *::before {
   box-sizing: border-box;
 }
@@ -40,11 +41,11 @@ main {
 
 .intro {
   width: 100%;
-  height: 75vh;
+  height: 85vh;
   position: relative;
   padding-top: 27vh;
   color: #fff;
-  background: linear-gradient(-45deg, #68c8ff, #5526ac, #00e18a, #fbb3d8);
+  /*background: linear-gradient(-45deg, #68c8ff, #5526ac, #00e18a, #fbb3d8);*/
   background-size: 400% 400%;
   -webkit-animation: Gradient 40 ease infinite;
   -moz-animation: Gradient 40s ease infinite;
@@ -59,7 +60,7 @@ main {
   top: 17vh;
   img{
     width: 100%;
-    opacity: 0.1;
+    opacity: 0.5;
   }
   animation-duration: 4.8s;
   animation-iteration-count: 1;
@@ -91,12 +92,12 @@ header {
       float: left;
       margin: 0 30px 0 0;
       a {
-        color: #fff;
+        color: #322f2d;
         &:hover {
-          color: #fff;
+          color: #322f2d;
         }
         &:active, &:focus {
-          color: #fff;
+          color: #322f2d;
           font-weight: 600
         }
       }
@@ -227,7 +228,9 @@ h1 {
   font-family: 'KozGoPro-ExtraLight-AlphaNum' !important;
   font-style: normal;
   font-weight: 200;
-  color: #fff;
+  /*color: #fff;*/
+  color: #322f2d;
+
   font-size: calc(25px + 4vw);
   text-shadow: 0px 0px 20px #fff;
   width: 100%;
@@ -244,7 +247,8 @@ h2 {
   text-align: center;
   margin: 16vh auto 0;
   font-size: 15px;
-  color: #fff;
+  /*color: #fff;*/
+  color: #322f2d;
   font-family: 'Lato', sans-serif;
   font-weight: 300;
   letter-spacing: 1px;
@@ -255,13 +259,56 @@ h2 {
   margin: 45px auto;
   text-align: center;
 }
-
-
+.thunder{
+  position: absolute;
+  right: 1vw;
+  top: -10vh;
+  z-index: 0;
+  animation: flash 3s linear infinite;
+  img{
+    width: 25vw;
+    opacity: 0.3
+  }
+}
+@keyframes flash {
+	0% { opacity: 1; }
+	50% { opacity: .1; }
+	100% { opacity: 1; }
+}
 .about {
+  background: url("../imgs/bg-dot.png") repeat;
+  h2{
+    margin: 0 auto;
+    padding: 10vh 0 0;
+    font-size: 2vw;;
+    font-weight: 900;
+    letter-spacing: 3px;
+    &.TC{
+      font-family: 'Noto Sans TC', sans-serif;
+      font-size: 1vw;
+      font-weight: 300;
+      padding: 1vh 0 0;
+    }
+  }
   .avatar {
     text-align: center;
     width: 100%;
-    padding: 20px 0 10px;
+    padding: 40px 0 10px;
+    a{
+      background: url("../imgs/avatar-x.png") no-repeat;
+      display: block;
+      width: 248px;
+      height: 248px;
+      margin: 0 auto;
+      img{
+        opacity: 1;
+        transition: opacity 1.0s ease-in;
+        &:hover{
+          opacity: 0;
+
+        }
+      }
+    }
   }
   h3 {
     width: 100%;
@@ -275,6 +322,8 @@ h2 {
     width: 70vw;
     max-width: 950px;
     margin: 30px auto;
+    background: #fff;
+    padding: 20px;
     .column {
       flex: 2;
       line-height: 28px;
@@ -283,7 +332,7 @@ h2 {
         font-weight: 600;
       }
       .bio {
-        padding: 20px 0 0;
+        padding: 20px 20px 0 0;
       }
     }
     .skills {
@@ -295,6 +344,7 @@ h2 {
   .boxs {
     width: 100vw;
     overflow-x: hidden;
+    margin: 20vh auto 0;
     .project {
       float: left;
       a {
