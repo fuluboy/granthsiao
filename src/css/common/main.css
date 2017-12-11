@@ -236,3 +236,10 @@ a[href^="tel"] {
   font-weight: inherit !important;
   line-height: inherit !important;
 }
+
+
+.clearfix:after {
+    content:" ";
+    display:table;
+    clear:both;
+}

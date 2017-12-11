@@ -275,6 +275,8 @@ h2 {
 	50% { opacity: .1; }
 	100% { opacity: 1; }
 }
+
+
 .about {
   background: url("../imgs/bg-dot.png") repeat;
   h2{
@@ -341,6 +343,9 @@ h2 {
       padding: 0 0 0 30px;
     }
   }
+  .works{
+    margin: 30vh 0;
+  }
   .boxs {
     width: 100vw;
     overflow-x: hidden;
@@ -361,5 +366,32 @@ h2 {
   }
 
 
+
+}
+
+footer{
+  background: #f2f2f2;
+  height: 20vh;
+  .social{
+    padding: 50px 0 20px;
+    margin: 0 auto;
+    width: 160px;
+    li {
+      float: left;
+      a{
+        width: 40px;
+        height: 40px;
+        display: block;
+          svg{
+          width: 100%;
+          height: 100%;
+          }
+      }
+    }
+  }
+}
+.copyrights{
+  font-size: 12px;
+  text-align: center;
 
 }
