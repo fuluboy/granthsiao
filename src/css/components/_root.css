@@ -4,7 +4,7 @@
 @custom-media --notebook screen and (width >= 64rem); /*1024*/
 @custom-media --desktop screen and (width >= 80rem); /*1280*/
 
-@custom-media --max-tablet-mini screen and (width < 25rem); /*399*/
+@custom-media --max-tablet-mini screen and (width < 26rem); /*399*/
 @custom-media --max-tablet screen and (width < 48rem); /*767*/
 @custom-media --max-notebook-mini screen and (width < 56rem); /*895*/
 @custom-media --max-notebook screen and (width < 64rem); /*1023*/

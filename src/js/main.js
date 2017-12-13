@@ -5,6 +5,10 @@ $(function() {
   $(".menu-overlay").toggleClass("active");
   $(".m-menu").toggleClass("active");
   });
+  $("#music").click(function(e) {
+    e.preventDefault();
+  $(".soundcloud").toggleClass("active");
+  });
 
   // //Scroll Controll
   // $(window).scroll( function(){
