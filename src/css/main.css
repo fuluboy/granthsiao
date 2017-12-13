@@ -31,7 +31,7 @@ header {
   z-index: 99;
   /*Main Menu*/
   nav {
-    position: absolute;
+    position: fixed;
     right: 5vw;
     top: 5vh;
 		display: none;
@@ -68,7 +68,7 @@ header {
   }
   /*Mobile Burger Menu*/
   .m-menu {
-    position: absolute;
+    position: fixed;
     top: 20px;
     left: 20px;
     height: 46px;
