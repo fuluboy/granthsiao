@@ -1,13 +1,13 @@
 $(function() {
 
   $(".menu-link").click(function(e) {
-    e.preventDefault();
   $(".menu-overlay").toggleClass("active");
   $(".m-menu").toggleClass("active");
+  return false;
   });
   $("#music").click(function(e) {
-    e.preventDefault();
   $(".soundcloud").toggleClass("active");
+  return false;
   });
 
   //Scroll Controll

@@ -26,12 +26,12 @@
 }
 /* Header menu*/
 header {
-  position: relative;
+  position: fixed;
   width: 100vw;
   z-index: 99;
   /*Main Menu*/
   nav {
-    position: fixed;
+    position: absolute;
     right: 5vw;
     top: 5vh;
 		display: none;
@@ -68,7 +68,7 @@ header {
   }
   /*Mobile Burger Menu*/
   .m-menu {
-    position: fixed;
+    position: absolute;
     top: 20px;
     left: 20px;
     height: 46px;
@@ -100,7 +100,7 @@ header {
     width: 100%;
     height: 100%;
     position: absolute;
-    z-index: 1002;
+    z-index: 11;
   }
   .menu-icon {
     position: absolute;
@@ -119,7 +119,7 @@ header {
     position: absolute;
     border-radius: 50%;
     transform: scale(1);
-    z-index: 1000;
+    z-index: 9;
     transition: all 0.2s ease-in-out;
   }
   .menu-line {
@@ -150,7 +150,7 @@ header {
     width: 100%;
     position: fixed;
     transition: opacity 0.2s ease-in-out;
-    z-index: 1001;
+    z-index: 10;
 		font-family: 'Lato', sans-serif;
 
     h3{
