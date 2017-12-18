@@ -10,6 +10,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="stylesheet" type="text/css" href="css/common.css">
+    <link rel="stylesheet" type="text/css" href="css/template.css">
     <script src="http://code.jquery.com/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <title>Grant Hsiao Portfolio</title>
@@ -20,8 +21,8 @@
       <div class="menu-overlay">
         <h3>grant / hsiao</h3>
         <ul>
-          <li><a id="mabout" href="#">About</a></li>
-          <li><a id="mwork" href="#">Works</a></li>
+          <li><a id="mabout" href="#section-2">About</a></li>
+          <li><a id="mwork" href="#section-3">Works</a></li>
           <li><a href="resume.pdf">Resume</a></li>
           <li>
             <div class="social">
@@ -53,15 +54,15 @@
       </div>
       <nav class="menu">
         <ul>
-          <li><a class="list__item--link" id="about" href="#">ABOUT</a></li>
-          <li><a class="list__item--link" id="work" href="#">WORKS</a></li>
+          <li><a class="list__item--link" id="aboutx" href="#section-2">ABOUT</a></li>
+          <li><a class="list__item--link" id="work" href="#section-3">WORKS</a></li>
           <li><a class="list__item--link" href="resume.pdf" target="_blank">RESUME</a></li>
         </ul>
       </nav>
     </header>
     <main>
       <div class="content">
-        <section class="intro">
+        <section class="intro" id="section-1">
           <div class="thunder"><img src="imgs/thunder.png"></div>
           <div class="logo"><img src="imgs/logo.svg"></div>
           <h1>grant / hsiao</h1>
@@ -79,7 +80,7 @@
             <button class="button button--1" id="component-1">Let's Go<span class="button__container"><span class="circle top-left"></span><span class="circle top-left"></span><span class="circle top-left"></span><span class="button__bg"></span><span class="circle bottom-right"></span><span class="circle bottom-right"></span><span class="circle bottom-right"></span></span></button>
           </div>
         </section>
-        <section class="about">
+        <section class="about" id="section-2">
           <h2 class="hideme">ABOUT</h2>
           <h2 class="TC hideme">關於我</h2>
           <div class="avatar"><a><img src="imgs/avatar.png"></a></div>
@@ -100,9 +101,9 @@
               <h4>Skills /</h4>SASS / SCSS / postCSS<br>JavaScript / jQuery / Vue.js<br>Git version controll<br>Gulp / JADE (pug) / HTML5<br>Graphic, branding and  package Ddesign<br>IOS / Android UI design and UX rsearch<br>Responsive web design<br>Cross-browser compatible
             </div>
           </div>
-          <section class="works">
+          <section class="works" id="section-3">
             <div class="boxs">
-              <div class="project"><a href="#"><img src="imgs/works_10.png"></a></div>
+              <div class="project"><a href="rakuya.html" target="_self"><img src="imgs/works_10.png"></a></div>
               <div class="project"><a href="#"><img src="imgs/works_01.png"></a></div>
               <div class="project"><a href="#"><img src="imgs/works_02.png"></a></div>
               <div class="project"><a href="#"><img src="imgs/works_03.png"></a></div>

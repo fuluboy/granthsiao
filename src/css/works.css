@@ -1,0 +1,56 @@
+
+@import "components/_root.css";
+main.works{
+  font-family: 'KozGoPro-ExtraLight-AlphaNum';
+  padding: 10vh 0 0 0;
+  text-align: center;
+  h1{
+    font-size: 1.5vw;
+    letter-spacing: 1px;
+    text-align: center;
+  }
+  h2 {
+    text-align: center;
+    margin: 10px auto ;
+    font-size: 32px;
+    /*color: #fff;*/
+    color: #322f2d;
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
+    letter-spacing: 1px;
+    @media (--max-tablet-mini) {
+      font-size: 12px;
+      margin: 19vh auto 0;
+    }
+  }
+  h3 {
+    text-align: center;
+    margin: 10px auto 5vh;
+    font-size: 15px;
+    /*color: #fff;*/
+    color: #322f2d;
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
+    letter-spacing: 1px;
+    @media (--max-tablet-mini) {
+      font-size: 12px;
+      margin: 19vh auto 0;
+    }
+  }
+  .products {
+    margin: 2vh 0 2vh 0;
+    text-align: center;
+    img {
+      width: 100vw;
+      height: auto;
+      @media (--notebook) {
+        max-width: 1366px;
+      }
+    }
+  }
+  p{
+    font-size: 15px;
+    font-family: 'Lato', sans-serif;
+    margin: 0 0 5vh 0;
+  }
+}

@@ -1,5 +1,4 @@
 $(function() {
-
   $(".menu-link").click(function(e) {
   $(".menu-overlay").toggleClass("active");
   $(".m-menu").toggleClass("active");
@@ -11,25 +10,25 @@ $(function() {
   });
 
   //Scroll Controll
-	$('#about, .action').click(function(){
-		$('html, body').animate({scrollTop: $('.about').offset().top }, 'slow');
+	$('#aboutx, .action').click(function(){
+		$('html, body').animate({scrollTop: $('#section-2').offset().top }, 'slow');
 		return false;
 	});
 
   $('#work').click(function(){
-    $('html, body').animate({scrollTop: $('.works').offset().top }, 'slow');
+    $('html, body').animate({scrollTop: $('#section-3').offset().top }, 'slow');
     return false;
   });
 
   $('#mabout').click(function(){
-		$('html, body').animate({scrollTop: $('.about').offset().top }, 'slow');
+		$('html, body').animate({scrollTop: $('#section-2').offset().top }, 'slow');
     $(".menu-overlay").toggleClass("active");
     $(".m-menu").toggleClass("active");
     return false;
 	});
 
   $('#mwork').click(function(){
-    $('html, body').animate({scrollTop: $('.works').offset().top }, 'slow');
+    $('html, body').animate({scrollTop: $('#section-3').offset().top }, 'slow');
     $(".menu-overlay").toggleClass("active");
     $(".m-menu").toggleClass("active");
     return false;

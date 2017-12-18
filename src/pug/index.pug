@@ -6,7 +6,7 @@ block title
 block content
   main
     .content
-      section.intro
+      section.intro#section-1
         .thunder
           img(src="imgs/thunder.png")
         .logo
@@ -31,7 +31,7 @@ block content
               span.circle.bottom-right
               span.circle.bottom-right
 
-      section.about
+      section.about#section-2
         h2.hideme ABOUT
         h2.TC.hideme 關於我
         .avatar
@@ -74,10 +74,10 @@ block content
             br
             | Cross-browser compatible
 
-        section.works
+        section.works#section-3
           .boxs
             .project
-              a(href="#")
+              a(href="rakuya.html" target="_self")
                 img(src="imgs/works_10.png")
             .project
               a(href="#")
@@ -108,6 +108,7 @@ block content
                 img(src="imgs/works_09.png")
                 .soundcloud
                   iframe(width='100%', height='100%', scrolling='no', frameborder='no', src='https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/users/38257373&color=%232f2e41&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true')
+
 
 block js
   script(src="https://code.jquery.com/jquery-3.2.1.min.js")
