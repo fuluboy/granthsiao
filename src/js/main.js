@@ -1,4 +1,8 @@
 $(function() {
+  $('a.dis').click(function(e){
+    e.preventDefault();
+  });
+
   $(".menu-link").click(function(e) {
   $(".menu-overlay").toggleClass("active");
   $(".m-menu").toggleClass("active");

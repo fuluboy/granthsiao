@@ -1,5 +1,14 @@
 
+@import "components/_root.css";
 @import "components/button.css";
+@import url('https://fonts.googleapis.com/css?family=Lato');
+@import url('https://fonts.googleapis.com/earlyaccess/notosanstc.css');
+@font-face {
+  font-family: 'KozGoPro-ExtraLight-AlphaNum';
+  src: url('../fonts/KozGoPro-ExtraLight-AlphaNum.eot?#iefix') format('embedded-opentype'), url('../fonts/KozGoPro-ExtraLight-AlphaNum.otf') format('opentype'), url('../fonts/KozGoPro-ExtraLight-AlphaNum.woff') format('woff'), url('../fonts/KozGoPro-ExtraLight-AlphaNum.ttf') format('truetype'), url('KozGoPro-ExtraLight-AlphaNum.svg#KozGoPro-ExtraLight-AlphaNum') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
 
 @keyframes Gradient {
   0% {
@@ -161,6 +170,7 @@ h2 {
       width: 248px;
       height: 248px;
       margin: 0 auto;
+      font-size: 13px;
       @media (--max-tablet-mini) {
         transform:scale(0.8);
       }
@@ -217,7 +227,8 @@ h2 {
       }
     }
   }
-  .works{
+  a.dis{
+    cursor: default;
   }
   .boxs {
     width: 100vw;
@@ -238,6 +249,11 @@ h2 {
         overflow: hidden;
         display: block;
         position: relative;
+        color: #fff;
+        font-size: 13px;
+        &:hover{
+          color: #fff;
+        }
         @media (--max-notebook) {
           width: 33vw;
           height: 33vw;
