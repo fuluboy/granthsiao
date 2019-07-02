@@ -33,5 +33,7 @@
     "postcss-import": "^11.0.0",
     "precss": "^2.0.0"
   },
-  "dependencies": {}
+  "dependencies": {
+  "handlebars": ">=4.0.14"
+}
 }
