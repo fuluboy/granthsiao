@@ -107,6 +107,7 @@ main.works .products img {
 main.works .products img.origin {
     width: auto;
     height: auto;
+    max-width: 90vw;
   }
 @media screen and (min-width: 64rem) {
   main.works .products img {
@@ -128,4 +129,5 @@ main.works p {
 }
 main.works .products img.screenshot{
     width: 940px;
+    max-width: 90vw;
 }
