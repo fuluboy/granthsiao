@@ -1,0 +1,28 @@
+---
+interface Props {
+  paragraphs: string[];
+}
+
+const { paragraphs } = Astro.props;
+---
+
+<div class="reflection">
+  {paragraphs.map((paragraph) => (
+    <p class="reflection__paragraph">{paragraph}</p>
+  ))}
+</div>
+
+<style>
+  .reflection {
+    max-width: 68ch;
+  }
+
+  .reflection__paragraph {
+    font-size: var(--fs-lead);
+    line-height: var(--lh-heading);
+  }
+
+  .reflection__paragraph + .reflection__paragraph {
+    margin-top: var(--space-lg);
+  }
+</style>

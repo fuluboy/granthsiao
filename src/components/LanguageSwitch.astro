@@ -1,0 +1,54 @@
+---
+import { UI_TEXT, swapLocaleInPath, otherLocale, type Locale } from "../i18n/config";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const target = otherLocale(locale);
+const t = UI_TEXT[locale];
+const altPath = swapLocaleInPath(Astro.url.pathname, target);
+const currentLabel = locale === "zh" ? "中" : "EN";
+---
+
+<a
+  href={altPath}
+  class="lang-switch"
+  aria-label={t.langSwitchLabelTo(target)}
+  hreflang={target === "zh" ? "zh-Hant" : "en"}
+>
+  <img src="/brand/icon-lang_switch.svg" alt="" width="20" height="20" aria-hidden="true" />
+  <span class="lang-switch__current" aria-current="true">{currentLabel}</span>
+</a>
+
+<style>
+  .lang-switch {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2xs);
+    text-decoration: none;
+    padding: var(--space-2xs) var(--space-xs);
+    border-radius: var(--radius-sm);
+  }
+
+  .lang-switch img {
+    width: 18px;
+    height: 18px;
+    filter: invert(9%);
+  }
+
+  .lang-switch__current {
+    font-size: var(--fs-small);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+
+  .lang-switch:hover {
+    color: var(--color-mustard);
+  }
+
+  .lang-switch:hover img {
+    filter: invert(38%) sepia(45%) saturate(500%) hue-rotate(360deg);
+  }
+</style>

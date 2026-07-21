@@ -1,0 +1,115 @@
+---
+interface Props {
+  name: string;
+  caseName?: string;
+  purpose: string;
+  format?: string;
+  ratio?: string;
+  display?: "cover" | "contain";
+  class?: string;
+}
+
+const {
+  name,
+  caseName,
+  purpose,
+  format,
+  ratio = "4 / 3",
+  display = "cover",
+  class: className,
+} = Astro.props;
+---
+
+<div class:list={["media-placeholder", className]} style={`aspect-ratio: ${ratio};`} data-display={display}>
+  <div class="media-placeholder__inner">
+    <p class="media-placeholder__name">{name}</p>
+    {caseName && <p class="media-placeholder__case">{caseName}</p>}
+    <p class="media-placeholder__purpose">{purpose}</p>
+    <dl class="media-placeholder__meta">
+      {format && (
+        <div>
+          <dt>Format</dt>
+          <dd>{format}</dd>
+        </div>
+      )}
+      <div>
+        <dt>Display</dt>
+        <dd>{display}</dd>
+      </div>
+      <div>
+        <dt>Ratio</dt>
+        <dd>{ratio.replace(" / ", ":")}</dd>
+      </div>
+    </dl>
+  </div>
+</div>
+
+<style>
+  .media-placeholder {
+    width: 100%;
+    background: repeating-linear-gradient(
+      135deg,
+      var(--color-grey-200),
+      var(--color-grey-200) 10px,
+      var(--color-grey-100) 10px,
+      var(--color-grey-100) 20px
+    );
+    border: 1.5px dashed var(--color-grey-400);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .media-placeholder__inner {
+    max-width: 88%;
+    text-align: center;
+    padding: var(--space-md);
+    background: color-mix(in srgb, var(--color-paper-raised) 88%, transparent);
+    border-radius: var(--radius-sm);
+  }
+
+  .media-placeholder__name {
+    font-weight: 700;
+    font-size: var(--fs-small);
+    color: var(--color-ink);
+  }
+
+  .media-placeholder__case {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-kicker);
+    color: var(--color-mustard);
+    margin-top: var(--space-2xs);
+  }
+
+  .media-placeholder__purpose {
+    font-size: 0.8rem;
+    color: var(--color-grey-600);
+    margin-top: var(--space-xs);
+  }
+
+  .media-placeholder__meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-sm);
+    margin-top: var(--space-sm);
+    font-size: 0.7rem;
+    color: var(--color-grey-500);
+  }
+
+  .media-placeholder__meta div {
+    display: flex;
+    gap: 0.3em;
+  }
+
+  .media-placeholder__meta dt {
+    font-weight: 600;
+  }
+
+  .media-placeholder__meta dt::after {
+    content: ":";
+  }
+</style>

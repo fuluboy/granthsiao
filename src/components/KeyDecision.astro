@@ -1,0 +1,64 @@
+---
+import type { KeyDecision } from "../content/types";
+
+interface Props {
+  decision: KeyDecision;
+  index: number;
+}
+
+const { decision, index } = Astro.props;
+---
+
+<article class="key-decision" id={`key-decision-${index}`}>
+  <div class="key-decision__index" aria-hidden="true">{String(index).padStart(2, "0")}</div>
+  <div class="key-decision__body">
+    <p class="kicker">{decision.kicker}</p>
+    <h3 class="key-decision__heading">{decision.heading}</h3>
+    {decision.paragraphs.map((paragraph) => (
+      <p class="key-decision__paragraph">{paragraph}</p>
+    ))}
+  </div>
+</article>
+
+<style>
+  .key-decision {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--space-lg);
+    padding-block: var(--space-lg);
+  }
+
+  .key-decision + .key-decision {
+    border-top: 1px solid var(--color-line);
+  }
+
+  .key-decision__index {
+    font-size: var(--fs-display);
+    font-weight: 700;
+    color: var(--color-grey-300);
+    line-height: 1;
+  }
+
+  .key-decision__heading {
+    font-size: var(--fs-h3);
+    max-width: 40ch;
+  }
+
+  .key-decision__paragraph {
+    margin-top: var(--space-md);
+    max-width: 68ch;
+    color: var(--color-ink-soft);
+  }
+
+  @media (max-width: 599px) {
+    .key-decision {
+      grid-template-columns: 1fr;
+      gap: var(--space-sm);
+    }
+
+    .key-decision__index {
+      font-size: var(--fs-h2);
+      color: var(--color-mustard-strong);
+    }
+  }
+</style>

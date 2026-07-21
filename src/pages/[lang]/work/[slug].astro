@@ -1,0 +1,155 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import CaseHero from "../../../components/CaseHero.astro";
+import CaseSection from "../../../components/CaseSection.astro";
+import SectionNavigation from "../../../components/SectionNavigation.astro";
+import SignalGrid from "../../../components/SignalGrid.astro";
+import KeyDecision from "../../../components/KeyDecision.astro";
+import CaseMetrics from "../../../components/CaseMetrics.astro";
+import ImpactGrid from "../../../components/ImpactGrid.astro";
+import ReflectionSection from "../../../components/ReflectionSection.astro";
+import NextCaseNavigation from "../../../components/NextCaseNavigation.astro";
+import Quote from "../../../components/Quote.astro";
+import BeforeAfter from "../../../components/BeforeAfter.astro";
+import ResponsiveMedia from "../../../components/ResponsiveMedia.astro";
+import { LOCALES, WORK_SLUGS, type Locale } from "../../../i18n/config";
+import { getWork, getHome, workOrder } from "../../../content";
+
+export function getStaticPaths() {
+  return LOCALES.flatMap((lang) => WORK_SLUGS.map((slug) => ({ params: { lang, slug } })));
+}
+
+const { lang, slug } = Astro.params as { lang: Locale; slug: string };
+const caseData = getWork(lang, slug);
+const workCards = getHome(lang).selectedWork.cards;
+const currentIdx = workOrder.indexOf(slug as (typeof workOrder)[number]);
+const prevCard = workCards[(currentIdx - 1 + workCards.length) % workCards.length];
+const nextCard = workCards[(currentIdx + 1) % workCards.length];
+
+const navItems = [
+  { id: "context", label: caseData.context.kicker },
+  { id: "what-we-saw", label: caseData.whatWeSaw.kicker },
+  { id: "key-decisions", label: lang === "zh" ? "關鍵決策" : "Key decisions" },
+  { id: "execution", label: caseData.execution.kicker },
+  { id: "impact", label: caseData.impact.kicker },
+  { id: "reflection", label: caseData.reflection.kicker },
+];
+---
+
+<BaseLayout locale={lang} title={caseData.meta.title} description={caseData.meta.description}>
+  <CaseHero locale={lang} caseData={caseData} />
+  <SectionNavigation locale={lang} items={navItems} />
+
+  <CaseSection id="context" kicker={caseData.context.kicker} heading={caseData.context.heading} narrow>
+    {caseData.context.paragraphs.map((paragraph) => (
+      <p class="case-paragraph">{paragraph}</p>
+    ))}
+    <div class="core-challenge">
+      <p class="core-challenge__label">{caseData.context.coreChallengeLabel}</p>
+      <Quote text={caseData.context.coreChallengeQuote} size="lg" />
+    </div>
+  </CaseSection>
+
+  <CaseSection id="what-we-saw" kicker={caseData.whatWeSaw.kicker} heading={caseData.whatWeSaw.heading}>
+    <SignalGrid signals={caseData.whatWeSaw.signals} />
+  </CaseSection>
+
+  <CaseSection id="key-decisions" kicker={lang === "zh" ? "KEY DECISIONS" : "KEY DECISIONS"}>
+    {caseData.keyDecisions.map((decision, i) => (
+      <KeyDecision decision={decision} index={i + 1} />
+    ))}
+
+    {slug === "house579" && (
+      <div class="key-decision-media">
+        <BeforeAfter
+          locale={lang}
+          name="House579 Mobile Admin"
+          caseName="House579"
+          purpose={
+            lang === "zh"
+              ? "比較改版前後的手機後台資訊密度與物件管理流程"
+              : "Compare information density and mobile property-management workflow before and after the redesign"
+          }
+          ratio="16 / 10"
+        />
+      </div>
+    )}
+  </CaseSection>
+
+  <CaseSection id="execution" kicker={caseData.execution.kicker} heading={caseData.execution.heading} narrow>
+    {caseData.execution.paragraphs.map((paragraph) => (
+      <p class="case-paragraph">{paragraph}</p>
+    ))}
+
+    {caseData.execution.supportingMetrics && (
+      <div class="execution-metrics">
+        <CaseMetrics
+          metrics={caseData.execution.supportingMetrics}
+          caption={caseData.execution.supportingMetricsCaption}
+          compact
+        />
+      </div>
+    )}
+
+    <div class="execution-media">
+      <ResponsiveMedia
+        name={`${caseData.title} — Execution Detail`}
+        caseName={caseData.title}
+        purpose={
+          lang === "zh"
+            ? "呈現產品規則、資料流程或元件治理的示意圖"
+            : "Illustrate the product rules, data workflow, or component governance in practice"
+        }
+        format={lang === "zh" ? "流程圖／截圖" : "Diagram / Screenshot"}
+        ratio="16 / 10"
+        display="contain"
+      />
+    </div>
+  </CaseSection>
+
+  <CaseSection id="impact" kicker={caseData.impact.kicker} heading={caseData.impact.heading}>
+    <ImpactGrid blocks={caseData.impact.blocks} footnote={caseData.impact.footnote} />
+  </CaseSection>
+
+  <CaseSection id="reflection" kicker={caseData.reflection.kicker} heading={caseData.reflection.heading} narrow>
+    <ReflectionSection paragraphs={caseData.reflection.paragraphs} />
+  </CaseSection>
+
+  <NextCaseNavigation locale={lang} previous={prevCard} next={nextCard} />
+</BaseLayout>
+
+<style>
+  .case-paragraph {
+    color: var(--color-ink-soft);
+    font-size: var(--fs-lead);
+  }
+
+  .case-paragraph + .case-paragraph {
+    margin-top: var(--space-md);
+  }
+
+  .core-challenge {
+    margin-top: var(--space-xl);
+  }
+
+  .core-challenge__label {
+    font-size: var(--fs-small);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-kicker);
+    color: var(--color-ink-soft);
+    margin-bottom: var(--space-sm);
+  }
+
+  .key-decision-media {
+    margin-top: var(--space-xl);
+  }
+
+  .execution-metrics {
+    margin-top: var(--space-xl);
+  }
+
+  .execution-media {
+    margin-top: var(--space-xl);
+  }
+</style>

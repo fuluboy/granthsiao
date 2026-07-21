@@ -1,0 +1,103 @@
+---
+import { UI_TEXT, type Locale } from "../i18n/config";
+import { getFooter } from "../content";
+import { siteConfig } from "../content/siteConfig";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const footer = getFooter(locale);
+const t = UI_TEXT[locale];
+const home = `/${locale}/`;
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <div class="site-footer__identity">
+      <p class="site-footer__name">{footer.name}</p>
+      <p class="site-footer__role">{footer.role} · {footer.location}</p>
+    </div>
+
+    <nav class="site-footer__nav" aria-label={locale === "zh" ? "頁尾導覽" : "Footer navigation"}>
+      <ul>
+        <li><a href={`${home}about/`}>{t.nav.about}</a></li>
+        <li><a href={`${home}#selected-work`}>{t.nav.work}</a></li>
+        <li><a href={`${home}contact/`}>{t.nav.contact}</a></li>
+      </ul>
+    </nav>
+
+    <div class="site-footer__actions">
+      <a class="btn btn-outline" href={siteConfig.resumeHref[locale]} target="_blank" rel="noopener noreferrer">{footer.resumeLabel}</a>
+      <a class="btn" href={`mailto:${siteConfig.contactEmail}`}>{footer.contactLabel}</a>
+    </div>
+  </div>
+
+  <div class="container site-footer__rights">
+    <p>© {year} {footer.name} — {footer.rights}</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--color-line);
+    padding-block: var(--space-xl) var(--space-lg);
+    margin-top: var(--space-3xl);
+  }
+
+  .site-footer__inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-lg);
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-bottom: var(--space-lg);
+  }
+
+  .site-footer__name {
+    font-weight: 700;
+    font-size: var(--fs-lead);
+  }
+
+  .site-footer__role {
+    color: var(--color-ink-soft);
+    font-size: var(--fs-small);
+    margin-top: var(--space-2xs);
+  }
+
+  .site-footer__nav ul {
+    display: flex;
+    gap: var(--space-lg);
+  }
+
+  .site-footer__nav a {
+    text-decoration: none;
+    font-size: var(--fs-small);
+    font-weight: 600;
+  }
+
+  .site-footer__nav a:hover {
+    color: var(--color-mustard);
+  }
+
+  .site-footer__actions {
+    display: flex;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+  }
+
+  .site-footer__rights {
+    border-top: 1px solid var(--color-line);
+    padding-top: var(--space-md);
+    font-size: var(--fs-small);
+    color: var(--color-grey-500);
+  }
+
+  @media (max-width: 599px) {
+    .site-footer__inner {
+      flex-direction: column;
+    }
+  }
+</style>

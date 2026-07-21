@@ -1,0 +1,159 @@
+---
+import MediaPlaceholder from "./MediaPlaceholder.astro";
+import { UI_TEXT, type Locale } from "../i18n/config";
+import type { WorkCardSummary } from "../content/types";
+
+interface Props {
+  locale: Locale;
+  card: WorkCardSummary;
+}
+
+const { locale, card } = Astro.props;
+const t = UI_TEXT[locale];
+const href = `/${locale}/work/${card.slug}/`;
+---
+
+<article class:list={["work-card", `work-card--${card.imageSide}`]} id={card.slug === "house579" ? "selected-work" : undefined}>
+  <a class="work-card__link" href={href}>
+    <div class="work-card__media">
+      <MediaPlaceholder
+        name={`${card.name} — Case Cover`}
+        caseName={card.name}
+        purpose={locale === "zh" ? "精選作品封面圖" : "Selected work cover image"}
+        ratio="4 / 3"
+        display="cover"
+      />
+    </div>
+
+    <div class="work-card__content">
+      <p class="work-card__index">{card.index}</p>
+      <p class="work-card__name">{card.name}</p>
+      <h3 class="work-card__title">{card.title}</h3>
+      <p class="work-card__description">{card.description}</p>
+      <ul class="tag-list work-card__tags">
+        {card.tags.map((tag) => <li class="tag">{tag}</li>)}
+      </ul>
+      <p class="work-card__metric">{card.metric}</p>
+    </div>
+
+    <div class="work-card__cta">
+      {t.viewCaseStudy}
+      <span class="work-card__cta-arrow" aria-hidden="true">→</span>
+    </div>
+  </a>
+</article>
+
+<style>
+  .work-card {
+    padding-block: var(--space-xl);
+    border-top: 1px solid var(--color-line);
+  }
+
+  .work-card:last-child {
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .work-card__link {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "media content" "media cta";
+    align-content: center;
+    gap: var(--space-xl) var(--space-xl);
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .work-card--right .work-card__link {
+    grid-template-areas: "content media" "cta media";
+  }
+
+  .work-card__media {
+    grid-area: media;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    transition: transform var(--duration-hover) var(--ease-out);
+    align-self: center;
+  }
+
+  .work-card__link:hover .work-card__media,
+  .work-card__link:focus-visible .work-card__media {
+    transform: scale(1.015);
+  }
+
+  .work-card__content {
+    grid-area: content;
+    align-self: center;
+  }
+
+  .work-card__cta {
+    grid-area: cta;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    width: fit-content;
+    font-weight: 600;
+    font-size: var(--fs-small);
+    letter-spacing: 0.02em;
+    border-bottom: 1.5px solid var(--color-mustard-strong);
+    padding-bottom: 2px;
+    align-self: start;
+  }
+
+  .work-card__index {
+    font-size: var(--fs-small);
+    font-weight: 700;
+    color: var(--color-mustard-strong);
+    letter-spacing: 0.08em;
+  }
+
+  .work-card__name {
+    font-size: var(--fs-small);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-kicker);
+    color: var(--color-ink-soft);
+    margin-top: var(--space-xs);
+  }
+
+  .work-card__title {
+    font-size: var(--fs-h2);
+    margin-top: var(--space-sm);
+  }
+
+  .work-card__description {
+    margin-top: var(--space-md);
+    color: var(--color-ink-soft);
+    max-width: 46ch;
+  }
+
+  .work-card__tags {
+    margin-top: var(--space-md);
+  }
+
+  .work-card__metric {
+    margin-top: var(--space-md);
+    font-weight: 700;
+    font-size: var(--fs-lead);
+  }
+
+  .work-card__cta-arrow {
+    transition: transform var(--duration-hover) var(--ease-out);
+  }
+
+  .work-card__link:hover .work-card__cta-arrow,
+  .work-card__link:focus-visible .work-card__cta-arrow {
+    transform: translateX(4px);
+  }
+
+  @media (max-width: 1023px) {
+    .work-card__link,
+    .work-card--right .work-card__link {
+      grid-template-columns: 1fr;
+      grid-template-areas: "content" "media" "cta";
+    }
+
+    .work-card__cta {
+      margin-top: var(--space-sm);
+    }
+  }
+</style>

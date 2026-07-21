@@ -1,0 +1,96 @@
+---
+import { UI_TEXT, type Locale } from "../i18n/config";
+
+interface CaseLink {
+  slug: string;
+  name: string;
+  title: string;
+}
+
+interface Props {
+  locale: Locale;
+  previous: CaseLink;
+  next: CaseLink;
+}
+
+const { locale, previous, next } = Astro.props;
+const t = UI_TEXT[locale];
+---
+
+<nav class="case-nav" aria-label={locale === "zh" ? "案例前後導覽" : "Case study navigation"}>
+  <div class="container case-nav__grid">
+    <a class="case-nav__link case-nav__link--prev" href={`/${locale}/work/${previous.slug}/`}>
+      <span class="case-nav__eyebrow">← {t.previousCase}</span>
+      <span class="case-nav__name">{previous.name}</span>
+      <span class="case-nav__title">{previous.title}</span>
+    </a>
+    <a class="case-nav__link case-nav__link--next" href={`/${locale}/work/${next.slug}/`}>
+      <span class="case-nav__eyebrow">{t.nextCase} →</span>
+      <span class="case-nav__name">{next.name}</span>
+      <span class="case-nav__title">{next.title}</span>
+    </a>
+  </div>
+</nav>
+
+<style>
+  .case-nav {
+    border-top: 1px solid var(--color-line);
+    padding-block: var(--space-2xl);
+  }
+
+  .case-nav__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-lg);
+  }
+
+  .case-nav__link {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    text-decoration: none;
+    padding: var(--space-lg);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    transition: border-color var(--duration-hover) var(--ease-out);
+  }
+
+  .case-nav__link:hover,
+  .case-nav__link:focus-visible {
+    border-color: var(--color-mustard-strong);
+  }
+
+  .case-nav__link--next {
+    text-align: right;
+    align-items: flex-end;
+  }
+
+  .case-nav__eyebrow {
+    font-size: var(--fs-small);
+    font-weight: 600;
+    color: var(--color-mustard);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-kicker);
+  }
+
+  .case-nav__name {
+    font-size: var(--fs-small);
+    color: var(--color-ink-soft);
+  }
+
+  .case-nav__title {
+    font-size: var(--fs-h3);
+    font-weight: 700;
+  }
+
+  @media (max-width: 767px) {
+    .case-nav__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .case-nav__link--next {
+      text-align: left;
+      align-items: flex-start;
+    }
+  }
+</style>

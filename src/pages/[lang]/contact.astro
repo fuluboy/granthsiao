@@ -1,0 +1,48 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { LOCALES, type Locale } from "../../i18n/config";
+import { getContact } from "../../content";
+import { siteConfig } from "../../content/siteConfig";
+
+export function getStaticPaths() {
+  return LOCALES.map((lang) => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params as { lang: Locale };
+const contact = getContact(lang);
+---
+
+<BaseLayout locale={lang} title={contact.meta.title} description={contact.meta.description}>
+  <section class="section">
+    <div class="container container-narrow contact-page">
+      <p class="kicker">{contact.kicker}</p>
+      <h1 class="contact-page__title">{contact.title}</h1>
+      <p class="contact-page__lead">{contact.lead}</p>
+
+      <div class="contact-page__actions">
+        <a class="btn" href={`mailto:${siteConfig.contactEmail}`}>{contact.contactLabel}</a>
+        <a class="btn btn-outline" href={siteConfig.resumeHref[lang]} target="_blank" rel="noopener noreferrer">{contact.resumeLabel}</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .contact-page__title {
+    font-size: var(--fs-h1);
+    margin-top: var(--space-sm);
+  }
+
+  .contact-page__lead {
+    margin-top: var(--space-md);
+    font-size: var(--fs-lead);
+    color: var(--color-ink-soft);
+  }
+
+  .contact-page__actions {
+    display: flex;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+    margin-top: var(--space-xl);
+  }
+</style>

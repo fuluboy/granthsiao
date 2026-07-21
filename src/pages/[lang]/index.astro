@@ -1,0 +1,84 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import VinylHero from "../../components/VinylHero.astro";
+import SelectedWorkCard from "../../components/SelectedWorkCard.astro";
+import { LOCALES, type Locale } from "../../i18n/config";
+import { getHome } from "../../content";
+import { siteConfig } from "../../content/siteConfig";
+
+export function getStaticPaths() {
+  return LOCALES.map((lang) => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params as { lang: Locale };
+const home = getHome(lang);
+---
+
+<BaseLayout locale={lang} title={home.meta.title} description={home.meta.description}>
+  <VinylHero home={home} />
+
+  <section class="section" aria-labelledby="selected-work-heading">
+    <div class="container">
+      <h2 id="selected-work-heading" class="kicker">{home.selectedWork.kicker}</h2>
+    </div>
+    <div class="container">
+      {home.selectedWork.cards.map((card) => (
+        <SelectedWorkCard locale={lang} card={card} />
+      ))}
+    </div>
+  </section>
+
+  <section class="section about-teaser">
+    <div class="container container-narrow">
+      <p class="kicker">{home.aboutTeaser.kicker}</p>
+      <h2 class="about-teaser__heading">{home.aboutTeaser.heading}</h2>
+      <p class="about-teaser__paragraph">{home.aboutTeaser.paragraph}</p>
+      <a class="btn btn-outline" href={`/${lang}/about/`}>{home.aboutTeaser.cta}</a>
+    </div>
+  </section>
+
+  <section class="section contact-cta bg-dot">
+    <div class="container container-narrow contact-cta__inner">
+      <p class="kicker">{home.contactCta.kicker}</p>
+      <h2 class="contact-cta__title">{home.contactCta.title}</h2>
+      <p class="contact-cta__lead">{home.contactCta.lead}</p>
+      <a class="btn" href={`mailto:${siteConfig.contactEmail}`}>{home.contactCta.cta}</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .about-teaser__heading {
+    font-size: var(--fs-h2);
+    margin-top: var(--space-sm);
+  }
+
+  .about-teaser__paragraph {
+    margin-top: var(--space-md);
+    color: var(--color-ink-soft);
+    font-size: var(--fs-lead);
+  }
+
+  .about-teaser .btn {
+    margin-top: var(--space-lg);
+  }
+
+  .contact-cta__inner {
+    text-align: center;
+  }
+
+  .contact-cta__title {
+    font-size: var(--fs-h1);
+    margin-top: var(--space-sm);
+  }
+
+  .contact-cta__lead {
+    margin-top: var(--space-md);
+    color: var(--color-ink-soft);
+    font-size: var(--fs-lead);
+  }
+
+  .contact-cta .btn {
+    margin-top: var(--space-lg);
+  }
+</style>

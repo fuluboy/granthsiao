@@ -1,0 +1,374 @@
+---
+import type { HomeContent } from "../content/types";
+
+interface Props {
+  home: HomeContent;
+}
+
+const { home } = Astro.props;
+---
+
+<section class="vinyl-hero-section bg-dot">
+  <div class="container">
+    <div class="vinyl-hero" data-vinyl-hero>
+      <div class="vinyl-group">
+        <img
+          class="vinyl-disc"
+          src="/brand/vinyl.png"
+          alt=""
+          width="1093"
+          height="1093"
+          decoding="async"
+          fetchpriority="high"
+        />
+
+        <div class="vinyl-label">
+          <img
+            class="vinyl-label-image"
+            src="/brand/vinyl-tag.png"
+            alt=""
+            width="576"
+            height="568"
+            decoding="async"
+          />
+          <div class="vinyl-label-content" lang="en">
+            <div class="vinyl-label__band">
+              <p class="vinyl-label__greeting">Hi! I’m Grant Hsiao.</p>
+              <p class="vinyl-label__role">A Product &amp; Design Lead</p>
+            </div>
+            <div class="vinyl-label__meta">
+              <div class="vinyl-label__meta-left">
+                <p class="vinyl-label__format">STEREO</p>
+                <p class="vinyl-label__rpm">45RPM</p>
+              </div>
+              <p class="vinyl-label__year">1981</p>
+            </div>
+            <div class="vinyl-label__body">
+              <p class="vinyl-label__blurb">
+                Uncovering real user needs to build products that work for people and the business.
+              </p>
+              <p class="vinyl-label__location">TAIPEI, TAIWAN 2026</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <img
+        class="hero-thunder"
+        src="/brand/thunder.png"
+        alt=""
+        width="452"
+        height="631"
+        decoding="async"
+      />
+    </div>
+
+    <div class="vinyl-hero-copy" data-reveal>
+      <h1 class="vinyl-hero-title">{home.hero.title}</h1>
+      <p class="vinyl-hero-lead">{home.hero.lead}</p>
+    </div>
+  </div>
+</section>
+
+<noscript>
+  <style>
+    .vinyl-hero-title,
+    .vinyl-hero-lead {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  </style>
+</noscript>
+
+<script>
+  const copy = document.querySelector("[data-reveal]");
+  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (copy instanceof HTMLElement && !prefersReduced) {
+    // Only reveal after a real scroll — on tall/large screens the copy can
+    // already sit inside the first viewport, so an IntersectionObserver
+    // would fire (and reveal) immediately on load with no scroll at all.
+    let hasScrolled = false;
+
+    const tryReveal = () => {
+      if (!hasScrolled) return;
+      const rect = copy.getBoundingClientRect();
+      const inView = rect.top < window.innerHeight * 0.85 && rect.bottom > 0;
+      if (inView) {
+        copy.classList.add("is-revealed");
+        window.removeEventListener("scroll", onScroll);
+      }
+    };
+
+    const onScroll = () => {
+      hasScrolled = true;
+      tryReveal();
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+  } else if (copy instanceof HTMLElement) {
+    copy.classList.add("is-revealed");
+  }
+</script>
+
+<style>
+  .vinyl-hero-section {
+    padding-block: var(--space-2xl) var(--space-xl);
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .vinyl-hero {
+    position: relative;
+    width: clamp(300px, 58vw, 860px);
+    aspect-ratio: 1 / 1;
+    margin-inline: auto;
+    container-type: inline-size;
+    container-name: vinyl;
+  }
+
+  .vinyl-group {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transform: translateY(48px);
+    animation: vinyl-enter var(--duration-hero-in) var(--ease-out) forwards;
+  }
+
+  .vinyl-disc {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    animation: vinyl-spin var(--vinyl-spin-duration) linear var(--duration-hero-in) infinite;
+  }
+
+  .vinyl-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 55%;
+    aspect-ratio: 1 / 1;
+    transform: translate(-50%, -50%);
+  }
+
+  .vinyl-label-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+  }
+
+  .vinyl-label-content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    border-radius: 50%;
+    overflow: hidden;
+    font-family: var(--font-sans-en);
+  }
+
+  .vinyl-label__band {
+    flex: 0 0 43.7%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding-bottom: 5%;
+    padding-inline: 8%;
+    color: var(--color-paper-raised);
+  }
+
+  .vinyl-label__greeting {
+    font-size: 2.5cqw;
+    letter-spacing: 0.03em;
+    line-height: 1.2;
+    opacity: 0.85;
+    white-space: nowrap;
+  }
+
+  .vinyl-label__role {
+    font-size: 3.8cqw;
+    font-weight: 900;
+    line-height: 1.15;
+    margin-top: 0.15em;
+    white-space: nowrap;
+  }
+
+  .vinyl-label__meta {
+    flex: 0 0 13%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-inline: 11%;
+    color: var(--color-ink);
+  }
+
+  .vinyl-label__meta-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 1.15;
+  }
+
+  .vinyl-label__format {
+    font-size: 2.6cqw;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+
+  .vinyl-label__rpm {
+    font-size: 1.7cqw;
+    font-weight: 600;
+    color: var(--color-ink-soft);
+  }
+
+  .vinyl-label__year {
+    font-size: 2.6cqw;
+    font-weight: 700;
+  }
+
+  .vinyl-label__body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8cqw;
+    color: var(--color-ink);
+    padding-inline: 16%;
+    text-align: center;
+  }
+
+  .vinyl-label__blurb {
+    font-size: 2.3cqw;
+    line-height: 1.4;
+  }
+
+  .vinyl-label__location {
+    font-size: 2cqw;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: var(--color-ink);
+  }
+
+  .hero-thunder {
+    position: absolute;
+    top: -3%;
+    right: 4%;
+    width: 24%;
+    height: auto;
+    opacity: 0;
+    transform: translateY(-16px);
+    animation: thunder-enter var(--duration-thunder-in) var(--ease-out) var(--duration-hero-in) forwards,
+      thunder-drift var(--thunder-drift-duration) ease-in-out
+        calc(var(--duration-hero-in) + var(--duration-thunder-in)) infinite;
+  }
+
+  @keyframes vinyl-enter {
+    from {
+      opacity: 0;
+      transform: translateY(48px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes vinyl-spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes thunder-enter {
+    from {
+      opacity: 0;
+      transform: translateY(-16px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes thunder-drift {
+    0%,
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    50% {
+      transform: translateY(7px);
+      opacity: 0.92;
+    }
+  }
+
+  .vinyl-hero-copy {
+    max-width: var(--container-narrow);
+    margin-inline: auto;
+    margin-top: var(--space-xl);
+  }
+
+  .vinyl-hero-title,
+  .vinyl-hero-lead {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 800ms var(--ease-out), transform 800ms var(--ease-out);
+  }
+
+  .vinyl-hero-title {
+    font-size: var(--fs-h1);
+  }
+
+  .vinyl-hero-lead {
+    font-size: var(--fs-lead);
+    color: var(--color-ink-soft);
+    margin-top: var(--space-md);
+    transition-delay: 120ms;
+  }
+
+  .vinyl-hero-copy.is-revealed .vinyl-hero-title,
+  .vinyl-hero-copy.is-revealed .vinyl-hero-lead {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (max-width: 599px) {
+    .vinyl-hero {
+      width: clamp(240px, 86vw, 380px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vinyl-group {
+      opacity: 1;
+      transform: none;
+      animation: none;
+    }
+
+    .vinyl-disc {
+      animation: none;
+    }
+
+    .hero-thunder {
+      opacity: 1;
+      transform: none;
+      animation: none;
+    }
+
+    .vinyl-hero-title,
+    .vinyl-hero-lead {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+</style>

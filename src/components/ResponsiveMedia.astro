@@ -1,0 +1,86 @@
+---
+import MediaPlaceholder from "./MediaPlaceholder.astro";
+
+interface Props {
+  name: string;
+  caseName?: string;
+  purpose: string;
+  format?: string;
+  ratio?: string;
+  display?: "cover" | "contain";
+  alt?: string;
+  src?: string;
+  srcset?: string;
+  sizes?: string;
+  width?: number;
+  height?: number;
+  loading?: "lazy" | "eager";
+  class?: string;
+}
+
+const {
+  name,
+  caseName,
+  purpose,
+  format,
+  ratio = "4 / 3",
+  display = "cover",
+  alt = "",
+  src,
+  srcset,
+  sizes,
+  width,
+  height,
+  loading = "lazy",
+  class: className,
+} = Astro.props;
+---
+
+{
+  src ? (
+    <div class:list={["responsive-media", className]} style={`aspect-ratio: ${ratio};`} data-display={display}>
+      <img
+        src={src}
+        srcset={srcset}
+        sizes={sizes}
+        width={width}
+        height={height}
+        alt={alt}
+        loading={loading}
+        decoding="async"
+      />
+    </div>
+  ) : (
+    <MediaPlaceholder
+      name={name}
+      caseName={caseName}
+      purpose={purpose}
+      format={format}
+      ratio={ratio}
+      display={display}
+      class={className}
+    />
+  )
+}
+
+<style>
+  .responsive-media {
+    width: 100%;
+    overflow: hidden;
+    border-radius: var(--radius-md);
+  }
+
+  .responsive-media img {
+    width: 100%;
+    height: 100%;
+  }
+
+  .responsive-media[data-display="cover"] img {
+    object-fit: cover;
+  }
+
+  .responsive-media[data-display="contain"] img {
+    object-fit: contain;
+    background: var(--color-paper-sunken);
+  }
+</style>

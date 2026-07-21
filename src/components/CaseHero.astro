@@ -1,0 +1,95 @@
+---
+import CaseMetrics from "./CaseMetrics.astro";
+import ResponsiveMedia from "./ResponsiveMedia.astro";
+import type { CaseStudyContent } from "../content/types";
+import type { Locale } from "../i18n/config";
+
+interface Props {
+  locale: Locale;
+  caseData: CaseStudyContent;
+}
+
+const { locale, caseData } = Astro.props;
+---
+
+<header class="case-hero">
+  <div class="container">
+    <p class="kicker">{caseData.kicker}</p>
+    <h1 class="case-hero__title">{caseData.title}</h1>
+    <p class="case-hero__lead">{caseData.lead}</p>
+
+    <dl class="case-hero__facts">
+      {caseData.facts.map((fact) => (
+        <div class="case-hero__fact">
+          <dt>{fact.label}</dt>
+          <dd>{fact.value}</dd>
+        </div>
+      ))}
+    </dl>
+
+    <div class="case-hero__metrics">
+      <CaseMetrics metrics={caseData.metrics} />
+    </div>
+
+    <div class="case-hero__media">
+      <ResponsiveMedia
+        name={caseData.heroImageName}
+        caseName={caseData.title}
+        purpose={locale === "zh" ? "案例首頁主視覺" : "Case study hero visual"}
+        ratio="16 / 9"
+        display="cover"
+        loading="eager"
+      />
+    </div>
+  </div>
+</header>
+
+<style>
+  .case-hero {
+    padding-top: var(--space-xl);
+  }
+
+  .case-hero__title {
+    font-size: var(--fs-h1);
+    max-width: 20ch;
+  }
+
+  .case-hero__lead {
+    font-size: var(--fs-lead);
+    color: var(--color-ink-soft);
+    margin-top: var(--space-md);
+    max-width: 62ch;
+  }
+
+  .case-hero__facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: var(--space-md);
+    margin-top: var(--space-xl);
+    padding: var(--space-lg);
+    background: var(--color-paper-sunken);
+    border-radius: var(--radius-md);
+  }
+
+  .case-hero__fact dt {
+    font-size: var(--fs-small);
+    font-weight: 600;
+    color: var(--color-mustard);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-kicker);
+  }
+
+  .case-hero__fact dd {
+    margin: 0;
+    margin-top: var(--space-2xs);
+    font-size: var(--fs-small);
+  }
+
+  .case-hero__metrics {
+    margin-top: var(--space-xl);
+  }
+
+  .case-hero__media {
+    margin-top: var(--space-xl);
+  }
+</style>

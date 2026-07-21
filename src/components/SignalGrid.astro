@@ -1,0 +1,58 @@
+---
+import type { Signal } from "../content/types";
+
+interface Props {
+  signals: Signal[];
+}
+
+const { signals } = Astro.props;
+---
+
+<ul class="signal-grid">
+  {signals.map((signal) => (
+    <li class="signal-card">
+      <p class="signal-card__number" aria-hidden="true">{signal.number}</p>
+      <h3 class="signal-card__heading">{signal.heading}</h3>
+      <p class="signal-card__body">{signal.body}</p>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .signal-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-lg);
+  }
+
+  .signal-card {
+    padding: var(--space-lg);
+    background: var(--color-paper-raised);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+  }
+
+  .signal-card__number {
+    font-size: var(--fs-h3);
+    font-weight: 700;
+    color: var(--color-mustard-strong);
+  }
+
+  .signal-card__heading {
+    font-size: var(--fs-body);
+    font-weight: 700;
+    margin-top: var(--space-sm);
+  }
+
+  .signal-card__body {
+    margin-top: var(--space-sm);
+    font-size: var(--fs-small);
+    color: var(--color-ink-soft);
+  }
+
+  @media (max-width: 1023px) {
+    .signal-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

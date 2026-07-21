@@ -1,0 +1,24 @@
+---
+// Root entry point: no locale in the URL yet.
+// Server-side fallback points crawlers/no-JS clients at the default locale;
+// the inline script upgrades that to the visitor's preferred language.
+---
+
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="refresh" content="0; url=/zh/" />
+    <link rel="canonical" href="/zh/" />
+    <title>Grant Hsiao</title>
+    <script>
+      const preferred = navigator.language?.toLowerCase().startsWith("zh") ? "/zh/" : "/en/";
+      window.location.replace(preferred);
+    </script>
+  </head>
+  <body>
+    <p>
+      <a href="/zh/">繼續前往中文網站</a> ／ <a href="/en/">Continue to the English site</a>
+    </p>
+  </body>
+</html>

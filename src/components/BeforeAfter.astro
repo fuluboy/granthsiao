@@ -1,0 +1,63 @@
+---
+import MediaPlaceholder from "./MediaPlaceholder.astro";
+import type { Locale } from "../i18n/config";
+
+interface Props {
+  locale: Locale;
+  name: string;
+  caseName: string;
+  purpose: string;
+  ratio?: string;
+}
+
+const { locale, name, caseName, purpose, ratio = "16 / 10" } = Astro.props;
+const beforeLabel = locale === "zh" ? "改版前" : "Before";
+const afterLabel = locale === "zh" ? "改版後" : "After";
+---
+
+<div class="before-after">
+  <figure class="before-after__item">
+    <MediaPlaceholder
+      name={`${name} — ${beforeLabel}`}
+      caseName={caseName}
+      purpose={purpose}
+      format="Before / After"
+      ratio={ratio}
+      display="contain"
+    />
+    <figcaption>{beforeLabel}</figcaption>
+  </figure>
+  <figure class="before-after__item">
+    <MediaPlaceholder
+      name={`${name} — ${afterLabel}`}
+      caseName={caseName}
+      purpose={purpose}
+      format="Before / After"
+      ratio={ratio}
+      display="contain"
+    />
+    <figcaption>{afterLabel}</figcaption>
+  </figure>
+</div>
+
+<style>
+  .before-after {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-lg);
+  }
+
+  .before-after__item figcaption {
+    text-align: center;
+    margin-top: var(--space-sm);
+    font-size: var(--fs-small);
+    font-weight: 600;
+    color: var(--color-ink-soft);
+  }
+
+  @media (max-width: 599px) {
+    .before-after {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

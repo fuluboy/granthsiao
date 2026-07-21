@@ -1,0 +1,129 @@
+---
+import { UI_TEXT, type Locale } from "../i18n/config";
+
+interface NavItem {
+  id: string;
+  label: string;
+}
+
+interface Props {
+  locale: Locale;
+  items: NavItem[];
+}
+
+const { locale, items } = Astro.props;
+const t = UI_TEXT[locale];
+---
+
+<nav class="section-nav" aria-label={t.onThisPage} data-section-nav>
+  <div class="container section-nav__inner">
+    <span class="section-nav__label">{t.onThisPage}</span>
+    <ul class="section-nav__list">
+      {items.map((item) => (
+        <li>
+          <a href={`#${item.id}`} data-section-link={item.id}>{item.label}</a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</nav>
+
+<script>
+  const nav = document.querySelector<HTMLElement>("[data-section-nav]");
+  if (nav) {
+    const links = Array.from(nav.querySelectorAll<HTMLAnchorElement>("[data-section-link]"));
+    const sections = links
+      .map((link) => document.getElementById(link.dataset.sectionLink ?? ""))
+      .filter((el): el is HTMLElement => Boolean(el));
+
+    if (sections.length > 0 && "IntersectionObserver" in window) {
+      const setActive = (id: string) => {
+        links.forEach((link) => {
+          const isActive = link.dataset.sectionLink === id;
+          link.classList.toggle("is-active", isActive);
+          if (isActive) {
+            link.setAttribute("aria-current", "true");
+          } else {
+            link.removeAttribute("aria-current");
+          }
+        });
+      };
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          const visible = entries
+            .filter((entry) => entry.isIntersecting)
+            .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+          if (visible.length > 0) {
+            setActive(visible[0].target.id);
+          }
+        },
+        { rootMargin: "-40% 0px -50% 0px", threshold: 0 }
+      );
+
+      sections.forEach((section) => observer.observe(section));
+    }
+  }
+</script>
+
+<style>
+  .section-nav {
+    position: sticky;
+    top: var(--header-height);
+    z-index: 40;
+    background: var(--color-paper);
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .section-nav__inner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+    padding-block: var(--space-sm);
+    overflow-x: auto;
+    scrollbar-width: thin;
+  }
+
+  .section-nav__label {
+    font-size: var(--fs-small);
+    font-weight: 600;
+    color: var(--color-ink-soft);
+    flex-shrink: 0;
+  }
+
+  .section-nav__list {
+    display: flex;
+    gap: var(--space-lg);
+    flex-shrink: 0;
+  }
+
+  .section-nav__list a {
+    display: inline-block;
+    font-size: var(--fs-small);
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--color-ink-soft);
+    white-space: nowrap;
+    padding-block: var(--space-2xs);
+    border-bottom: 2px solid transparent;
+  }
+
+  .section-nav__list a.is-active {
+    color: var(--color-ink);
+    border-bottom-color: var(--color-mustard-strong);
+  }
+
+  .section-nav__list a:hover {
+    color: var(--color-ink);
+  }
+
+  @media (max-width: 767px) {
+    .section-nav {
+      top: var(--header-height-mobile);
+    }
+
+    .section-nav__label {
+      display: none;
+    }
+  }
+</style>

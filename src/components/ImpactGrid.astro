@@ -1,0 +1,51 @@
+---
+import type { ImpactBlock } from "../content/types";
+
+interface Props {
+  blocks: ImpactBlock[];
+  footnote?: string;
+}
+
+const { blocks, footnote } = Astro.props;
+---
+
+<div class="impact-grid-wrap">
+  <ul class="impact-grid">
+    {blocks.map((block) => (
+      <li class="impact-block">
+        <h3 class="impact-block__heading">{block.heading}</h3>
+        <p class="impact-block__body">{block.body}</p>
+      </li>
+    ))}
+  </ul>
+  {footnote && <p class="impact-footnote">{footnote}</p>}
+</div>
+
+<style>
+  .impact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--space-xl);
+  }
+
+  .impact-block__heading {
+    font-size: var(--fs-body);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-mustard);
+  }
+
+  .impact-block__body {
+    margin-top: var(--space-sm);
+    color: var(--color-ink-soft);
+  }
+
+  .impact-footnote {
+    margin-top: var(--space-lg);
+    font-size: var(--fs-small);
+    color: var(--color-grey-500);
+    border-top: 1px solid var(--color-line);
+    padding-top: var(--space-sm);
+  }
+</style>

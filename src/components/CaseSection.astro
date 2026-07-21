@@ -1,0 +1,41 @@
+---
+interface Props {
+  id: string;
+  kicker?: string;
+  heading?: string;
+  narrow?: boolean;
+}
+
+const { id, kicker, heading, narrow = false } = Astro.props;
+---
+
+<section id={id} class="case-section section">
+  <div class:list={["container", { "container-narrow": narrow }]}>
+    {kicker && <p class="kicker">{kicker}</p>}
+    {heading && <h2 class="case-section__heading">{heading}</h2>}
+    <div class="case-section__body">
+      <slot />
+    </div>
+  </div>
+</section>
+
+<style>
+  .case-section {
+    scroll-margin-top: calc(var(--header-height) + var(--space-md));
+  }
+
+  .case-section__heading {
+    font-size: var(--fs-h2);
+    max-width: 24ch;
+  }
+
+  .case-section__body {
+    margin-top: var(--space-lg);
+  }
+
+  @media (max-width: 767px) {
+    .case-section {
+      scroll-margin-top: calc(var(--header-height-mobile) + var(--space-sm));
+    }
+  }
+</style>
