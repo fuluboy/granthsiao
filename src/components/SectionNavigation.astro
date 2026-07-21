@@ -16,16 +16,14 @@ const t = UI_TEXT[locale];
 ---
 
 <nav class="section-nav" aria-label={t.onThisPage} data-section-nav>
-  <div class="container section-nav__inner">
-    <span class="section-nav__label">{t.onThisPage}</span>
-    <ul class="section-nav__list">
-      {items.map((item) => (
-        <li>
-          <a href={`#${item.id}`} data-section-link={item.id}>{item.label}</a>
-        </li>
-      ))}
-    </ul>
-  </div>
+  <p class="section-nav__label">{t.onThisPage}</p>
+  <ul class="section-nav__list">
+    {items.map((item) => (
+      <li>
+        <a href={`#${item.id}`} data-section-link={item.id}>{item.label}</a>
+      </li>
+    ))}
+  </ul>
 </nav>
 
 <script>
@@ -67,63 +65,127 @@ const t = UI_TEXT[locale];
 </script>
 
 <style>
+  /*
+    Default (mobile / tablet, <1280px): sticky top bar directly under the
+    site header. Deliberately styled differently from the header nav —
+    sunken background strip + pill active state — so the two menus read as
+    separate layers.
+  */
   .section-nav {
     position: sticky;
-    top: var(--header-height);
+    top: var(--header-height-mobile);
     z-index: 40;
-    background: var(--color-paper);
-    border-bottom: 1px solid var(--color-line);
-  }
-
-  .section-nav__inner {
-    display: flex;
-    align-items: center;
-    gap: var(--space-lg);
-    padding-block: var(--space-sm);
-    overflow-x: auto;
-    scrollbar-width: thin;
+    background: var(--color-paper-sunken);
+    border-block: 1px solid var(--color-line);
+    margin-inline: calc(var(--container-pad) * -1);
+    padding-inline: var(--container-pad);
   }
 
   .section-nav__label {
-    font-size: var(--fs-small);
-    font-weight: 600;
-    color: var(--color-ink-soft);
-    flex-shrink: 0;
+    display: none;
   }
 
   .section-nav__list {
     display: flex;
-    gap: var(--space-lg);
-    flex-shrink: 0;
+    align-items: center;
+    gap: var(--space-xs);
+    min-height: var(--case-nav-height-mobile);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .section-nav__list::-webkit-scrollbar {
+    display: none;
   }
 
   .section-nav__list a {
     display: inline-block;
-    font-size: var(--fs-small);
+    font-size: 0.8125rem;
     font-weight: 600;
+    letter-spacing: 0.02em;
     text-decoration: none;
     color: var(--color-ink-soft);
     white-space: nowrap;
-    padding-block: var(--space-2xs);
-    border-bottom: 2px solid transparent;
+    padding: 0.4em 0.95em;
+    border-radius: 999px;
+    transition: color var(--duration-hover) var(--ease-out),
+      background-color var(--duration-hover) var(--ease-out);
+  }
+
+  .section-nav__list a:hover,
+  .section-nav__list a:focus-visible {
+    color: var(--color-ink);
   }
 
   .section-nav__list a.is-active {
     color: var(--color-ink);
-    border-bottom-color: var(--color-mustard-strong);
+    background: color-mix(in srgb, var(--color-mustard-soft) 45%, var(--color-paper-raised));
   }
 
-  .section-nav__list a:hover {
-    color: var(--color-ink);
-  }
-
-  @media (max-width: 767px) {
+  @media (min-width: 768px) {
     .section-nav {
-      top: var(--header-height-mobile);
+      top: var(--header-height);
+      margin-inline: 0;
+      padding-inline: 0;
+    }
+
+    .section-nav__list {
+      min-height: var(--case-nav-height);
+    }
+  }
+
+  /*
+    Desktop rail (≥1280px): vertical sidebar in the left grid column,
+    sticky under the header. Visual language: hairline + mustard indicator,
+    small caps label — nothing like the horizontal header nav.
+  */
+  @media (min-width: 1280px) {
+    .section-nav {
+      position: sticky;
+      top: calc(var(--header-height) + var(--space-xl));
+      align-self: start;
+      z-index: 10;
+      background: transparent;
+      border-block: none;
+      margin-inline: 0;
+      padding-inline: 0;
     }
 
     .section-nav__label {
-      display: none;
+      display: block;
+      font-size: var(--fs-kicker);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-kicker);
+      color: var(--color-grey-500);
+      margin-bottom: var(--space-md);
+    }
+
+    .section-nav__list {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      min-height: 0;
+      overflow: visible;
+      border-left: 1px solid var(--color-line);
+    }
+
+    .section-nav__list a {
+      display: block;
+      padding: 0.5em 0 0.5em 1.1em;
+      border-radius: 0;
+      border-left: 2px solid transparent;
+      margin-left: -1.5px;
+      white-space: normal;
+      line-height: 1.4;
+    }
+
+    .section-nav__list a.is-active {
+      background: none;
+      color: var(--color-ink);
+      font-weight: 700;
+      border-left-color: var(--color-mustard-strong);
     }
   }
 </style>

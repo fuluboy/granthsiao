@@ -1,10 +1,11 @@
 ---
-import MediaPlaceholder from "./MediaPlaceholder.astro";
+import MediaPlaceholder, { type PlaceholderVariant } from "./MediaPlaceholder.astro";
 
 interface Props {
   name: string;
+  variant?: PlaceholderVariant;
   caseName?: string;
-  purpose: string;
+  purpose?: string;
   format?: string;
   ratio?: string;
   display?: "cover" | "contain";
@@ -20,11 +21,12 @@ interface Props {
 
 const {
   name,
+  variant = "detail",
   caseName,
   purpose,
   format,
-  ratio = "4 / 3",
-  display = "cover",
+  ratio,
+  display,
   alt = "",
   src,
   srcset,
@@ -34,11 +36,18 @@ const {
   loading = "lazy",
   class: className,
 } = Astro.props;
+
+const resolvedRatio = ratio ?? "4 / 3";
+const resolvedDisplay = display ?? "cover";
 ---
 
 {
   src ? (
-    <div class:list={["responsive-media", className]} style={`aspect-ratio: ${ratio};`} data-display={display}>
+    <div
+      class:list={["responsive-media", className]}
+      style={`aspect-ratio: ${resolvedRatio};`}
+      data-display={resolvedDisplay}
+    >
       <img
         src={src}
         srcset={srcset}
@@ -53,6 +62,7 @@ const {
   ) : (
     <MediaPlaceholder
       name={name}
+      variant={variant}
       caseName={caseName}
       purpose={purpose}
       format={format}

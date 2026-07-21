@@ -23,6 +23,11 @@ const { text, attribution, size = "md" } = Astro.props;
   .pull-quote p {
     font-weight: 600;
     line-height: var(--lh-heading);
+    text-wrap: pretty;
+  }
+
+  :global([data-lang="zh"]) .pull-quote p {
+    line-height: 1.65;
   }
 
   .pull-quote--md p {
@@ -30,7 +35,7 @@ const { text, attribution, size = "md" } = Astro.props;
   }
 
   .pull-quote--lg p {
-    font-size: var(--fs-h3);
+    font-size: var(--fs-h4);
   }
 
   .pull-quote cite {

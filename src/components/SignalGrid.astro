@@ -8,51 +8,77 @@ interface Props {
 const { signals } = Astro.props;
 ---
 
-<ul class="signal-grid">
+<ul class="insight-rows">
   {signals.map((signal) => (
-    <li class="signal-card">
-      <p class="signal-card__number" aria-hidden="true">{signal.number}</p>
-      <h3 class="signal-card__heading">{signal.heading}</h3>
-      <p class="signal-card__body">{signal.body}</p>
+    <li class="insight-row">
+      <p class="insight-row__number" aria-hidden="true">{signal.number.padStart(2, "0")}</p>
+      <h3 class="insight-row__heading">{signal.heading}</h3>
+      <p class="insight-row__body">{signal.body}</p>
     </li>
   ))}
 </ul>
 
 <style>
-  .signal-grid {
+  .insight-rows {
+    border-top: 1px solid var(--color-line);
+  }
+
+  .insight-row {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 4.5rem minmax(0, 1fr) minmax(0, 1.3fr);
     gap: var(--space-lg);
+    align-items: baseline;
+    padding-block: var(--space-xl);
+    border-bottom: 1px solid var(--color-line);
   }
 
-  .signal-card {
-    padding: var(--space-lg);
-    background: var(--color-paper-raised);
-    border: 1px solid var(--color-line);
-    border-radius: var(--radius-md);
-  }
-
-  .signal-card__number {
+  .insight-row__number {
     font-size: var(--fs-h3);
     font-weight: 700;
     color: var(--color-mustard-strong);
+    line-height: 1;
   }
 
-  .signal-card__heading {
-    font-size: var(--fs-body);
+  .insight-row__heading {
+    font-size: var(--fs-h4);
     font-weight: 700;
-    margin-top: var(--space-sm);
+    max-width: 22ch;
   }
 
-  .signal-card__body {
-    margin-top: var(--space-sm);
-    font-size: var(--fs-small);
+  .insight-row__body {
+    font-size: var(--fs-case-body);
     color: var(--color-ink-soft);
+    max-width: 52ch;
+  }
+
+  :global([data-lang="zh"]) .insight-row__heading {
+    max-width: none;
+    line-height: 1.5;
+  }
+
+  :global([data-lang="zh"]) .insight-row__body {
+    max-width: none;
   }
 
   @media (max-width: 1023px) {
-    .signal-grid {
+    .insight-row {
+      grid-template-columns: 3.5rem 1fr;
+    }
+
+    .insight-row__body {
+      grid-column: 2 / 3;
+    }
+  }
+
+  @media (max-width: 599px) {
+    .insight-row {
       grid-template-columns: 1fr;
+      gap: var(--space-sm);
+      padding-block: var(--space-lg);
+    }
+
+    .insight-row__body {
+      grid-column: auto;
     }
   }
 </style>

@@ -5,12 +5,13 @@ interface Props {
   metrics: Metric[];
   caption?: string;
   compact?: boolean;
+  tone?: "default" | "dark";
 }
 
-const { metrics, caption, compact = false } = Astro.props;
+const { metrics, caption, compact = false, tone = "default" } = Astro.props;
 ---
 
-<div class:list={["case-metrics", { "case-metrics--compact": compact }]}>
+<div class:list={["case-metrics", { "case-metrics--compact": compact, "case-metrics--dark": tone === "dark" }]}>
   {caption && <p class="case-metrics__caption">{caption}</p>}
   <ul class="case-metrics__grid">
     {metrics.map((metric) => (
@@ -23,38 +24,56 @@ const { metrics, caption, compact = false } = Astro.props;
 </div>
 
 <style>
+  .case-metrics {
+    border-top: 1.5px solid var(--color-mustard-strong);
+  }
+
   .case-metrics__caption {
     font-size: var(--fs-small);
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: var(--tracking-kicker);
     color: var(--color-ink-soft);
-    margin-bottom: var(--space-sm);
+    margin-top: var(--space-sm);
   }
 
   .case-metrics__grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: var(--space-lg);
   }
 
   .case-metrics--compact .case-metrics__grid {
     grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-    gap: var(--space-md);
   }
 
   .case-metrics__item {
-    border-top: 2px solid var(--color-mustard-strong);
-    padding-top: var(--space-sm);
+    padding-block: var(--space-md);
+    padding-inline: var(--space-md);
+  }
+
+  .case-metrics__item:first-child {
+    padding-inline-start: 0;
+  }
+
+  .case-metrics__item + .case-metrics__item {
+    border-left: 1px solid var(--color-line);
+  }
+
+  .case-metrics--dark .case-metrics__item + .case-metrics__item {
+    border-left-color: rgba(247, 243, 234, 0.2);
   }
 
   .case-metrics__value {
-    font-size: var(--fs-h3);
+    font-size: var(--fs-h2);
     font-weight: 700;
   }
 
   .case-metrics--compact .case-metrics__value {
     font-size: var(--fs-lead);
+  }
+
+  .case-metrics--dark .case-metrics__value {
+    color: var(--color-mustard-strong);
   }
 
   .case-metrics__label {
@@ -63,10 +82,38 @@ const { metrics, caption, compact = false } = Astro.props;
     margin-top: var(--space-2xs);
   }
 
-  @media (max-width: 599px) {
+  .case-metrics--dark .case-metrics__label {
+    color: rgba(247, 243, 234, 0.72);
+  }
+
+  @media (max-width: 767px) {
     .case-metrics__grid {
       grid-template-columns: repeat(2, 1fr);
-      gap: var(--space-md);
+    }
+
+    .case-metrics__item {
+      padding-inline: var(--space-sm);
+    }
+
+    .case-metrics__item:nth-child(odd) {
+      padding-inline-start: 0;
+      border-left: none;
+    }
+
+    .case-metrics__item:nth-child(even) {
+      border-left: 1px solid var(--color-line);
+    }
+
+    .case-metrics--dark .case-metrics__item:nth-child(even) {
+      border-left-color: rgba(247, 243, 234, 0.2);
+    }
+
+    .case-metrics__item:nth-child(n + 3) {
+      border-top: 1px solid var(--color-line);
+    }
+
+    .case-metrics--dark .case-metrics__item:nth-child(n + 3) {
+      border-top-color: rgba(247, 243, 234, 0.2);
     }
   }
 </style>

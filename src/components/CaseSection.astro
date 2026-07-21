@@ -3,39 +3,105 @@ interface Props {
   id: string;
   kicker?: string;
   heading?: string;
-  narrow?: boolean;
+  tone?: "default" | "raised" | "tint" | "dark";
+  bodyWidth?: "reading" | "wide" | "none";
 }
 
-const { id, kicker, heading, narrow = false } = Astro.props;
+const { id, kicker, heading, tone = "default", bodyWidth = "reading" } = Astro.props;
 ---
 
-<section id={id} class="case-section section">
-  <div class:list={["container", { "container-narrow": narrow }]}>
-    {kicker && <p class="kicker">{kicker}</p>}
+<section id={id} class:list={["case-section", `case-section--${tone}`]}>
+  <div class="case-reading case-section__head">
+    {kicker && <p class="kicker case-section__kicker">{kicker}</p>}
     {heading && <h2 class="case-section__heading">{heading}</h2>}
+  </div>
+
+  {bodyWidth === "none" ? (
     <div class="case-section__body">
       <slot />
     </div>
-  </div>
+  ) : (
+    <div class:list={[bodyWidth === "wide" ? "case-wide" : "case-reading", "case-section__body"]}>
+      <slot />
+    </div>
+  )}
 </section>
 
 <style>
   .case-section {
-    scroll-margin-top: calc(var(--header-height) + var(--space-md));
+    scroll-margin-top: calc(var(--header-height-mobile) + var(--case-nav-height-mobile) + var(--space-sm));
+    padding-block: var(--case-section-space);
+  }
+
+  .case-section--default {
+    background: var(--color-paper);
+  }
+
+  .case-section--raised {
+    background: var(--color-paper-raised);
+  }
+
+  .case-section--tint {
+    background: color-mix(in srgb, var(--color-mustard-soft) 16%, var(--color-paper));
+  }
+
+  .case-section--dark {
+    background: var(--color-ink);
+    color: var(--color-paper-raised);
+  }
+
+  .case-section--dark .kicker {
+    color: var(--color-mustard-strong);
+  }
+
+  /*
+    Toned sections carry their own background. Below the rail breakpoint the
+    band bleeds to the viewport edges (the layout wrapper's padding is
+    cancelled with negative margins); on desktop the band spans the content
+    column and its contents get a deliberate inset.
+  */
+  .case-section--raised,
+  .case-section--tint,
+  .case-section--dark {
+    margin-inline: calc(var(--container-pad) * -1);
+    padding-inline: var(--container-pad);
+  }
+
+  .case-section__kicker {
+    margin-bottom: var(--space-md);
   }
 
   .case-section__heading {
-    font-size: var(--fs-h2);
-    max-width: 24ch;
+    font-size: var(--fs-case-h2);
+    line-height: 1.15;
+    max-width: 20ch;
+  }
+
+  :global([data-lang="zh"]) .case-section__heading {
+    max-width: 18em;
+    line-height: 1.3;
   }
 
   .case-section__body {
-    margin-top: var(--space-lg);
+    margin-top: var(--case-inner-space);
   }
 
-  @media (max-width: 767px) {
+  @media (min-width: 768px) {
     .case-section {
-      scroll-margin-top: calc(var(--header-height-mobile) + var(--space-sm));
+      scroll-margin-top: calc(var(--header-height) + var(--case-nav-height) + var(--space-sm));
+    }
+
+    .case-section--raised,
+    .case-section--tint,
+    .case-section--dark {
+      margin-inline: 0;
+      padding-inline: clamp(2rem, 3vw, 3.5rem);
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .case-section {
+      scroll-margin-top: calc(var(--header-height) + var(--space-md));
     }
   }
 </style>

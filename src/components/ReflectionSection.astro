@@ -7,19 +7,26 @@ const { paragraphs } = Astro.props;
 ---
 
 <div class="reflection">
-  {paragraphs.map((paragraph) => (
-    <p class="reflection__paragraph">{paragraph}</p>
+  {paragraphs.map((paragraph, i) => (
+    <p class:list={["reflection__paragraph", { "reflection__paragraph--lead": i === 0 }]}>{paragraph}</p>
   ))}
 </div>
 
 <style>
-  .reflection {
-    max-width: 68ch;
+  .reflection__paragraph {
+    font-size: var(--fs-case-body);
+    color: var(--color-ink-soft);
   }
 
-  .reflection__paragraph {
-    font-size: var(--fs-lead);
+  .reflection__paragraph--lead {
+    font-size: var(--fs-h4);
+    font-weight: 600;
+    color: var(--color-ink);
     line-height: var(--lh-heading);
+  }
+
+  :global([data-lang="zh"]) .reflection__paragraph--lead {
+    line-height: 1.65;
   }
 
   .reflection__paragraph + .reflection__paragraph {

@@ -1,4 +1,5 @@
 ---
+import "../../../styles/case-study.css";
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import CaseHero from "../../../components/CaseHero.astro";
 import CaseSection from "../../../components/CaseSection.astro";
@@ -12,6 +13,7 @@ import NextCaseNavigation from "../../../components/NextCaseNavigation.astro";
 import Quote from "../../../components/Quote.astro";
 import BeforeAfter from "../../../components/BeforeAfter.astro";
 import ResponsiveMedia from "../../../components/ResponsiveMedia.astro";
+import type { PlaceholderVariant } from "../../../components/MediaPlaceholder.astro";
 import { LOCALES, WORK_SLUGS, type Locale } from "../../../i18n/config";
 import { getWork, getHome, workOrder } from "../../../content";
 
@@ -34,13 +36,108 @@ const navItems = [
   { id: "impact", label: caseData.impact.kicker },
   { id: "reflection", label: caseData.reflection.kicker },
 ];
+
+// Presentation-only placeholder descriptors per Key Decision, keyed by case slug.
+// Purely describes future asset content — no case-study copy or data is introduced here.
+interface DecisionMedia {
+  variant: PlaceholderVariant;
+  name: string;
+  purpose: { zh: string; en: string };
+}
+
+const decisionMediaBySlug: Record<string, DecisionMedia[]> = {
+  house579: [
+    {
+      variant: "diagram",
+      name: "House579 — Registration & Verification Flow",
+      purpose: {
+        zh: "註冊、身分認證與首次刊登的資料流程示意",
+        en: "Diagram of the registration, verification, and first-listing data flow",
+      },
+    },
+    {
+      variant: "ui",
+      name: "House579 — Data Quality Prioritization",
+      purpose: {
+        zh: "依風險排序的欄位品質檢查介面",
+        en: "Field-level data quality review interface, prioritized by risk",
+      },
+    },
+    {
+      variant: "before-after",
+      name: "House579 Mobile Admin",
+      purpose: {
+        zh: "比較改版前後的手機後台資訊密度與物件管理流程",
+        en: "Compare information density and mobile property-management workflow before and after the redesign",
+      },
+    },
+  ],
+  "rakuya-data-product": [
+    {
+      variant: "process",
+      name: "Rakuya — Agent Journey to MVP Scope",
+      purpose: {
+        zh: "房仲完整工作旅程，以及 MVP 範圍選擇示意",
+        en: "Agent workflow map and the chosen MVP entry point",
+      },
+    },
+    {
+      variant: "diagram",
+      name: "Rakuya — Community Data Foundation",
+      purpose: {
+        zh: "社區與建物基礎資料的整合流程",
+        en: "Diagram of the community and building-registry data foundation",
+      },
+    },
+    {
+      variant: "ui",
+      name: "Rakuya — Daily Prospecting Report",
+      purpose: {
+        zh: "每日初次上架、降價與下架日報介面",
+        en: "Daily report UI for genuinely new listings, price cuts, and removals",
+      },
+    },
+  ],
+  "design-system": [
+    {
+      variant: "process",
+      name: "Design System — Sprint Rollout Timeline",
+      purpose: {
+        zh: "Token 盤點到首批元件交付的時間軸",
+        en: "Timeline from token audit to first components shipped",
+      },
+    },
+    {
+      variant: "diagram",
+      name: "Design System — Component Decision Flow",
+      purpose: {
+        zh: "延伸、新增或保留特規的判斷流程",
+        en: "Decision flow for extending, creating, or preserving a variation",
+      },
+    },
+    {
+      variant: "ui",
+      name: "Design System — Governance Workflow",
+      purpose: {
+        zh: "元件新增與治理的日常協作介面",
+        en: "Daily governance workflow across design and front-end",
+      },
+    },
+  ],
+};
+
+const decisionMedia = decisionMediaBySlug[slug] ?? [];
+const impactHighlightMetrics = caseData.metrics.slice(-2);
 ---
 
 <BaseLayout locale={lang} title={caseData.meta.title} description={caseData.meta.description}>
-  <CaseHero locale={lang} caseData={caseData} />
-  <SectionNavigation locale={lang} items={navItems} />
+  <div class="case-layout">
+    <SectionNavigation locale={lang} items={navItems} />
 
-  <CaseSection id="context" kicker={caseData.context.kicker} heading={caseData.context.heading} narrow>
+    <div class="case-main">
+      <CaseHero locale={lang} caseData={caseData} />
+
+      <CaseSection id="context" kicker={caseData.context.kicker} heading={caseData.context.heading}>
     {caseData.context.paragraphs.map((paragraph) => (
       <p class="case-paragraph">{paragraph}</p>
     ))}
@@ -50,70 +147,90 @@ const navItems = [
     </div>
   </CaseSection>
 
-  <CaseSection id="what-we-saw" kicker={caseData.whatWeSaw.kicker} heading={caseData.whatWeSaw.heading}>
+  <CaseSection
+    id="what-we-saw"
+    kicker={caseData.whatWeSaw.kicker}
+    heading={caseData.whatWeSaw.heading}
+    tone="raised"
+    bodyWidth="wide"
+  >
     <SignalGrid signals={caseData.whatWeSaw.signals} />
   </CaseSection>
 
-  <CaseSection id="key-decisions" kicker={lang === "zh" ? "KEY DECISIONS" : "KEY DECISIONS"}>
-    {caseData.keyDecisions.map((decision, i) => (
-      <KeyDecision decision={decision} index={i + 1} />
-    ))}
-
-    {slug === "house579" && (
-      <div class="key-decision-media">
-        <BeforeAfter
-          locale={lang}
-          name="House579 Mobile Admin"
-          caseName="House579"
-          purpose={
-            lang === "zh"
-              ? "比較改版前後的手機後台資訊密度與物件管理流程"
-              : "Compare information density and mobile property-management workflow before and after the redesign"
-          }
-          ratio="16 / 10"
-        />
-      </div>
-    )}
+  <CaseSection id="key-decisions" kicker="KEY DECISIONS" bodyWidth="none">
+    {caseData.keyDecisions.map((decision, i) => {
+      const media = decisionMedia[i];
+      return (
+        <KeyDecision decision={decision} index={i + 1}>
+          {media?.variant === "before-after" ? (
+            <BeforeAfter
+              locale={lang}
+              name={media.name}
+              caseName={caseData.title}
+              purpose={lang === "zh" ? media.purpose.zh : media.purpose.en}
+            />
+          ) : media ? (
+            <ResponsiveMedia
+              name={media.name}
+              variant={media.variant}
+              caseName={caseData.title}
+              purpose={lang === "zh" ? media.purpose.zh : media.purpose.en}
+            />
+          ) : null}
+        </KeyDecision>
+      );
+    })}
   </CaseSection>
 
-  <CaseSection id="execution" kicker={caseData.execution.kicker} heading={caseData.execution.heading} narrow>
-    {caseData.execution.paragraphs.map((paragraph) => (
-      <p class="case-paragraph">{paragraph}</p>
-    ))}
+  <CaseSection
+    id="execution"
+    kicker={caseData.execution.kicker}
+    heading={caseData.execution.heading}
+    tone="raised"
+    bodyWidth="none"
+  >
+    <div class="case-wide">
+      <div class="case-split">
+        <div class="case-split__text">
+          {caseData.execution.paragraphs.map((paragraph) => (
+            <p class="case-paragraph">{paragraph}</p>
+          ))}
 
-    {caseData.execution.supportingMetrics && (
-      <div class="execution-metrics">
-        <CaseMetrics
-          metrics={caseData.execution.supportingMetrics}
-          caption={caseData.execution.supportingMetricsCaption}
-          compact
-        />
+          {caseData.execution.supportingMetrics && (
+            <div class="execution-metrics">
+              <CaseMetrics
+                metrics={caseData.execution.supportingMetrics}
+                caption={caseData.execution.supportingMetricsCaption}
+                compact
+              />
+            </div>
+          )}
+        </div>
+        <div class="case-split__media">
+          <ResponsiveMedia
+            name={`${caseData.title} — Execution Detail`}
+            variant="diagram"
+            caseName={caseData.title}
+            purpose={
+              lang === "zh"
+                ? "呈現產品規則、資料流程或元件治理的示意圖"
+                : "Illustrate the product rules, data workflow, or component governance in practice"
+            }
+          />
+        </div>
       </div>
-    )}
-
-    <div class="execution-media">
-      <ResponsiveMedia
-        name={`${caseData.title} — Execution Detail`}
-        caseName={caseData.title}
-        purpose={
-          lang === "zh"
-            ? "呈現產品規則、資料流程或元件治理的示意圖"
-            : "Illustrate the product rules, data workflow, or component governance in practice"
-        }
-        format={lang === "zh" ? "流程圖／截圖" : "Diagram / Screenshot"}
-        ratio="16 / 10"
-        display="contain"
-      />
     </div>
   </CaseSection>
 
-  <CaseSection id="impact" kicker={caseData.impact.kicker} heading={caseData.impact.heading}>
-    <ImpactGrid blocks={caseData.impact.blocks} footnote={caseData.impact.footnote} />
+  <CaseSection id="impact" kicker={caseData.impact.kicker} heading={caseData.impact.heading} tone="dark" bodyWidth="wide">
+    <ImpactGrid blocks={caseData.impact.blocks} footnote={caseData.impact.footnote} highlightMetrics={impactHighlightMetrics} />
   </CaseSection>
 
-  <CaseSection id="reflection" kicker={caseData.reflection.kicker} heading={caseData.reflection.heading} narrow>
+  <CaseSection id="reflection" kicker={caseData.reflection.kicker} heading={caseData.reflection.heading} tone="tint">
     <ReflectionSection paragraphs={caseData.reflection.paragraphs} />
   </CaseSection>
+    </div>
+  </div>
 
   <NextCaseNavigation locale={lang} previous={prevCard} next={nextCard} />
 </BaseLayout>
@@ -121,7 +238,7 @@ const navItems = [
 <style>
   .case-paragraph {
     color: var(--color-ink-soft);
-    font-size: var(--fs-lead);
+    font-size: var(--fs-case-body);
   }
 
   .case-paragraph + .case-paragraph {
@@ -129,7 +246,7 @@ const navItems = [
   }
 
   .core-challenge {
-    margin-top: var(--space-xl);
+    margin-top: var(--case-inner-space);
   }
 
   .core-challenge__label {
@@ -138,18 +255,10 @@ const navItems = [
     text-transform: uppercase;
     letter-spacing: var(--tracking-kicker);
     color: var(--color-ink-soft);
-    margin-bottom: var(--space-sm);
-  }
-
-  .key-decision-media {
-    margin-top: var(--space-xl);
+    margin-bottom: var(--space-md);
   }
 
   .execution-metrics {
-    margin-top: var(--space-xl);
-  }
-
-  .execution-media {
     margin-top: var(--space-xl);
   }
 </style>

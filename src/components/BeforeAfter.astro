@@ -17,26 +17,24 @@ const afterLabel = locale === "zh" ? "改版後" : "After";
 
 <div class="before-after">
   <figure class="before-after__item">
+    <figcaption>{beforeLabel}</figcaption>
     <MediaPlaceholder
       name={`${name} — ${beforeLabel}`}
+      variant="before-after"
       caseName={caseName}
       purpose={purpose}
-      format="Before / After"
       ratio={ratio}
-      display="contain"
     />
-    <figcaption>{beforeLabel}</figcaption>
   </figure>
   <figure class="before-after__item">
+    <figcaption>{afterLabel}</figcaption>
     <MediaPlaceholder
       name={`${name} — ${afterLabel}`}
+      variant="before-after"
       caseName={caseName}
       purpose={purpose}
-      format="Before / After"
       ratio={ratio}
-      display="contain"
     />
-    <figcaption>{afterLabel}</figcaption>
   </figure>
 </div>
 
@@ -48,16 +46,18 @@ const afterLabel = locale === "zh" ? "改版後" : "After";
   }
 
   .before-after__item figcaption {
-    text-align: center;
-    margin-top: var(--space-sm);
     font-size: var(--fs-small);
-    font-weight: 600;
-    color: var(--color-ink-soft);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-kicker);
+    color: var(--color-mustard);
+    margin-bottom: var(--space-sm);
   }
 
   @media (max-width: 599px) {
     .before-after {
       grid-template-columns: 1fr;
+      gap: var(--space-xl);
     }
   }
 </style>

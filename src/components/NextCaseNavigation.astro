@@ -18,14 +18,20 @@ const t = UI_TEXT[locale];
 ---
 
 <nav class="case-nav" aria-label={locale === "zh" ? "案例前後導覽" : "Case study navigation"}>
-  <div class="container case-nav__grid">
+  <div class="case-wide case-nav__grid">
     <a class="case-nav__link case-nav__link--prev" href={`/${locale}/work/${previous.slug}/`}>
-      <span class="case-nav__eyebrow">← {t.previousCase}</span>
+      <span class="case-nav__eyebrow">
+        <span class="case-nav__arrow" aria-hidden="true">←</span>
+        {t.previousCase}
+      </span>
       <span class="case-nav__name">{previous.name}</span>
       <span class="case-nav__title">{previous.title}</span>
     </a>
     <a class="case-nav__link case-nav__link--next" href={`/${locale}/work/${next.slug}/`}>
-      <span class="case-nav__eyebrow">{t.nextCase} →</span>
+      <span class="case-nav__eyebrow">
+        {t.nextCase}
+        <span class="case-nav__arrow" aria-hidden="true">→</span>
+      </span>
       <span class="case-nav__name">{next.name}</span>
       <span class="case-nav__title">{next.title}</span>
     </a>
@@ -34,14 +40,16 @@ const t = UI_TEXT[locale];
 
 <style>
   .case-nav {
+    background: var(--color-paper-raised);
+    padding-block: var(--case-section-space);
     border-top: 1px solid var(--color-line);
-    padding-block: var(--space-2xl);
+    border-bottom: 1px solid var(--color-line);
   }
 
   .case-nav__grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: var(--space-lg);
+    gap: var(--space-2xl);
   }
 
   .case-nav__link {
@@ -49,15 +57,12 @@ const t = UI_TEXT[locale];
     flex-direction: column;
     gap: var(--space-xs);
     text-decoration: none;
-    padding: var(--space-lg);
-    border: 1px solid var(--color-line);
-    border-radius: var(--radius-md);
-    transition: border-color var(--duration-hover) var(--ease-out);
+    transition: opacity var(--duration-hover) var(--ease-out);
   }
 
   .case-nav__link:hover,
   .case-nav__link:focus-visible {
-    border-color: var(--color-mustard-strong);
+    opacity: 0.7;
   }
 
   .case-nav__link--next {
@@ -66,6 +71,9 @@ const t = UI_TEXT[locale];
   }
 
   .case-nav__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
     font-size: var(--fs-small);
     font-weight: 600;
     color: var(--color-mustard);
@@ -73,19 +81,42 @@ const t = UI_TEXT[locale];
     letter-spacing: var(--tracking-kicker);
   }
 
+  .case-nav__arrow {
+    transition: transform var(--duration-hover) var(--ease-out);
+  }
+
+  .case-nav__link--prev:hover .case-nav__arrow,
+  .case-nav__link--prev:focus-visible .case-nav__arrow {
+    transform: translateX(-4px);
+  }
+
+  .case-nav__link--next:hover .case-nav__arrow,
+  .case-nav__link--next:focus-visible .case-nav__arrow {
+    transform: translateX(4px);
+  }
+
   .case-nav__name {
     font-size: var(--fs-small);
     color: var(--color-ink-soft);
+    margin-top: var(--space-sm);
   }
 
   .case-nav__title {
-    font-size: var(--fs-h3);
+    font-size: var(--fs-case-h2);
     font-weight: 700;
+    max-width: 20ch;
+    text-wrap: balance;
+  }
+
+  :global([data-lang="zh"]) .case-nav__title {
+    max-width: 15em;
+    line-height: 1.35;
   }
 
   @media (max-width: 767px) {
     .case-nav__grid {
       grid-template-columns: 1fr;
+      gap: var(--space-2xl);
     }
 
     .case-nav__link--next {

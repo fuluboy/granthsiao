@@ -7,33 +7,38 @@ interface Props {
 }
 
 const { decision, index } = Astro.props;
+const reversed = index % 2 === 0;
 ---
 
 <article class="key-decision" id={`key-decision-${index}`}>
-  <div class="key-decision__index" aria-hidden="true">{String(index).padStart(2, "0")}</div>
-  <div class="key-decision__body">
-    <p class="kicker">{decision.kicker}</p>
-    <h3 class="key-decision__heading">{decision.heading}</h3>
-    {decision.paragraphs.map((paragraph) => (
-      <p class="key-decision__paragraph">{paragraph}</p>
-    ))}
+  <div class="case-wide">
+    <div class:list={["case-split", { "case-split--reverse": reversed }]}>
+      <div class="case-split__text key-decision__text">
+        <p class="key-decision__number" aria-hidden="true">{String(index).padStart(2, "0")}</p>
+        <p class="kicker">{decision.kicker}</p>
+        <h3 class="key-decision__heading">{decision.heading}</h3>
+        {decision.paragraphs.map((paragraph) => (
+          <p class="key-decision__paragraph">{paragraph}</p>
+        ))}
+      </div>
+      <div class="case-split__media key-decision__media">
+        <slot />
+      </div>
+    </div>
   </div>
 </article>
 
 <style>
   .key-decision {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: var(--space-lg);
-    padding-block: var(--space-lg);
+    padding-block: var(--space-xl);
   }
 
   .key-decision + .key-decision {
     border-top: 1px solid var(--color-line);
   }
 
-  .key-decision__index {
-    font-size: var(--fs-display);
+  .key-decision__number {
+    font-size: var(--fs-h1);
     font-weight: 700;
     color: var(--color-grey-300);
     line-height: 1;
@@ -41,24 +46,33 @@ const { decision, index } = Astro.props;
 
   .key-decision__heading {
     font-size: var(--fs-h3);
-    max-width: 40ch;
+    margin-top: var(--space-sm);
+    max-width: 26ch;
+  }
+
+  :global([data-lang="zh"]) .key-decision__heading {
+    max-width: none;
+    line-height: 1.4;
   }
 
   .key-decision__paragraph {
     margin-top: var(--space-md);
-    max-width: 68ch;
+    font-size: var(--fs-case-body);
     color: var(--color-ink-soft);
   }
 
   @media (max-width: 599px) {
     .key-decision {
-      grid-template-columns: 1fr;
-      gap: var(--space-sm);
+      padding-block: var(--space-lg);
     }
 
-    .key-decision__index {
+    .key-decision__number {
       font-size: var(--fs-h2);
       color: var(--color-mustard-strong);
+    }
+
+    .key-decision__media {
+      margin-top: var(--space-md);
     }
   }
 </style>
