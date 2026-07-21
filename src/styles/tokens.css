@@ -83,6 +83,9 @@
   --duration-hover: 220ms;
   --vinyl-spin-duration: 36s;
   --thunder-drift-duration: 10s;
+  --duration-tonearm-move: 900ms;
+  --tonearm-rest-angle: -12deg;
+  --tonearm-play-angle: 38deg;
 }
 
 [data-lang="zh"] {
@@ -99,5 +102,6 @@
     --duration-thunder-in: 1ms;
     --vinyl-spin-duration: 1ms;
     --thunder-drift-duration: 1ms;
+    --duration-tonearm-move: 1ms;
   }
 }

@@ -53,6 +53,18 @@ const { home } = Astro.props;
         </div>
       </div>
 
+      <div class="tonearm" aria-hidden="true">
+        <svg class="tonearm__art" viewBox="0 0 100 260" xmlns="http://www.w3.org/2000/svg">
+          <circle class="tonearm__pivot" cx="50" cy="26" r="22" />
+          <circle class="tonearm__pivot-dot" cx="50" cy="26" r="7" />
+          <path class="tonearm__shaft" d="M50,46 C36,92 64,146 52,206" />
+          <g class="tonearm__head" transform="translate(52 206) rotate(18)">
+            <rect x="-22" y="-8" width="44" height="22" rx="5" />
+            <circle cx="-16" cy="16" r="4" />
+          </g>
+        </svg>
+      </div>
+
       <img
         class="hero-thunder"
         src="/brand/thunder.png"
@@ -109,6 +121,55 @@ const { home } = Astro.props;
   } else if (copy instanceof HTMLElement) {
     copy.classList.add("is-revealed");
   }
+
+  // Tonearm entrance: disc appears -> tonearm swings onto the platter ->
+  // thunder + spin start together. Then, once scrolled past ~100px, the
+  // platter stops and the tonearm returns to its resting position; scrolling
+  // back up resumes both.
+  const hero = document.querySelector("[data-vinyl-hero]");
+
+  if (hero instanceof HTMLElement) {
+    const rootStyles = getComputedStyle(document.documentElement);
+    const heroInMs = parseFloat(rootStyles.getPropertyValue("--duration-hero-in")) || 1100;
+    const tonearmMoveMs = parseFloat(rootStyles.getPropertyValue("--duration-tonearm-move")) || 900;
+
+    let tonearmArrived = false;
+    let parked = false;
+
+    const applyPlaybackState = () => {
+      hero.classList.toggle("is-playing", tonearmArrived && !parked);
+    };
+
+    window.setTimeout(() => {
+      hero.classList.add("is-tonearm-visible");
+    }, heroInMs);
+
+    window.setTimeout(() => {
+      tonearmArrived = true;
+      applyPlaybackState();
+    }, heroInMs + tonearmMoveMs);
+
+    const PARK_THRESHOLD = 100;
+    let ticking = false;
+
+    const updateParked = () => {
+      parked = window.scrollY > PARK_THRESHOLD;
+      hero.classList.toggle("is-parked", parked);
+      applyPlaybackState();
+      ticking = false;
+    };
+
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (!ticking) {
+          window.requestAnimationFrame(updateParked);
+          ticking = true;
+        }
+      },
+      { passive: true }
+    );
+  }
 </script>
 
 <style>
@@ -141,7 +202,12 @@ const { home } = Astro.props;
     width: 100%;
     height: 100%;
     border-radius: 50%;
-    animation: vinyl-spin var(--vinyl-spin-duration) linear var(--duration-hero-in) infinite;
+    animation: vinyl-spin var(--vinyl-spin-duration) linear infinite;
+    animation-play-state: paused;
+  }
+
+  [data-vinyl-hero].is-playing .vinyl-disc {
+    animation-play-state: running;
   }
 
   .vinyl-label {
@@ -255,6 +321,59 @@ const { home } = Astro.props;
     color: var(--color-ink);
   }
 
+  .tonearm {
+    position: absolute;
+    top: 22%;
+    right: -8%;
+    width: 20%;
+    aspect-ratio: 100 / 260;
+    transform-origin: 50% 10%;
+    opacity: 0;
+    transform: rotate(var(--tonearm-rest-angle));
+    transition: opacity var(--duration-tonearm-move) var(--ease-out),
+      transform var(--duration-tonearm-move) var(--ease-out);
+    z-index: 2;
+  }
+
+  [data-vinyl-hero].is-tonearm-visible .tonearm {
+    opacity: 1;
+    transform: rotate(var(--tonearm-play-angle));
+  }
+
+  [data-vinyl-hero].is-tonearm-visible.is-parked .tonearm {
+    transform: rotate(var(--tonearm-rest-angle));
+  }
+
+  .tonearm__art {
+    width: 100%;
+    height: 100%;
+    display: block;
+    overflow: visible;
+  }
+
+  .tonearm__pivot {
+    fill: var(--color-grey-600);
+  }
+
+  .tonearm__pivot-dot {
+    fill: var(--color-mustard-strong);
+  }
+
+  .tonearm__shaft {
+    fill: none;
+    stroke: var(--color-ink);
+    stroke-width: 12;
+    stroke-linecap: round;
+  }
+
+  .tonearm__head rect {
+    fill: var(--color-ink);
+  }
+
+  .tonearm__head circle {
+    fill: var(--color-mustard-strong);
+  }
+
   .hero-thunder {
     position: absolute;
     top: -3%;
@@ -263,9 +382,10 @@ const { home } = Astro.props;
     height: auto;
     opacity: 0;
     transform: translateY(-16px);
-    animation: thunder-enter var(--duration-thunder-in) var(--ease-out) var(--duration-hero-in) forwards,
+    animation: thunder-enter var(--duration-thunder-in) var(--ease-out)
+        calc(var(--duration-hero-in) + var(--duration-tonearm-move)) forwards,
       thunder-drift var(--thunder-drift-duration) ease-in-out
-        calc(var(--duration-hero-in) + var(--duration-thunder-in)) infinite;
+        calc(var(--duration-hero-in) + var(--duration-tonearm-move) + var(--duration-thunder-in)) infinite;
   }
 
   @keyframes vinyl-enter {
@@ -362,6 +482,10 @@ const { home } = Astro.props;
       opacity: 1;
       transform: none;
       animation: none;
+    }
+
+    .tonearm {
+      transition: none;
     }
 
     .vinyl-hero-title,
