@@ -9,7 +9,7 @@ const { home } = Astro.props;
 ---
 
 <section class="vinyl-hero-section bg-dot">
-  <div class="container">
+  <div class="container vinyl-hero-stage">
     <div class="vinyl-hero" data-vinyl-hero>
       <div class="vinyl-group">
         <img
@@ -54,13 +54,52 @@ const { home } = Astro.props;
       </div>
 
       <div class="tonearm" aria-hidden="true">
-        <svg class="tonearm__art" viewBox="0 0 100 260" xmlns="http://www.w3.org/2000/svg">
+        <svg
+          class="tonearm__art"
+          viewBox="0 0 100 260"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <defs>
+            <linearGradient
+              id="tonearm-silver"
+              x1="0%"
+              y1="0%"
+              x2="100%"
+              y2="100%"
+            >
+              <stop offset="0%" stop-color="#62676b" />
+              <stop offset="20%" stop-color="#b9bec2" />
+              <stop offset="42%" stop-color="#f5f6f6" />
+              <stop offset="58%" stop-color="#cfd3d6" />
+              <stop offset="78%" stop-color="#8b9196" />
+              <stop offset="100%" stop-color="#d8dcde" />
+            </linearGradient>
+            <linearGradient
+              id="tonearm-head-silver"
+              x1="0%"
+              y1="0%"
+              x2="0%"
+              y2="100%"
+            >
+              <stop offset="0%" stop-color="#f4f5f5" />
+              <stop offset="18%" stop-color="#b8bdc1" />
+              <stop offset="42%" stop-color="#72787d" />
+              <stop offset="62%" stop-color="#d9dcde" />
+              <stop offset="82%" stop-color="#8a9094" />
+              <stop offset="100%" stop-color="#555b5f" />
+            </linearGradient>
+          </defs>
+
           <circle class="tonearm__pivot" cx="50" cy="26" r="22" />
           <circle class="tonearm__pivot-dot" cx="50" cy="26" r="7" />
-          <path class="tonearm__shaft" d="M50,46 C36,92 64,146 52,206" />
+
+          <path
+            class="tonearm__shaft"
+            d="M50,46 C36,92 64,146 52,206"
+          />
+
           <g class="tonearm__head" transform="translate(52 206) rotate(18)">
             <rect x="-22" y="-8" width="44" height="22" rx="5" />
-            <circle cx="-16" cy="16" r="4" />
           </g>
         </svg>
       </div>
@@ -74,11 +113,11 @@ const { home } = Astro.props;
         decoding="async"
       />
     </div>
+  </div>
 
-    <div class="vinyl-hero-copy" data-reveal>
-      <h1 class="vinyl-hero-title">{home.hero.title}</h1>
-      <p class="vinyl-hero-lead">{home.hero.lead}</p>
-    </div>
+  <div class="container vinyl-hero-copy" data-reveal>
+    <h1 class="vinyl-hero-title">{home.hero.title}</h1>
+    <p class="vinyl-hero-lead">{home.hero.lead}</p>
   </div>
 </section>
 
@@ -149,7 +188,7 @@ const { home } = Astro.props;
       applyPlaybackState();
     }, heroInMs + tonearmMoveMs);
 
-    const PARK_THRESHOLD = 100;
+    const PARK_THRESHOLD = 300;
     let ticking = false;
 
     const updateParked = () => {
@@ -174,9 +213,17 @@ const { home } = Astro.props;
 
 <style>
   .vinyl-hero-section {
-    padding-block: var(--space-2xl) var(--space-xl);
     text-align: center;
     overflow: hidden;
+  }
+
+  .vinyl-hero-stage {
+    min-height: calc(100dvh - var(--header-height));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-block: var(--space-lg);
+    padding-bottom: 0;
   }
 
   .vinyl-hero {
@@ -295,6 +342,7 @@ const { home } = Astro.props;
   .vinyl-label__year {
     font-size: 2.6cqw;
     font-weight: 700;
+    margin-top: -20px;
   }
 
   .vinyl-label__body {
@@ -324,7 +372,7 @@ const { home } = Astro.props;
   .tonearm {
     position: absolute;
     top: 22%;
-    right: -8%;
+    right: -17%;
     width: 20%;
     aspect-ratio: 100 / 260;
     transform-origin: 50% 10%;
@@ -352,7 +400,7 @@ const { home } = Astro.props;
   }
 
   .tonearm__pivot {
-    fill: var(--color-grey-600);
+    fill: var(--color-ink);
   }
 
   .tonearm__pivot-dot {
@@ -360,14 +408,18 @@ const { home } = Astro.props;
   }
 
   .tonearm__shaft {
-    fill: none;
-    stroke: var(--color-ink);
-    stroke-width: 12;
-    stroke-linecap: round;
+  fill: none;
+  stroke: url("#tonearm-silver");
+  stroke-width: 10;
+  stroke-linecap: round;
+  filter: drop-shadow(0 2px 1px rgb(0 0 0 / 18%));
   }
 
   .tonearm__head rect {
-    fill: var(--color-ink);
+  fill: url("#tonearm-head-silver");
+  stroke: rgb(0 0 0 / 32%);
+  stroke-width: 1.2;
+  filter: drop-shadow(0 2px 2px rgb(0 0 0 / 22%));
   }
 
   .tonearm__head circle {
@@ -434,7 +486,7 @@ const { home } = Astro.props;
   .vinyl-hero-copy {
     max-width: var(--container-narrow);
     margin-inline: auto;
-    margin-top: var(--space-xl);
+    margin-bottom: var(--space-xl);
   }
 
   .vinyl-hero-title,
@@ -445,7 +497,7 @@ const { home } = Astro.props;
   }
 
   .vinyl-hero-title {
-    font-size: var(--fs-h1);
+    font-size: var(--fs-h2);
   }
 
   .vinyl-hero-lead {
@@ -453,12 +505,20 @@ const { home } = Astro.props;
     color: var(--color-ink-soft);
     margin-top: var(--space-md);
     transition-delay: 120ms;
+    background: #fff;
+    padding: 5px;
   }
 
   .vinyl-hero-copy.is-revealed .vinyl-hero-title,
   .vinyl-hero-copy.is-revealed .vinyl-hero-lead {
     opacity: 1;
     transform: translateY(0);
+  }
+
+  @media (max-width: 767px) {
+    .vinyl-hero-stage {
+      min-height: calc(100dvh - var(--header-height-mobile));
+    }
   }
 
   @media (max-width: 599px) {
