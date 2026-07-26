@@ -1,42 +1,86 @@
 ---
-import MediaPlaceholder from "./MediaPlaceholder.astro";
-import type { Locale } from "../i18n/config";
+import ResponsiveMedia from "./ResponsiveMedia.astro";
+import CaseStudyGallery from "./CaseStudyGallery.astro";
+import { UI_TEXT, type Locale } from "../i18n/config";
+import type { MediaRatio, MediaDisplay } from "./MediaPlaceholder.astro";
 
 interface Props {
   locale: Locale;
   name: string;
   caseName: string;
   purpose: string;
-  ratio?: string;
+  ratio?: MediaRatio;
+  display?: MediaDisplay;
+  beforeSrc?: string;
+  afterSrc?: string;
+  width?: number;
+  height?: number;
+  /** PhotoSwipe gallery id shared by the Before and After slides — see CaseStudyGallery.astro. Omit to render without lightbox (e.g. no real assets yet). */
+  galleryId?: string;
 }
 
-const { locale, name, caseName, purpose, ratio = "16 / 10" } = Astro.props;
-const beforeLabel = locale === "zh" ? "改版前" : "Before";
-const afterLabel = locale === "zh" ? "改版後" : "After";
+const {
+  locale,
+  name,
+  caseName,
+  purpose,
+  ratio = "16 / 10",
+  display = "contain",
+  beforeSrc,
+  afterSrc,
+  width,
+  height,
+  galleryId,
+} = Astro.props;
+const t = UI_TEXT[locale];
+const beforeLabel = t.media.before;
+const afterLabel = t.media.after;
+const zoomLabel = t.lightbox.viewLargerImage;
+const useLightbox = Boolean(galleryId);
 ---
 
-<div class="before-after">
-  <figure class="before-after__item">
-    <figcaption>{beforeLabel}</figcaption>
-    <MediaPlaceholder
-      name={`${name} — ${beforeLabel}`}
-      variant="before-after"
-      caseName={caseName}
-      purpose={purpose}
-      ratio={ratio}
-    />
-  </figure>
-  <figure class="before-after__item">
-    <figcaption>{afterLabel}</figcaption>
-    <MediaPlaceholder
-      name={`${name} — ${afterLabel}`}
-      variant="before-after"
-      caseName={caseName}
-      purpose={purpose}
-      ratio={ratio}
-    />
-  </figure>
-</div>
+<CaseStudyGallery id={galleryId}>
+  <div class="before-after">
+    <figure class="before-after__item">
+      <figcaption>{beforeLabel}</figcaption>
+      <ResponsiveMedia
+        locale={locale}
+        name={`${name} — ${beforeLabel}`}
+        variant="before-after"
+        caseName={caseName}
+        purpose={purpose}
+        ratio={ratio}
+        display={display}
+        src={beforeSrc}
+        width={width}
+        height={height}
+        alt={`${purpose} — ${beforeLabel}`}
+        lightbox={useLightbox}
+        caption={beforeLabel}
+        zoomLabel={zoomLabel}
+      />
+    </figure>
+    <figure class="before-after__item">
+      <figcaption>{afterLabel}</figcaption>
+      <ResponsiveMedia
+        locale={locale}
+        name={`${name} — ${afterLabel}`}
+        variant="before-after"
+        caseName={caseName}
+        purpose={purpose}
+        ratio={ratio}
+        display={display}
+        src={afterSrc}
+        width={width}
+        height={height}
+        alt={`${purpose} — ${afterLabel}`}
+        lightbox={useLightbox}
+        caption={afterLabel}
+        zoomLabel={zoomLabel}
+      />
+    </figure>
+  </div>
+</CaseStudyGallery>
 
 <style>
   .before-after {
@@ -46,7 +90,7 @@ const afterLabel = locale === "zh" ? "改版後" : "After";
   }
 
   .before-after__item figcaption {
-    font-size: var(--fs-small);
+    font-size: var(--fs-case-caption);
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: var(--tracking-kicker);

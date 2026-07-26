@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { LOCALES, type Locale } from "../../i18n/config";
+import { LOCALES, withBase, type Locale } from "../../i18n/config";
 import { getContact } from "../../content";
 import { siteConfig } from "../../content/siteConfig";
 
@@ -21,7 +21,7 @@ const contact = getContact(lang);
 
       <div class="contact-page__actions">
         <a class="btn" href={`mailto:${siteConfig.contactEmail}`}>{contact.contactLabel}</a>
-        <a class="btn btn-outline" href={siteConfig.resumeHref[lang]} target="_blank" rel="noopener noreferrer">{contact.resumeLabel}</a>
+        <a class="btn btn-outline" href={withBase(siteConfig.resumeHref[lang])} target="_blank" rel="noopener noreferrer">{contact.resumeLabel}</a>
       </div>
     </div>
   </section>

@@ -76,19 +76,41 @@ export const designSystem: CaseStudyContent = {
     },
     {
       kicker: "KEY DECISION 3",
-      heading: "Make component changes part of everyday product development",
+      heading: "Embed Component Creation and Updates into the Day-to-Day Development Process",
       paragraphs: [
-        "The UI/UX team synced active pages and component needs daily, then reviewed weekly which changes could affect other products. When adding or changing tokens, designers explained the use case and reuse potential; front-end engineers assessed implementation and impact on existing components; PMs confirmed the product context and priority.",
-        "Once aligned, design and front-end components were updated in the same sprint. Even product-specific components remained in the library with their purpose documented, so exceptions had a reason, a boundary, and a maintenance path.",
+        "During daily stand-ups, the UI/UX team shared the pages in progress, component changes, and Token requirements, allowing us to identify early whether similar needs had already appeared in other products. Weekly Design QA sessions were used to review cross-product impact and prevent different teams from creating separate specifications for similar scenarios. When proposing a change, designers needed to explain the use case, product purpose, why the existing component could not support it, and its potential for reuse. Frontend engineers assessed the implementation approach, configurable parameters, compatibility, and impact on existing pages, while PMs confirmed priority, exception criteria, and acceptance scope.",
+        "When product requirements conflicted with shared rules, I helped the team decide whether to extend an existing component, introduce controlled Variants or Props, or retain a product-specific specification. Each decision was documented with its applicable product, use case, and constraints, so future teams could understand why the difference existed. When similar needs later appeared in another product, we could reassess whether the pattern was ready to be consolidated into a shared component.",
+        "This way of working allowed component issues to surface early in the design and development process, reducing late-stage specification changes and duplicated implementation. It also lowered the risk of the Figma Library, frontend components, and production interfaces gradually drifting apart. Product-specific components could still exist, but their purpose and boundaries remained traceable, while shared components continued to mature through real usage instead of accumulating unnecessary variables solely for visual consistency.",
       ],
+      infoCard: {
+        label: "GOVERNANCE CADENCE",
+        rows: [
+          {
+            label: "DAILY STAND-UP",
+            body: "Align on active pages, component changes, and Token requirements",
+          },
+          {
+            label: "WEEKLY DESIGN QA",
+            body: "Review cross-product impact, reuse potential, and overlapping specifications",
+          },
+          {
+            label: "DECISION",
+            items: [
+              "Extend an existing component",
+              "Introduce controlled Variants or Props",
+              "Retain a clearly defined product-specific exception",
+            ],
+          },
+        ],
+      },
     },
   ],
   execution: {
     kicker: "EXECUTION",
-    heading: "With limited engineering capacity, the Design System had to ship alongside product work",
+    heading: "With Limited Resources, the Design System Had to Ship with the Product",
     paragraphs: [
-      "As Chief of Experience, I led three UI/UX designers, while two front-end engineers supported three product teams and one engineer served two teams at once. We could not dedicate months to building a complete library first, so the work was embedded in the existing two-week sprint cadence.",
-      "The design team handled the initial audit and tokens. Once development continued, we prioritized buttons, forms, and modals needed by the current sprint, completing specification, implementation, and validation together. I set the sequence, defined the reuse boundary, and resolved conflicts by deciding whether to evolve the shared component, add controlled variables, or preserve a product-specific pattern.",
+      "As Chief of Experience, I led three UI/UX designers, while two frontend engineers supported three product teams. Spending several months building a complete component library upfront would have delayed product delivery and risked creating specifications that did not fit real use cases. We therefore integrated Design System development into our existing two-week Sprints, prioritizing components that were immediately needed by the product and also had clear potential for reuse.",
+      "During this period, I defined the adoption and governance process, participated in daily stand-ups, and led Design QA sessions to help the team identify similar needs across products and clarify the appropriate scope for shared components. When product requirements conflicted with existing system rules, I decided whether to revise the shared component, introduce controlled variants or props, or retain a clearly defined product-specific exception. This approach allowed the component library to mature through real product use while preventing it from accumulating excessive variables that would make it difficult to understand, implement, and maintain.",
     ],
     supportingMetrics: [
       { value: "1 month", label: "Audit and tokens completed" },
@@ -96,6 +118,25 @@ export const designSystem: CaseStudyContent = {
       { value: "2023–2025", label: "Ongoing governance" },
     ],
     supportingMetricsCaption: "Rollout timeline",
+    operatingContext: {
+      label: "OPERATING CONTEXT",
+      stats: [
+        { value: "3", label: "Product Teams" },
+        { value: "3", label: "UI/UX Designers" },
+        { value: "2", label: "Frontend Engineers" },
+        { value: "2 Weeks", label: "Sprint Cycle" },
+      ],
+    },
+    roleCard: {
+      label: "MY ROLE",
+      items: [
+        "Defined the Design System adoption and governance approach",
+        "Participated in daily stand-ups and led Design QA",
+        "Set cross-product reuse boundaries and component priorities",
+        "Decided when to revise a shared component, add controlled variables, or retain an exception",
+      ],
+      footnote: "Build the system through real product use, rather than completing it in isolation.",
+    },
   },
   impact: {
     kicker: "IMPACT",

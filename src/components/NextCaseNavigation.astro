@@ -1,5 +1,5 @@
 ---
-import { UI_TEXT, type Locale } from "../i18n/config";
+import { UI_TEXT, withBase, type Locale } from "../i18n/config";
 
 interface CaseLink {
   slug: string;
@@ -17,9 +17,9 @@ const { locale, previous, next } = Astro.props;
 const t = UI_TEXT[locale];
 ---
 
-<nav class="case-nav" aria-label={locale === "zh" ? "案例前後導覽" : "Case study navigation"}>
+<nav class="case-nav" aria-label={t.accessibility.nextCaseNav}>
   <div class="case-wide case-nav__grid">
-    <a class="case-nav__link case-nav__link--prev" href={`/${locale}/work/${previous.slug}/`}>
+    <a class="case-nav__link case-nav__link--prev" href={withBase(`/${locale}/work/${previous.slug}/`)}>
       <span class="case-nav__eyebrow">
         <span class="case-nav__arrow" aria-hidden="true">←</span>
         {t.previousCase}
@@ -27,7 +27,7 @@ const t = UI_TEXT[locale];
       <span class="case-nav__name">{previous.name}</span>
       <span class="case-nav__title">{previous.title}</span>
     </a>
-    <a class="case-nav__link case-nav__link--next" href={`/${locale}/work/${next.slug}/`}>
+    <a class="case-nav__link case-nav__link--next" href={withBase(`/${locale}/work/${next.slug}/`)}>
       <span class="case-nav__eyebrow">
         {t.nextCase}
         <span class="case-nav__arrow" aria-hidden="true">→</span>

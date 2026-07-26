@@ -13,9 +13,13 @@ import NextCaseNavigation from "../../../components/NextCaseNavigation.astro";
 import Quote from "../../../components/Quote.astro";
 import BeforeAfter from "../../../components/BeforeAfter.astro";
 import ResponsiveMedia from "../../../components/ResponsiveMedia.astro";
-import type { PlaceholderVariant } from "../../../components/MediaPlaceholder.astro";
-import { LOCALES, WORK_SLUGS, type Locale } from "../../../i18n/config";
+import CaseStudyGallery from "../../../components/CaseStudyGallery.astro";
+import CaseStudyLightbox from "../../../components/CaseStudyLightbox.astro";
+import CaseInfoCard from "../../../components/CaseInfoCard.astro";
+import type { PlaceholderVariant, MediaRatio, MediaDisplay } from "../../../components/MediaPlaceholder.astro";
+import { LOCALES, WORK_SLUGS, UI_TEXT, type Locale, type LocalizedText } from "../../../i18n/config";
 import { getWork, getHome, workOrder } from "../../../content";
+import { localizedSrc, resolveLocalizedSrc, type LocalizedImageSource } from "../../../content/media";
 
 export function getStaticPaths() {
   return LOCALES.flatMap((lang) => WORK_SLUGS.map((slug) => ({ params: { lang, slug } })));
@@ -23,119 +27,296 @@ export function getStaticPaths() {
 
 const { lang, slug } = Astro.params as { lang: Locale; slug: string };
 const caseData = getWork(lang, slug);
+const t = UI_TEXT[lang];
 const workCards = getHome(lang).selectedWork.cards;
 const currentIdx = workOrder.indexOf(slug as (typeof workOrder)[number]);
 const prevCard = workCards[(currentIdx - 1 + workCards.length) % workCards.length];
 const nextCard = workCards[(currentIdx + 1) % workCards.length];
 
+const sectionNav = t.caseStudy.sectionNav;
+
 const navItems = [
-  { id: "context", label: caseData.context.kicker },
-  { id: "what-we-saw", label: caseData.whatWeSaw.kicker },
-  { id: "key-decisions", label: lang === "zh" ? "關鍵決策" : "Key decisions" },
-  { id: "execution", label: caseData.execution.kicker },
-  { id: "impact", label: caseData.impact.kicker },
-  { id: "reflection", label: caseData.reflection.kicker },
+  { id: "context", label: sectionNav.context },
+  { id: "what-we-saw", label: sectionNav.whatWeSaw },
+  { id: "key-decisions", label: sectionNav.keyDecisions },
+  { id: "execution", label: sectionNav.execution },
+  { id: "impact", label: sectionNav.impact },
+  { id: "reflection", label: sectionNav.reflection },
 ];
 
-// Presentation-only placeholder descriptors per Key Decision, keyed by case slug.
-// Purely describes future asset content — no case-study copy or data is introduced here.
+// Presentation descriptors per Key Decision, keyed by case slug.
+// Copy (name/purpose) is presentation-only, not case-study content; image
+// paths point at the real assets imported into public/images/work/<slug>/.
+// ratio/display are explicit per item — deliberately NOT inferred from
+// `variant` alone. ResponsiveMedia falls back to the variant default when
+// these are omitted, but every real asset here should state its own,
+// verified-against-actual-pixel-dimensions shape (see docs/image-specs.md).
+//
+// src/beforeSrc/afterSrc are LocalizedImageSource ({ zh, en }), built with
+// localizedSrc() — never a single shared path — so a page can never load
+// the other language's diagram. width/height are one shared value per item
+// since the zh/en assets are the same pixel dimensions (same crop, only the
+// in-image text differs).
 interface DecisionMedia {
+  // 1-based Key Decision number this media belongs to — matches the
+  // `KEY DECISION N` kicker / KeyDecision `index` prop, NOT the position of
+  // this object within the array below. Lookup is by this field (see
+  // `decisionMedia.find(...)` below), so entries may be reordered, skipped
+  // (a decision with no media yet), or have new decisions inserted between
+  // them without any image silently shifting to the wrong decision.
+  decision: number;
   variant: PlaceholderVariant;
   name: string;
-  purpose: { zh: string; en: string };
+  purpose: LocalizedText;
+  // Only set when this image already has a *visible* on-page caption (see
+  // ResponsiveMedia's `caption` prop docs) — do not add one just to fill
+  // the field.
+  caption?: LocalizedText;
+  ratio: MediaRatio;
+  display: MediaDisplay;
+  src?: LocalizedImageSource;
+  beforeSrc?: LocalizedImageSource;
+  afterSrc?: LocalizedImageSource;
+  width?: number;
+  height?: number;
 }
 
 const decisionMediaBySlug: Record<string, DecisionMedia[]> = {
   house579: [
     {
+      decision: 1,
       variant: "diagram",
       name: "House579 — Registration & Verification Flow",
       purpose: {
         zh: "註冊、身分認證與首次刊登的資料流程示意",
         en: "Diagram of the registration, verification, and first-listing data flow",
       },
+      ratio: "16 / 9",
+      display: "contain",
+      // Real, distinct EN asset (not the -EN naming convention default) — already produced, not a placeholder copy.
+      src: localizedSrc("/images/work/house579/decision-01.jpg", "/images/work/house579/decision-01-EN.jpg"),
+      width: 1920,
+      height: 1080,
     },
     {
+      decision: 2,
+      variant: "process",
+      name: "House579 — Onboarding-to-Paid Conversion Strategy",
+      purpose: {
+        zh: "House579 從降低導入阻力、建立使用意願，到透過行銷成效建立產品信用與付費理由的策略圖",
+        en: "House579 strategy showing how lower onboarding friction, visible marketing results, and word of mouth established product trust and a reason to pay",
+      },
+      caption: {
+        zh: "從方便使用，到值得付費：產品降低導入阻力，行銷用實際成效建立付費理由",
+        en: "From ease of adoption to a reason to pay: product experience reduced onboarding friction, while marketing helped prove tangible value",
+      },
+      ratio: "21 / 9",
+      display: "contain",
+      // decision-02-EN.jpg is a temporary copy of the zh asset (see localizedSrc default) —
+      // the real English version will overwrite that same path later with no code change needed.
+      src: localizedSrc("/images/work/house579/decision-02.jpg"),
+      width: 1920,
+      height: 823,
+    },
+    {
+      decision: 3,
       variant: "ui",
       name: "House579 — Data Quality Prioritization",
       purpose: {
         zh: "依風險排序的欄位品質檢查介面",
         en: "Field-level data quality review interface, prioritized by risk",
       },
+      ratio: "4 / 3",
+      display: "contain",
+      // decision-03-EN.jpg is a temporary copy pending the real English asset.
+      src: localizedSrc("/images/work/house579/decision-03.jpg"),
+      width: 1920,
+      height: 1440,
     },
     {
+      decision: 4,
       variant: "before-after",
       name: "House579 Mobile Admin",
       purpose: {
         zh: "比較改版前後的手機後台資訊密度與物件管理流程",
         en: "Compare information density and mobile property-management workflow before and after the redesign",
       },
+      ratio: "16 / 10",
+      display: "contain",
+      // decision-04-{before,after}-EN.jpg are temporary copies pending the real English assets.
+      beforeSrc: localizedSrc("/images/work/house579/decision-04-before.jpg"),
+      afterSrc: localizedSrc("/images/work/house579/decision-04-after.jpg"),
+      width: 1920,
+      height: 1200,
     },
   ],
   "rakuya-data-product": [
     {
+      decision: 1,
       variant: "process",
       name: "Rakuya — Agent Journey to MVP Scope",
       purpose: {
         zh: "房仲完整工作旅程，以及 MVP 範圍選擇示意",
         en: "Agent workflow map and the chosen MVP entry point",
       },
+      ratio: "21 / 9",
+      display: "contain",
+      // decision-01-EN.jpg is a temporary copy pending the real English asset.
+      src: localizedSrc("/images/work/rakuya-data-product/decision-01.jpg"),
+      width: 1920,
+      height: 823,
     },
     {
+      decision: 2,
       variant: "diagram",
       name: "Rakuya — Community Data Foundation",
       purpose: {
         zh: "社區與建物基礎資料的整合流程",
         en: "Diagram of the community and building-registry data foundation",
       },
+      ratio: "16 / 9",
+      display: "contain",
+      // decision-02-EN.jpg is a temporary copy pending the real English asset.
+      src: localizedSrc("/images/work/rakuya-data-product/decision-02.jpg"),
+      width: 1920,
+      height: 1080,
     },
     {
+      decision: 3,
       variant: "ui",
       name: "Rakuya — Daily Prospecting Report",
       purpose: {
         zh: "每日初次上架、降價與下架日報介面",
         en: "Daily report UI for genuinely new listings, price cuts, and removals",
       },
+      ratio: "4 / 3",
+      display: "contain",
+      // decision-03-EN.jpg is a temporary copy pending the real English asset.
+      src: localizedSrc("/images/work/rakuya-data-product/decision-03.jpg"),
+      width: 1920,
+      height: 1440,
     },
   ],
   "design-system": [
     {
+      decision: 1,
       variant: "process",
       name: "Design System — Sprint Rollout Timeline",
       purpose: {
         zh: "Token 盤點到首批元件交付的時間軸",
         en: "Timeline from token audit to first components shipped",
       },
+      ratio: "21 / 9",
+      display: "contain",
+      // decision-01-EN.jpg is a temporary copy pending the real English asset.
+      src: localizedSrc("/images/work/design-system/decision-01.jpg"),
+      width: 1920,
+      height: 823,
     },
     {
+      decision: 2,
       variant: "diagram",
       name: "Design System — Component Decision Flow",
       purpose: {
         zh: "延伸、新增或保留特規的判斷流程",
         en: "Decision flow for extending, creating, or preserving a variation",
       },
+      ratio: "16 / 9",
+      display: "contain",
+      // decision-02-EN.jpg is a temporary copy pending the real English asset.
+      src: localizedSrc("/images/work/design-system/decision-02.jpg"),
+      width: 1920,
+      height: 1080,
     },
-    {
-      variant: "ui",
-      name: "Design System — Governance Workflow",
-      purpose: {
-        zh: "元件新增與治理的日常協作介面",
-        en: "Daily governance workflow across design and front-end",
-      },
-    },
+    // Key Decision 3 intentionally has no media entry — replaced by an
+    // inline governance-cadence info card (see KeyDecision.infoCard on the
+    // content model) rather than the old "Governance Workflow" screenshot.
   ],
 };
 
+interface CaseImage {
+  src: string;
+  width: number;
+  height: number;
+  ratio: MediaRatio;
+  display: MediaDisplay;
+}
+
+// Hero photos have no in-image text today, so they stay a single shared
+// path (CaseImage above) rather than being forced into a { zh, en } pair.
+// Execution diagrams do carry embedded text, so they get their own type —
+// same LocalizedImageSource/localizedSrc/resolveLocalizedSrc mechanism as
+// decisionMediaBySlug, just applied to a different lookup table.
+interface LocalizedCaseImage {
+  src: LocalizedImageSource;
+  width: number;
+  height: number;
+  ratio: MediaRatio;
+  display: MediaDisplay;
+}
+
+const heroImageBySlug: Record<string, CaseImage> = {
+  house579: { src: "/images/work/house579/hero.jpg", width: 1920, height: 1080, ratio: "16 / 9", display: "cover" },
+  "rakuya-data-product": {
+    src: "/images/work/rakuya-data-product/hero.jpg",
+    width: 1920,
+    height: 1080,
+    ratio: "16 / 9",
+    display: "cover",
+  },
+  "design-system": {
+    src: "/images/work/design-system/hero.jpg",
+    width: 1920,
+    height: 1080,
+    ratio: "16 / 9",
+    display: "cover",
+  },
+};
+
+const executionImageBySlug: Record<string, LocalizedCaseImage> = {
+  house579: {
+    // execution-EN.jpg already existed (pre-dates this change) — localizedSrc's
+    // default -EN suffix resolves to it either way, no override needed.
+    src: localizedSrc("/images/work/house579/execution.jpg"),
+    width: 1920,
+    height: 1080,
+    ratio: "16 / 9",
+    display: "contain",
+  },
+  "rakuya-data-product": {
+    // execution-EN.jpg is a temporary copy pending the real English asset.
+    src: localizedSrc("/images/work/rakuya-data-product/execution.jpg"),
+    width: 1920,
+    height: 1080,
+    ratio: "16 / 9",
+    display: "contain",
+  },
+  // design-system intentionally has no execution image entry — replaced by
+  // the Operating Context / My Role info cards (see caseData.execution
+  // .operatingContext / .roleCard) rather than the old "Governance
+  // Workflow" screenshot.
+};
+
 const decisionMedia = decisionMediaBySlug[slug] ?? [];
+const heroImage = heroImageBySlug[slug];
+const executionImage = executionImageBySlug[slug];
+const executionImageSrc = resolveLocalizedSrc(executionImage?.src, lang);
 const impactHighlightMetrics = caseData.metrics.slice(-2);
+const operatingContext = caseData.execution.operatingContext;
+const roleCard = caseData.execution.roleCard;
+const hasExecutionSupport = Boolean(operatingContext && roleCard);
 ---
 
 <BaseLayout locale={lang} title={caseData.meta.title} description={caseData.meta.description}>
-  <div class="case-layout">
-    <SectionNavigation locale={lang} items={navItems} />
+  <div class="case-shell">
+    <div class="case-sidebar">
+      <SectionNavigation locale={lang} items={navItems} variant="desktop" />
+    </div>
 
     <div class="case-main">
-      <CaseHero locale={lang} caseData={caseData} />
+      <CaseHero locale={lang} caseData={caseData} heroImage={heroImage} lightboxGalleryId={heroImage ? `${slug}-hero` : undefined} />
+
+      <SectionNavigation locale={lang} items={navItems} variant="compact" />
 
       <CaseSection id="context" kicker={caseData.context.kicker} heading={caseData.context.heading}>
     {caseData.context.paragraphs.map((paragraph) => (
@@ -151,32 +332,80 @@ const impactHighlightMetrics = caseData.metrics.slice(-2);
     id="what-we-saw"
     kicker={caseData.whatWeSaw.kicker}
     heading={caseData.whatWeSaw.heading}
-    tone="raised"
+    tone="subtle"
     bodyWidth="wide"
+    fullBleed
   >
     <SignalGrid signals={caseData.whatWeSaw.signals} />
   </CaseSection>
 
-  <CaseSection id="key-decisions" kicker="KEY DECISIONS" bodyWidth="none">
+  <CaseSection id="key-decisions" kicker={t.caseStudy.keyDecisionsKicker} bodyWidth="none">
     {caseData.keyDecisions.map((decision, i) => {
-      const media = decisionMedia[i];
+      const media = decisionMedia.find((m) => m.decision === i + 1);
+      const galleryId = `${slug}-decision-${i + 1}`;
+      const beforeSrc = resolveLocalizedSrc(media?.beforeSrc, lang);
+      const afterSrc = resolveLocalizedSrc(media?.afterSrc, lang);
+      const mediaSrc = resolveLocalizedSrc(media?.src, lang);
       return (
-        <KeyDecision decision={decision} index={i + 1}>
+        <KeyDecision decision={decision} index={i + 1} hasMedia={Boolean(media)}>
           {media?.variant === "before-after" ? (
             <BeforeAfter
               locale={lang}
               name={media.name}
               caseName={caseData.title}
-              purpose={lang === "zh" ? media.purpose.zh : media.purpose.en}
+              purpose={media.purpose[lang]}
+              ratio={media.ratio}
+              display={media.display}
+              beforeSrc={beforeSrc}
+              afterSrc={afterSrc}
+              width={media.width}
+              height={media.height}
+              galleryId={beforeSrc && afterSrc ? galleryId : undefined}
             />
           ) : media ? (
-            <ResponsiveMedia
-              name={media.name}
-              variant={media.variant}
-              caseName={caseData.title}
-              purpose={lang === "zh" ? media.purpose.zh : media.purpose.en}
-            />
+            <CaseStudyGallery id={mediaSrc ? galleryId : undefined}>
+              <ResponsiveMedia
+                locale={lang}
+                name={media.name}
+                variant={media.variant}
+                caseName={caseData.title}
+                purpose={media.purpose[lang]}
+                ratio={media.ratio}
+                display={media.display}
+                src={mediaSrc}
+                width={media.width}
+                height={media.height}
+                alt={media.purpose[lang]}
+                lightbox={Boolean(mediaSrc)}
+                caption={media.caption?.[lang]}
+                zoomLabel={t.lightbox.viewLargerImage}
+              />
+            </CaseStudyGallery>
           ) : null}
+
+          {decision.infoCard && (
+            <div slot="sideCard">
+              <CaseInfoCard label={decision.infoCard.label}>
+                <dl class="governance-cadence">
+                  {decision.infoCard.rows.map((row) => (
+                    <div class="governance-cadence__row">
+                      <dt>{row.label}</dt>
+                      <dd>
+                        {row.body && <p>{row.body}</p>}
+                        {row.items && (
+                          <ul>
+                            {row.items.map((item) => (
+                              <li>{item}</li>
+                            ))}
+                          </ul>
+                        )}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              </CaseInfoCard>
+            </div>
+          )}
         </KeyDecision>
       );
     })}
@@ -186,53 +415,92 @@ const impactHighlightMetrics = caseData.metrics.slice(-2);
     id="execution"
     kicker={caseData.execution.kicker}
     heading={caseData.execution.heading}
-    tone="raised"
     bodyWidth="none"
   >
-    <div class="case-wide">
-      <div class="case-split">
-        <div class="case-split__text">
-          {caseData.execution.paragraphs.map((paragraph) => (
-            <p class="case-paragraph">{paragraph}</p>
-          ))}
+    <div class="execution-layout" data-has-support={hasExecutionSupport || undefined}>
+      <div class="case-reading execution-layout__content">
+        {caseData.execution.paragraphs.map((paragraph) => (
+          <p class="case-paragraph">{paragraph}</p>
+        ))}
 
-          {caseData.execution.supportingMetrics && (
-            <div class="execution-metrics">
-              <CaseMetrics
-                metrics={caseData.execution.supportingMetrics}
-                caption={caseData.execution.supportingMetricsCaption}
-                compact
-              />
-            </div>
-          )}
+        {caseData.execution.supportingMetrics && (
+          <div class="execution-metrics">
+            <CaseMetrics
+              metrics={caseData.execution.supportingMetrics}
+              caption={caseData.execution.supportingMetricsCaption}
+              compact
+            />
+          </div>
+        )}
+      </div>
+
+      {operatingContext && roleCard && (
+        <div class="execution-layout__support">
+          <CaseInfoCard label={operatingContext.label}>
+            <ul class="operating-context-grid">
+              {operatingContext.stats.map((stat) => (
+                <li class="operating-context-grid__item">
+                  <p class="operating-context-grid__value">{stat.value}</p>
+                  <p class="operating-context-grid__label">{stat.label}</p>
+                </li>
+              ))}
+            </ul>
+          </CaseInfoCard>
+
+          <CaseInfoCard label={roleCard.label}>
+            <ul class="role-card-list">
+              {roleCard.items.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+            {roleCard.footnote && <p class="role-card-footnote">{roleCard.footnote}</p>}
+          </CaseInfoCard>
         </div>
-        <div class="case-split__media">
+      )}
+    </div>
+
+    {executionImageSrc && (
+      <div class="case-wide execution-media">
+        <CaseStudyGallery id={`${slug}-execution`}>
           <ResponsiveMedia
+            locale={lang}
             name={`${caseData.title} — Execution Detail`}
             variant="diagram"
             caseName={caseData.title}
-            purpose={
-              lang === "zh"
-                ? "呈現產品規則、資料流程或元件治理的示意圖"
-                : "Illustrate the product rules, data workflow, or component governance in practice"
-            }
+            purpose={t.caseStudy.executionMediaPurpose}
+            ratio={executionImage?.ratio}
+            display={executionImage?.display}
+            src={executionImageSrc}
+            width={executionImage?.width}
+            height={executionImage?.height}
+            alt={t.caseStudy.executionMediaPurpose}
+            lightbox={true}
+            zoomLabel={t.lightbox.viewLargerImage}
           />
-        </div>
+        </CaseStudyGallery>
       </div>
-    </div>
+    )}
   </CaseSection>
 
-  <CaseSection id="impact" kicker={caseData.impact.kicker} heading={caseData.impact.heading} tone="dark" bodyWidth="wide">
+  <CaseSection
+    id="impact"
+    kicker={caseData.impact.kicker}
+    heading={caseData.impact.heading}
+    tone="dark"
+    bodyWidth="wide"
+    fullBleed
+  >
     <ImpactGrid blocks={caseData.impact.blocks} footnote={caseData.impact.footnote} highlightMetrics={impactHighlightMetrics} />
   </CaseSection>
 
-  <CaseSection id="reflection" kicker={caseData.reflection.kicker} heading={caseData.reflection.heading} tone="tint">
+  <CaseSection id="reflection" kicker={caseData.reflection.kicker} heading={caseData.reflection.heading}>
     <ReflectionSection paragraphs={caseData.reflection.paragraphs} />
   </CaseSection>
     </div>
   </div>
 
   <NextCaseNavigation locale={lang} previous={prevCard} next={nextCard} />
+  <CaseStudyLightbox />
 </BaseLayout>
 
 <style>
@@ -259,6 +527,119 @@ const impactHighlightMetrics = caseData.metrics.slice(-2);
   }
 
   .execution-metrics {
-    margin-top: var(--space-xl);
+    margin-top: var(--case-inner-space);
+  }
+
+  .execution-media {
+    margin-top: 32px;
+  }
+
+  /*
+    Plain block by default — identical to the old unwrapped .case-reading
+    markup. Only becomes a text/card split when a case actually supplies
+    operatingContext + roleCard (currently only design-system), so every
+    other case study's Execution section renders exactly as before.
+  */
+  .execution-layout {
+    display: block;
+  }
+
+  .execution-layout[data-has-support] {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--case-inner-space);
+  }
+
+  .execution-layout__support {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  @media (min-width: 900px) {
+    .execution-layout[data-has-support] {
+      grid-template-columns: minmax(0, 2fr) minmax(240px, 1fr);
+      gap: var(--case-split-gap);
+      align-items: start;
+    }
+  }
+
+  /* ---- Key Decision 3: governance cadence card ---- */
+  .governance-cadence {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .governance-cadence__row + .governance-cadence__row {
+    margin-top: var(--space-sm);
+    padding-top: var(--space-sm);
+    border-top: 1px solid var(--color-line);
+  }
+
+  .governance-cadence__row dt {
+    font-size: var(--fs-case-meta-label);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-kicker);
+    color: var(--color-ink-soft);
+  }
+
+  .governance-cadence__row dd {
+    margin: var(--space-2xs) 0 0;
+    font-size: var(--fs-case-caption);
+    color: var(--color-ink-soft);
+    line-height: 1.6;
+  }
+
+  .governance-cadence__row dd ul {
+    margin: 0;
+    padding-left: 1.1em;
+  }
+
+  .governance-cadence__row dd li + li {
+    margin-top: var(--space-2xs);
+  }
+
+  /* ---- Execution: operating context (resource conditions, not KPIs) ---- */
+  .operating-context-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-sm) var(--space-md);
+  }
+
+  .operating-context-grid__value {
+    font-size: var(--fs-h4);
+    font-weight: 700;
+    color: var(--color-ink);
+    line-height: 1.1;
+  }
+
+  .operating-context-grid__label {
+    margin-top: var(--space-2xs);
+    font-size: var(--fs-case-caption);
+    color: var(--color-ink-soft);
+  }
+
+  /* ---- Execution: my role ---- */
+  .role-card-list {
+    margin: 0;
+    padding-left: 1.1em;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .role-card-list li {
+    font-size: var(--fs-case-caption);
+    color: var(--color-ink-soft);
+    line-height: 1.6;
+  }
+
+  .role-card-footnote {
+    margin-top: var(--space-sm);
+    padding-top: var(--space-sm);
+    border-top: 1px solid var(--color-line);
+    font-size: var(--fs-case-caption);
+    color: var(--color-grey-500);
   }
 </style>

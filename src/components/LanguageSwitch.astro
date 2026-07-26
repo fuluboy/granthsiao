@@ -1,5 +1,5 @@
 ---
-import { UI_TEXT, swapLocaleInPath, otherLocale, type Locale } from "../i18n/config";
+import { UI_TEXT, HTML_LANG, swapLocaleInPath, otherLocale, withBase, type Locale } from "../i18n/config";
 
 interface Props {
   locale: Locale;
@@ -9,17 +9,16 @@ const { locale } = Astro.props;
 const target = otherLocale(locale);
 const t = UI_TEXT[locale];
 const altPath = swapLocaleInPath(Astro.url.pathname, target);
-const currentLabel = locale === "zh" ? "中" : "EN";
 ---
 
 <a
   href={altPath}
   class="lang-switch"
   aria-label={t.langSwitchLabelTo(target)}
-  hreflang={target === "zh" ? "zh-Hant" : "en"}
+  hreflang={HTML_LANG[target]}
 >
-  <img src="/brand/icon-lang_switch.svg" alt="" width="20" height="20" aria-hidden="true" />
-  <span class="lang-switch__current" aria-current="true">{currentLabel}</span>
+  <img src={withBase("/brand/icon-lang_switch.svg")} alt="" width="20" height="20" aria-hidden="true" />
+  <span class="lang-switch__current" aria-current="true">{t.language.current}</span>
 </a>
 
 <style>

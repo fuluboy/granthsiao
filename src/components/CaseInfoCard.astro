@@ -1,0 +1,46 @@
+---
+/**
+ * Small supplementary card — lighter weight than a Key Decision's main
+ * media, used for compact reference info (e.g. a governance cadence
+ * summary, resourcing context) that sits beside or below case-study prose.
+ * The label is a <p>, never a heading, so these cards never compete with
+ * the surrounding section's real heading structure.
+ */
+interface Props {
+  label: string;
+}
+
+const { label } = Astro.props;
+---
+
+<div class="case-info-card">
+  <p class="case-info-card__label">{label}</p>
+  <div class="case-info-card__body">
+    <slot />
+  </div>
+</div>
+
+<style>
+  .case-info-card {
+    background: var(--color-paper-raised);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    padding: var(--space-md);
+  }
+
+  .case-info-card__label {
+    font-size: var(--fs-case-meta-label);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-kicker);
+    color: var(--color-mustard);
+  }
+
+  .case-info-card__body {
+    margin-top: var(--space-sm);
+  }
+
+  .case-info-card + .case-info-card {
+    margin-top: var(--space-md);
+  }
+</style>

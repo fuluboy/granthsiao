@@ -38,13 +38,13 @@ export const home: HomeContent = {
       {
         slug: "rakuya-data-product",
         index: "02",
-        eyebrow: "Product Strategy · Data Product · B2B Growth",
+        eyebrow: "Product Strategy · B2B PropTech · Agent Intelligence",
         name: "樂屋案源情報",
-        title: "把每天分散的找案工作，整理成可採取行動的情報",
+        title: "把分散的市場訊號，轉成房仲每天可採取行動的案源情報",
         description:
-          "從房仲每天跨平台找新案、比價格與判斷地址的工作出發，建立每日日報與資料判讀流程，再推進品牌試用與付費合作。",
-        tags: ["Product Strategy", "Data Product", "B2B Growth"],
-        metric: "每日掃描 1–2 小時 → 5–10 分鐘 · 2 家品牌續約",
+          "從房仲每天跨平台找新案、比對價格與判斷地址的工作出發，建立初次上架、降價與下架日報，再推進品牌試用、系統整合與付費合作。",
+        tags: ["Product Strategy", "B2B PropTech", "Agent Intelligence"],
+        metric: "每日案源掃描 1–2 小時 → 5–10 分鐘 · 2 家品牌續約付費",
         imageSide: "right",
       },
       {

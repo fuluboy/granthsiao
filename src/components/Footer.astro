@@ -1,5 +1,5 @@
 ---
-import { UI_TEXT, type Locale } from "../i18n/config";
+import { UI_TEXT, withBase, type Locale } from "../i18n/config";
 import { getFooter } from "../content";
 import { siteConfig } from "../content/siteConfig";
 
@@ -10,7 +10,7 @@ interface Props {
 const { locale } = Astro.props;
 const footer = getFooter(locale);
 const t = UI_TEXT[locale];
-const home = `/${locale}/`;
+const home = withBase(`/${locale}/`);
 const year = new Date().getFullYear();
 ---
 
@@ -21,7 +21,7 @@ const year = new Date().getFullYear();
       <p class="site-footer__role">{footer.role} · {footer.location}</p>
     </div>
 
-    <nav class="site-footer__nav" aria-label={locale === "zh" ? "頁尾導覽" : "Footer navigation"}>
+    <nav class="site-footer__nav" aria-label={t.accessibility.footerNav}>
       <ul>
         <li><a href={`${home}about/`}>{t.nav.about}</a></li>
         <li><a href={`${home}#selected-work`}>{t.nav.work}</a></li>
@@ -30,13 +30,13 @@ const year = new Date().getFullYear();
     </nav>
 
     <div class="site-footer__actions">
-      <a class="btn btn-outline" href={siteConfig.resumeHref[locale]} target="_blank" rel="noopener noreferrer">{footer.resumeLabel}</a>
+      <a class="btn btn-outline" href={withBase(siteConfig.resumeHref[locale])} target="_blank" rel="noopener noreferrer">{footer.resumeLabel}</a>
       <a class="btn" href={`mailto:${siteConfig.contactEmail}`}>{footer.contactLabel}</a>
     </div>
   </div>
 
   <div class="container site-footer__rights">
-    <p>© {year} {footer.name} — {footer.rights}</p>
+    <p>© {year} {footer.name}</p>
   </div>
 </footer>
 

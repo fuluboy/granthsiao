@@ -1,5 +1,6 @@
 ---
 import type { HomeContent } from "../content/types";
+import { withBase } from "../i18n/config";
 
 interface Props {
   home: HomeContent;
@@ -14,7 +15,7 @@ const { home } = Astro.props;
       <div class="vinyl-group">
         <img
           class="vinyl-disc"
-          src="/brand/vinyl.png"
+          src={withBase("/brand/vinyl.png")}
           alt=""
           width="1093"
           height="1093"
@@ -25,7 +26,7 @@ const { home } = Astro.props;
         <div class="vinyl-label">
           <img
             class="vinyl-label-image"
-            src="/brand/vinyl-tag.png"
+            src={withBase("/brand/vinyl-tag.png")}
             alt=""
             width="576"
             height="568"
@@ -45,7 +46,10 @@ const { home } = Astro.props;
             </div>
             <div class="vinyl-label__body">
               <p class="vinyl-label__blurb">
-                Uncovering real user needs to build products that work for people and the business.
+                Between thought and expression lies a lifetime.
+              </p>
+              <p class="vinyl-label__song">
+                 Velvet Undergroung - Some Kinda Love
               </p>
               <p class="vinyl-label__location">TAIPEI, TAIWAN 2026</p>
             </div>
@@ -106,7 +110,7 @@ const { home } = Astro.props;
 
       <img
         class="hero-thunder"
-        src="/brand/thunder.png"
+        src={withBase("/brand/thunder.png")}
         alt=""
         width="452"
         height="631"
@@ -358,14 +362,20 @@ const { home } = Astro.props;
   }
 
   .vinyl-label__blurb {
-    font-size: 2.3cqw;
+    font-size: 2.8cqw;
     line-height: 1.4;
+    font-weight: 900;
+  }
+   .vinyl-label__song {
+    font-size: 1.8cqw;
+    line-height: 1;
   }
 
   .vinyl-label__location {
-    font-size: 2cqw;
+    font-size: 1.2cqw;
     font-weight: 700;
     letter-spacing: 0.02em;
+    padding-top: 10px;
     color: var(--color-ink);
   }
 

@@ -13,7 +13,7 @@ const { metrics, caption, compact = false, tone = "default" } = Astro.props;
 
 <div class:list={["case-metrics", { "case-metrics--compact": compact, "case-metrics--dark": tone === "dark" }]}>
   {caption && <p class="case-metrics__caption">{caption}</p>}
-  <ul class="case-metrics__grid">
+  <ul class="case-metrics__grid" data-count={Math.min(metrics.length, 4)}>
     {metrics.map((metric) => (
       <li class="case-metrics__item">
         <p class="case-metrics__value">{metric.value}</p>
@@ -37,13 +37,33 @@ const { metrics, caption, compact = false, tone = "default" } = Astro.props;
     margin-top: var(--space-sm);
   }
 
+  /*
+    Column count follows the actual number of metrics — a case with 2
+    numbers should not stretch across 4 empty-feeling slots.
+  */
   .case-metrics__grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   }
 
-  .case-metrics--compact .case-metrics__grid {
-    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  .case-metrics__grid[data-count="1"] {
+    grid-template-columns: minmax(160px, 320px);
+  }
+
+  .case-metrics__grid[data-count="2"] {
+    grid-template-columns: repeat(2, minmax(140px, 1fr));
+  }
+
+  .case-metrics__grid[data-count="3"] {
+    grid-template-columns: repeat(3, minmax(140px, 1fr));
+  }
+
+  .case-metrics__grid[data-count="4"] {
+    grid-template-columns: repeat(4, minmax(120px, 1fr));
+  }
+
+  .case-metrics--compact .case-metrics__grid[data-count="1"] {
+    grid-template-columns: minmax(130px, 260px);
   }
 
   .case-metrics__item {
@@ -64,12 +84,9 @@ const { metrics, caption, compact = false, tone = "default" } = Astro.props;
   }
 
   .case-metrics__value {
-    font-size: var(--fs-h2);
+    font-size: var(--fs-case-metric-value);
     font-weight: 700;
-  }
-
-  .case-metrics--compact .case-metrics__value {
-    font-size: var(--fs-lead);
+    line-height: 1.15;
   }
 
   .case-metrics--dark .case-metrics__value {
@@ -77,9 +94,10 @@ const { metrics, caption, compact = false, tone = "default" } = Astro.props;
   }
 
   .case-metrics__label {
-    font-size: var(--fs-small);
+    font-size: var(--fs-case-meta-value);
     color: var(--color-ink-soft);
     margin-top: var(--space-2xs);
+    line-height: 1.5;
   }
 
   .case-metrics--dark .case-metrics__label {
@@ -87,7 +105,7 @@ const { metrics, caption, compact = false, tone = "default" } = Astro.props;
   }
 
   @media (max-width: 767px) {
-    .case-metrics__grid {
+    .case-metrics__grid:not([data-count="1"]) {
       grid-template-columns: repeat(2, 1fr);
     }
 

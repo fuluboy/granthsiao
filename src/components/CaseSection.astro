@@ -3,14 +3,22 @@ interface Props {
   id: string;
   kicker?: string;
   heading?: string;
-  tone?: "default" | "raised" | "tint" | "dark";
+  tone?: "default" | "subtle" | "tint" | "dark";
   bodyWidth?: "reading" | "wide" | "none";
+  fullBleed?: boolean;
 }
 
-const { id, kicker, heading, tone = "default", bodyWidth = "reading" } = Astro.props;
+const { id, kicker, heading, tone = "default", bodyWidth = "reading", fullBleed = false } = Astro.props;
 ---
 
-<section id={id} class:list={["case-section", `case-section--${tone}`]}>
+<section
+  id={id}
+  class:list={[
+    "case-section",
+    `case-section--${tone}`,
+    { "case-section--full-bleed": fullBleed },
+  ]}
+>
   <div class="case-reading case-section__head">
     {kicker && <p class="kicker case-section__kicker">{kicker}</p>}
     {heading && <h2 class="case-section__heading">{heading}</h2>}
@@ -29,24 +37,26 @@ const { id, kicker, heading, tone = "default", bodyWidth = "reading" } = Astro.p
 
 <style>
   .case-section {
-    scroll-margin-top: calc(var(--header-height-mobile) + var(--case-nav-height-mobile) + var(--space-sm));
+    position: relative;
+    scroll-margin-top: var(--case-anchor-offset-compact);
     padding-block: var(--case-section-space);
+    background: var(--section-background, transparent);
   }
 
   .case-section--default {
-    background: var(--color-paper);
+    --section-background: var(--color-paper);
   }
 
-  .case-section--raised {
-    background: var(--color-paper-raised);
+  .case-section--subtle {
+    --section-background: color-mix(in srgb, var(--color-paper-raised) 55%, var(--color-paper));
   }
 
   .case-section--tint {
-    background: color-mix(in srgb, var(--color-mustard-soft) 16%, var(--color-paper));
+    --section-background: color-mix(in srgb, var(--color-mustard-soft) 12%, var(--color-paper));
   }
 
   .case-section--dark {
-    background: var(--color-ink);
+    --section-background: var(--color-ink);
     color: var(--color-paper-raised);
   }
 
@@ -55,16 +65,42 @@ const { id, kicker, heading, tone = "default", bodyWidth = "reading" } = Astro.p
   }
 
   /*
-    Toned sections carry their own background. Below the rail breakpoint the
-    band bleeds to the viewport edges (the layout wrapper's padding is
-    cancelled with negative margins); on desktop the band spans the content
-    column and its contents get a deliberate inset.
+    Full bleed: the section itself stays in normal flow (no width change,
+    no negative margins on the content), a pseudo-element behind it carries
+    the background out to the viewport edges. `isolation: isolate` gives
+    the section its own stacking context so z-index: -1 on the pseudo
+    can't slip behind an earlier sibling section.
+
+    The classic left:50%/translateX(-50%) bleed only lands on the true
+    viewport edges when the element's own box is horizontally centered on
+    the page. At the >=1100px sidebar breakpoint .case-main is NOT centered
+    — it sits to the right of the sidebar+gap — so the naive version
+    overshoots by half that offset and creates horizontal scroll.
+    --case-bleed-shift corrects for it; it's 0 below the sidebar breakpoint,
+    where .case-main has no such offset.
   */
-  .case-section--raised,
-  .case-section--tint,
-  .case-section--dark {
-    margin-inline: calc(var(--container-pad) * -1);
-    padding-inline: var(--container-pad);
+  .case-section--full-bleed {
+    isolation: isolate;
+    background: none;
+    --case-bleed-shift: 0px;
+  }
+
+  @media (min-width: 1100px) {
+    .case-section--full-bleed {
+      --case-bleed-shift: calc((var(--case-sidebar-width) + var(--case-column-gap)) / 2);
+    }
+  }
+
+  .case-section--full-bleed::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    bottom: 0;
+    left: calc(50% - var(--case-bleed-shift));
+    width: 100vw;
+    transform: translateX(-50%);
+    background: var(--section-background);
   }
 
   .case-section__kicker {
@@ -86,22 +122,9 @@ const { id, kicker, heading, tone = "default", bodyWidth = "reading" } = Astro.p
     margin-top: var(--case-inner-space);
   }
 
-  @media (min-width: 768px) {
+  @media (min-width: 1100px) {
     .case-section {
-      scroll-margin-top: calc(var(--header-height) + var(--case-nav-height) + var(--space-sm));
-    }
-
-    .case-section--raised,
-    .case-section--tint,
-    .case-section--dark {
-      margin-inline: 0;
-      padding-inline: clamp(2rem, 3vw, 3.5rem);
-    }
-  }
-
-  @media (min-width: 1280px) {
-    .case-section {
-      scroll-margin-top: calc(var(--header-height) + var(--space-md));
+      scroll-margin-top: var(--case-anchor-offset-desktop);
     }
   }
 </style>

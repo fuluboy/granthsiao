@@ -1,14 +1,16 @@
 ---
-import MediaPlaceholder, { type PlaceholderVariant } from "./MediaPlaceholder.astro";
+import MediaPlaceholder, { VARIANT_DEFAULTS, type PlaceholderVariant, type MediaRatio, type MediaDisplay } from "./MediaPlaceholder.astro";
+import type { Locale } from "../i18n/config";
 
 interface Props {
+  locale: Locale;
   name: string;
   variant?: PlaceholderVariant;
   caseName?: string;
   purpose?: string;
   format?: string;
-  ratio?: string;
-  display?: "cover" | "contain";
+  ratio?: MediaRatio;
+  display?: MediaDisplay;
   alt?: string;
   src?: string;
   srcset?: string;
@@ -17,9 +19,27 @@ interface Props {
   height?: number;
   loading?: "lazy" | "eager";
   class?: string;
+  /**
+   * Opt-in only — must never be inferred from `src` alone. Case Study
+   * content images pass this explicitly; other ResponsiveMedia callers
+   * (e.g. SelectedWorkCard's cover, which is itself wrapped in a page-nav
+   * `<a>`) must keep this unset so they're never wrapped in a second,
+   * nested anchor.
+   */
+  lightbox?: boolean;
+  /**
+   * Only pass this when the image already has a *visible* on-page caption
+   * elsewhere (e.g. BeforeAfter's Before/After label). Do not backfill this
+   * from `alt`/`purpose` for images that have no visible caption today —
+   * PhotoSwipe should show no caption rather than a fabricated one.
+   */
+  caption?: string;
+  /** Accessible label appended (visually hidden) inside the lightbox trigger, e.g. "View larger image". Ignored unless `lightbox` is set. */
+  zoomLabel?: string;
 }
 
 const {
+  locale,
   name,
   variant = "detail",
   caseName,
@@ -35,32 +55,73 @@ const {
   height,
   loading = "lazy",
   class: className,
+  lightbox = false,
+  caption,
+  zoomLabel,
 } = Astro.props;
 
-const resolvedRatio = ratio ?? "4 / 3";
-const resolvedDisplay = display ?? "cover";
+const canLightbox = lightbox && Boolean(src) && Boolean(width) && Boolean(height);
+
+// Same variant → { ratio, display } lookup MediaPlaceholder uses for the
+// placeholder itself, so a real image and its placeholder never disagree
+// on shape once the src is filled in. Never fall back to a fixed ratio
+// (e.g. 4/3) here — that silently mis-crops any variant that isn't 4:3.
+if (import.meta.env.DEV && src && !ratio) {
+  console.warn(
+    `[ResponsiveMedia] "${name}" has a src but no explicit ratio — falling back to the "${variant}" variant default (${VARIANT_DEFAULTS[variant].ratio}). Pass ratio explicitly for real media so a future variant change can't silently re-crop it.`
+  );
+}
+
+const resolvedRatio = ratio ?? VARIANT_DEFAULTS[variant].ratio;
+const resolvedDisplay = display ?? VARIANT_DEFAULTS[variant].display;
 ---
 
 {
   src ? (
-    <div
-      class:list={["responsive-media", className]}
-      style={`aspect-ratio: ${resolvedRatio};`}
-      data-display={resolvedDisplay}
-    >
-      <img
-        src={src}
-        srcset={srcset}
-        sizes={sizes}
-        width={width}
-        height={height}
-        alt={alt}
-        loading={loading}
-        decoding="async"
-      />
-    </div>
+    canLightbox ? (
+      <a
+        class:list={["responsive-media", "responsive-media--lightbox", className]}
+        style={`aspect-ratio: ${resolvedRatio};`}
+        data-display={resolvedDisplay}
+        href={src}
+        data-pswp-width={width}
+        data-pswp-height={height}
+        data-pswp-caption={caption || undefined}
+      >
+        <img
+          src={src}
+          srcset={srcset}
+          sizes={sizes}
+          width={width}
+          height={height}
+          alt={alt}
+          loading={loading}
+          decoding="async"
+        />
+        {zoomLabel && <span class="visually-hidden">{zoomLabel}</span>}
+        <span class="responsive-media__zoom-affordance" aria-hidden="true"></span>
+      </a>
+    ) : (
+      <div
+        class:list={["responsive-media", className]}
+        style={`aspect-ratio: ${resolvedRatio};`}
+        data-display={resolvedDisplay}
+      >
+        <img
+          src={src}
+          srcset={srcset}
+          sizes={sizes}
+          width={width}
+          height={height}
+          alt={alt}
+          loading={loading}
+          decoding="async"
+        />
+      </div>
+    )
   ) : (
     <MediaPlaceholder
+      locale={locale}
       name={name}
       variant={variant}
       caseName={caseName}
@@ -92,5 +153,59 @@ const resolvedDisplay = display ?? "cover";
   .responsive-media[data-display="contain"] img {
     object-fit: contain;
     background: var(--color-paper-sunken);
+  }
+
+  .responsive-media--lightbox {
+    position: relative;
+    display: block;
+    cursor: zoom-in;
+    text-decoration: none;
+  }
+
+  /*
+    Deliberately no hover scale/lift/shadow/mask here — the brief calls for
+    a restrained affordance, not a "clickable card" treatment. Only the
+    corner icon nudges to full opacity on hover/focus; on touch devices
+    hover never fires so the icon must already be visible by default.
+  */
+  .responsive-media__zoom-affordance {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: rgba(27, 27, 28, 0.55);
+    opacity: 0.85;
+    transition: opacity var(--duration-hover) var(--ease-out);
+    pointer-events: none;
+  }
+
+  .responsive-media__zoom-affordance::before {
+    content: "";
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    width: 10px;
+    height: 10px;
+    border: 1.5px solid var(--color-paper);
+    border-radius: 50%;
+  }
+
+  .responsive-media__zoom-affordance::after {
+    content: "";
+    position: absolute;
+    top: 15px;
+    left: 14px;
+    width: 6px;
+    height: 1.5px;
+    background: var(--color-paper);
+    border-radius: 1px;
+    transform: rotate(45deg);
+  }
+
+  .responsive-media--lightbox:hover .responsive-media__zoom-affordance,
+  .responsive-media--lightbox:focus-visible .responsive-media__zoom-affordance {
+    opacity: 1;
   }
 </style>

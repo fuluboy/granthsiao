@@ -1,64 +1,23 @@
 /*
   Layout primitives shared by all Case Study pages.
-  Three content widths, used instead of one page-wide container:
-    .case-wide     ~1180-1280px  — hero media, wide diagrams, impact, next-case
-    .case-reading  ~680-760px   — long-form prose (context, execution, reflection)
-    .case-split    12-col grid  — text/media pairs (key decisions, execution)
+  Two content widths, used instead of one page-wide container:
+    .case-wide     up to --case-main-width     — hero media, metrics, decision media, impact
+    .case-reading  up to --case-reading-width   — long-form prose (context, decisions, execution, reflection)
   Imported once by src/pages/[lang]/work/[slug].astro; not scoped elsewhere.
 */
 
 .case-wide {
   width: 100%;
-  max-width: 1240px;
+  max-width: var(--case-shell-width);
   margin-inline: auto;
   padding-inline: var(--container-pad);
 }
 
 .case-reading {
   width: 100%;
-  max-width: 740px;
+  max-width: var(--case-reading-width);
   margin-inline: auto;
   padding-inline: var(--container-pad);
-}
-
-.case-split {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: var(--case-split-gap);
-  align-items: center;
-}
-
-.case-split__text {
-  grid-column: span 5;
-}
-
-.case-split__media {
-  grid-column: span 7;
-}
-
-.case-split--reverse .case-split__media {
-  grid-column: 1 / span 7;
-}
-
-.case-split--reverse .case-split__text {
-  grid-column: span 5 / -1;
-}
-
-/* Side-by-side split only when the rail layout provides a wide content
-   column (≥1280px); the centered 880px column stacks text above media. */
-@media (max-width: 1279px) {
-  .case-split {
-    grid-template-columns: 1fr;
-    align-items: stretch;
-    gap: var(--space-lg);
-  }
-
-  .case-split__text,
-  .case-split__media,
-  .case-split--reverse .case-split__text,
-  .case-split--reverse .case-split__media {
-    grid-column: 1 / -1;
-  }
 }
 
 .case-media-wide {
@@ -66,38 +25,64 @@
 }
 
 /*
-  Case page shell: a single wrapper that becomes a two-column grid on wide
-  screens — section-nav rail on the left, content column on the right.
-  Below 1280px the rail collapses and SectionNavigation renders as a sticky
-  top bar instead (styles live in SectionNavigation.astro).
+  Case Study shell: a single wrapper that becomes a two-column grid at the
+  sidebar breakpoint (>=1100px) — a fixed-width sidebar column on the left,
+  the main content column on the right, sized from the sidebar/gap/main
+  tokens directly so the grid math and the tokens can never drift apart.
+  Below that breakpoint the sidebar collapses (SectionNavigation renders
+  nothing — see its own styles) and the shell is just a centered single
+  column capped at the main column width.
 */
-.case-layout {
+.case-shell {
   width: 100%;
-  /* Below the rail breakpoint the whole content block stays a centered
-     column — prevents a left-hugging page with dead space on the right
-     at tablet/small-laptop widths. */
-  max-width: 880px;
+  max-width: calc(var(--case-main-width) + var(--container-pad) * 2);
   margin-inline: auto;
   padding-inline: var(--container-pad);
 }
 
-@media (min-width: 1280px) {
-  .case-layout {
-    max-width: 1360px;
+@media (min-width: 1100px) {
+  .case-shell {
+    /*
+      No padding-inline here: at this breakpoint the shell's max-width is
+      exactly sidebar + gap + main, so any inline padding would eat into
+      the tracks and shrink .case-main below its cap even on wide viewports.
+      Edge breathing room comes from centering (justify-content), not from
+      padding — that's only needed below this breakpoint's single column.
+    */
+    max-width: calc(
+      var(--case-sidebar-width) + var(--case-column-gap) + var(--case-main-width)
+    );
+    padding-inline: 0;
     display: grid;
-    grid-template-columns: 200px minmax(0, 1fr);
-    column-gap: clamp(3rem, 4vw, 4.5rem);
-    align-items: start;
+    grid-template-columns: var(--case-sidebar-width) minmax(0, var(--case-main-width));
+    column-gap: var(--case-column-gap);
+    justify-content: center;
+    /*
+      align-items must stay at the grid's default (stretch), not start:
+      .case-sidebar has no content tall enough to match .case-main, so with
+      align-items:start its own box (the sticky nav's containing block)
+      would only be as tall as the nav itself — giving position:sticky just
+      that much room to travel before reverting to static and scrolling
+      off-screen for the rest of the page. Stretching it to match
+      .case-main's full height is what lets the sticky rail follow all the
+      way to Reflection.
+    */
+    align-items: stretch;
   }
 }
 
 /*
-  Inside the content column every container shares one left edge: headings,
+  Inside the main column every container shares one left edge: headings,
   prose, and wide media all start at the same x. Reading-width prose stays
-  narrow via max-width but is never centered independently of wider blocks.
+  narrow via max-width but is never centered independently of wider blocks
+  — this is the one place that cancels .case-wide/.case-reading's own
+  auto-centering. Child components must not add their own margin-inline or
+  a competing max-width; the parent grid decides the horizontal axis.
 */
 .case-main {
+  width: 100%;
   min-width: 0;
+  max-width: var(--case-main-width);
 }
 
 .case-main .case-wide {
@@ -107,9 +92,36 @@
 }
 
 .case-main .case-reading {
-  max-width: 680px;
+  max-width: var(--case-reading-width);
   margin-inline: 0;
   padding-inline: 0;
+}
+
+/*
+  .case-sidebar is a DOM sibling that comes BEFORE .case-main, so by default
+  stacking order .case-main's content (including any full-bleed section's
+  z-index:-1 background pseudo, e.g. Impact) paints on top of it — the
+  pseudo's negative z-index only escapes behind content within its OWN
+  section's stacking context, not behind an earlier, unrelated sibling.
+  position:relative + a positive z-index lifts the whole sidebar column
+  above that, matching CaseSectionNavigation's dark-background handling
+  (see its own styles) for when a dark full-bleed section is behind it.
+*/
+.case-sidebar {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+}
+
+/*
+  Full-bleed section panels (see CaseSection.astro) expand their background
+  to 100vw via an absolutely-positioned pseudo-element. On platforms with a
+  non-overlay scrollbar that can add a sliver of horizontal scroll; case
+  study pages are the only place --full-bleed exists, so the clip is scoped
+  here instead of touching the global body rule in global.css.
+*/
+body:has(.case-section--full-bleed) {
+  overflow-x: clip;
 }
 
 /*

@@ -38,13 +38,13 @@ export const home: HomeContent = {
       {
         slug: "rakuya-data-product",
         index: "02",
-        eyebrow: "Product Strategy · Data Product · B2B Growth",
-        name: "Rakuya Market Intelligence",
-        title: "Turning fragmented prospecting work into actionable daily intelligence",
+        eyebrow: "Product Strategy · B2B PropTech · Agent Intelligence",
+        name: "Rakuya Agent Intelligence",
+        title: "Turning fragmented market signals into actionable daily listing intelligence",
         description:
-          "Starting from the daily work of finding new listings, comparing prices, and resolving addresses across multiple platforms, I helped build a daily intelligence workflow and expand it into brand trials and paid partnerships.",
-        tags: ["Product Strategy", "Data Product", "B2B Growth"],
-        metric: "Daily scan: 1–2 hours → 5–10 minutes · 2 brand renewals",
+          "Starting with agents’ daily routine of tracking new listings, price changes, and property addresses across multiple platforms, I helped build an intelligence workflow that later expanded into brand trials, system integrations, and paid partnerships.",
+        tags: ["Product Strategy", "B2B PropTech", "Agent Intelligence"],
+        metric: "Daily listing scan: 1–2 hours → 5–10 minutes · 2 paid brand renewals",
         imageSide: "right",
       },
       {

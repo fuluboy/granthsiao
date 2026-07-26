@@ -16,11 +16,11 @@ export const profile: ProfileCard = {
 };
 
 export const footer: FooterContent = {
-  name: "Grant Hsiao／蕭宏彬",
+  name: "Grant Hsiao",
   role: "Product & Design Lead",
   location: "Taipei, Taiwan",
   actionsLabel: "下載履歷／聯絡我",
   resumeLabel: "下載履歷",
   contactLabel: "聯絡我",
-  rights: "版權所有",
+  rights: "",
 };

@@ -51,17 +51,51 @@
   --fs-h1: clamp(2rem, 1.5rem + 2.6vw, 3.25rem);
   --fs-display: clamp(2.25rem, 1.5rem + 4vw, 4rem);
 
-  /* ---- Case study specific type scale (additive; does not alter Home/About) ---- */
-  --fs-case-hero: clamp(2.75rem, 1.9rem + 3.6vw, 4.5rem); /* ~44-72px */
-  --fs-case-h2: clamp(2rem, 1.5rem + 2.2vw, 3rem); /* ~32-48px */
-  --fs-case-body: clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem); /* ~17-19px */
+  /*
+    ---- Case study grid ----
+    --case-shell-width is a standalone alignment width for full-bleed page
+    elements outside the sidebar grid (e.g. NextCaseNavigation). The grid
+    itself (.case-shell at >=1100px, in case-study.css) derives its own
+    max-width from sidebar + gap + main so there is one arithmetic source
+    for the actual column math.
+  */
+  --case-shell-width: 1220px;
+  --case-sidebar-width: 150px;
+  --case-column-gap: 40px;
+  --case-main-width: 930px;
+  --case-reading-width: 800px;
+
+  /*
+    ---- Case study type scale ----
+    Mobile-first base values below; tablet/desktop tiers for the two
+    headline sizes are layered on via the media queries further down so
+    there is one place to look for the whole ramp.
+  */
+  --fs-case-hero: clamp(1.75rem, 1.5rem + 1.6vw, 2.125rem); /* mobile ~28-34px */
+  --fs-case-h2: clamp(1.5rem, 1.3rem + 1.2vw, 1.75rem); /* mobile ~24-28px */
+  --fs-case-lead: clamp(1.0625rem, 1.02rem + 0.15vw, 1.125rem); /* ~17-18px */
+  --fs-case-body: clamp(1rem, 0.95rem + 0.3vw, 1.0625rem); /* ~16-17px */
+  --fs-case-decision-title: clamp(1.3125rem, 1.15rem + 0.7vw, 1.5rem); /* ~21-24px */
+  --fs-case-meta-label: clamp(0.6875rem, 0.65rem + 0.2vw, 0.75rem); /* ~11-12px */
+  --fs-case-meta-value: clamp(0.8125rem, 0.78rem + 0.2vw, 0.875rem); /* ~13-14px */
+  --fs-case-caption: clamp(0.75rem, 0.72rem + 0.15vw, 0.8125rem); /* ~12-13px */
+  --fs-case-metric-value: clamp(1.75rem, 1.55rem + 1vw, 2.125rem); /* ~28-34px */
+  --fs-case-sidebar: 0.8125rem; /* 13px */
 
   /* ---- Case study section rhythm ---- */
-  --case-section-space: clamp(4.5rem, 3rem + 6vw, 10rem); /* ~72-160px */
-  --case-inner-space: clamp(2rem, 1.5rem + 3vw, 5rem); /* ~32-80px */
-  --case-split-gap: clamp(2rem, 1.5rem + 2.4vw, 5rem); /* ~32-80px */
-  --case-nav-height: 60px;
-  --case-nav-height-mobile: 52px;
+  --case-section-space: clamp(3rem, 2.6rem + 1.6vw, 4.5rem); /* ~48-72px, major section */
+  --case-inner-space: clamp(1.5rem, 1.2rem + 2vw, 3.25rem); /* ~24-52px, subsection */
+  --case-split-gap: clamp(2.75rem, 2.4rem + 1vw, 3.25rem); /* ~44-52px, Impact block grid gap */
+
+  /*
+    ---- Case study section navigation ----
+    Single source for anchor scroll offsets so every section's
+    scroll-margin-top (in CaseSection.astro) reads from the same two
+    tokens instead of each one guessing at the header + compact-bar math.
+  */
+  --case-compact-nav-height: 46px;
+  --case-anchor-offset-desktop: calc(var(--header-height) + 32px);
+  --case-anchor-offset-compact: calc(var(--header-height) + var(--case-compact-nav-height) + 16px);
 
   --lh-tight: 1.15;
   --lh-heading: 1.3;
@@ -107,6 +141,28 @@
 
 [data-lang="en"] {
   --font-sans: var(--font-sans-en);
+}
+
+/* Case study headline tiers: tablet steps up from the mobile base above,
+   desktop (sidebar breakpoint) steps up again. Keeps the whole H1/H2 ramp
+   defined in one place instead of scattered across components. */
+@media (min-width: 768px) {
+  :root {
+    --fs-case-hero: clamp(2rem, 1.7rem + 1.2vw, 2.375rem); /* tablet ~32-38px */
+    --fs-case-h2: clamp(1.75rem, 1.6rem + 0.8vw, 2rem); /* tablet+ ~28-32px */
+  }
+}
+
+@media (min-width: 1100px) {
+  :root {
+    --fs-case-hero: clamp(2.125rem, 1.9rem + 0.6vw, 2.5rem); /* desktop ~34-40px */
+  }
+}
+
+@media (max-width: 767px) {
+  :root {
+    --case-anchor-offset-compact: calc(var(--header-height-mobile) + var(--case-compact-nav-height) + 16px);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

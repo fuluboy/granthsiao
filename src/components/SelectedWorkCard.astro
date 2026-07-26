@@ -1,6 +1,6 @@
 ---
-import MediaPlaceholder from "./MediaPlaceholder.astro";
-import { UI_TEXT, type Locale } from "../i18n/config";
+import ResponsiveMedia from "./ResponsiveMedia.astro";
+import { UI_TEXT, withBase, type Locale } from "../i18n/config";
 import type { WorkCardSummary } from "../content/types";
 
 interface Props {
@@ -10,18 +10,23 @@ interface Props {
 
 const { locale, card } = Astro.props;
 const t = UI_TEXT[locale];
-const href = `/${locale}/work/${card.slug}/`;
+const href = withBase(`/${locale}/work/${card.slug}/`);
 ---
 
 <article class:list={["work-card", `work-card--${card.imageSide}`]} id={card.slug === "house579" ? "selected-work" : undefined}>
   <a class="work-card__link" href={href}>
     <div class="work-card__media">
-      <MediaPlaceholder
+      <ResponsiveMedia
+        locale={locale}
         name={`${card.name} — Case Cover`}
         caseName={card.name}
-        purpose={locale === "zh" ? "精選作品封面圖" : "Selected work cover image"}
+        purpose={t.media.selectedWorkCoverPurpose}
         ratio="4 / 3"
         display="cover"
+        src={withBase(`/images/work/${card.slug}/cover.jpg`)}
+        width={1920}
+        height={1440}
+        alt={card.title}
       />
     </div>
 

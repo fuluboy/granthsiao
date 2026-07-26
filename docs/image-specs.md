@@ -1,8 +1,22 @@
 # 圖片素材規格表
 
-本文件根據第二輪版型重構後的實際 CSS 容器寬度、斷點與 `MediaPlaceholder` variant 系統計算得出，作為正式圖片素材產出與置換的依據。
+本文件根據 Case Study 共用版型第四輪重構後的實際 CSS 容器寬度、斷點與 `MediaPlaceholder`／`ResponsiveMedia` variant 系統計算得出，並在第五輪圖片 import、第六輪比例稽核後更新為**與程式碼實際比例完全一致**的版本。
 
 如果你只是要換圖，直接看「三、如何替換」一節即可，不需要每個欄位都讀完。
+
+**Case Study 版型寬度（`src/styles/tokens.css` 的 `--case-*` 變數）：**
+
+| 變數 | 數值 | 說明 |
+| --- | --- | --- |
+| `--case-sidebar-width` | 150px | 左側章節導航欄寬 |
+| `--case-column-gap` | 40px | Sidebar 與 Main Column 間距 |
+| `--case-main-width` | 930px | Main Column（Hero 媒體、Metrics、Key Decision 媒體、Execution 媒體、Impact）寬度上限 |
+| `--case-reading-width` | 720px | Reading Column（正文、Key Decision 正文、Execution 文字、Reflection）寬度上限 |
+| `--case-shell-width` | 1220px | 只用於 Sidebar 網格之外、需要獨立置中對齊的滿版元件（例如上／下一案例導覽列），**不是**桌機兩欄網格本身的寬度 |
+
+桌機（≥1100px）兩欄網格（`.case-shell`）的實際寬度上限由 `calc(sidebar + gap + main)` 計算得出，即 150 + 40 + 930 = **1120px**，與上表的 `--case-shell-width` 各自獨立、不必相等。
+
+斷點：桌機（Sidebar 顯示）≥1100px；平板 768–1099px（無 Sidebar，Main Column 隨視窗寬度縮放、上限 930px）；手機 ≤767px（單欄）。`aspect-ratio` 與 `display`（cover／contain）不隨斷點改變 —— 同一張圖在桌機／平板／手機使用同一個比例，只有容器寬度縮放，高度跟著等比例變化。
 
 ---
 
@@ -21,9 +35,9 @@
 
 ---
 
-## 二、Placeholder Variant 系統
+## 二、Placeholder Variant 系統與比例規則
 
-`MediaPlaceholder`／`ResponsiveMedia` 現在依 `variant` 決定預設比例、裁切方式與視覺風格，未來也用同一組 variant 分類正式素材。
+`MediaPlaceholder`／`ResponsiveMedia` 依 `variant` 決定**預設**比例、裁切方式與視覺風格；`VARIANT_DEFAULTS` 這張表定義在 `src/components/MediaPlaceholder.astro` 並 export 出來，是 Placeholder 與正式圖片共用的唯一預設值來源。
 
 | Variant | 預設比例 | cover／contain | 視覺風格 | 用途 |
 | --- | --- | --- | --- | --- |
@@ -34,121 +48,121 @@
 | `detail` | 1:1 | contain | 斜線紋理、虛線框（照片感） | 小型局部／情境圖 |
 | `process` | 21:9 | contain | 同 ui／diagram | 寬版流程／時間軸 |
 
+**重要規則（第六輪稽核後新增）：** 上表只是 `variant` 沒有明確指定 `ratio`／`display` 時的 fallback。**每一個正式素材呼叫點都必須明確帶入 `ratio` 與 `display`**（見 `src/pages/[lang]/work/[slug].astro` 的 `decisionMediaBySlug`／`heroImageBySlug`／`executionImageBySlug`），不可只靠 `variant` 推測 —— 曾經發生過 Rakuya `decision-01.jpg`（實際 1920×823，21:9）因為呼叫端沒有明確帶 `ratio`，被 `ResponsiveMedia` 的正式圖片分支錯誤 fallback 成寫死的 `4 / 3` + `cover`，導致 21:9 的圖被裁成 4:3。根因是 `ResponsiveMedia.astro` 曾經有兩套互相獨立的預設值解析邏輯（Placeholder 分支正確查 `VARIANT_DEFAULTS`，正式圖片分支卻寫死 `ratio ?? "4 / 3"`）；現在兩個分支已改為共用同一張 `VARIANT_DEFAULTS` 表，且開發環境下若 `src` 存在但沒有明確 `ratio`，`ResponsiveMedia` 會印出 `console.warn` 提醒。
+
 畫面上只顯示「素材名稱、Variant 類型、比例」；`caseName`／`purpose`／`format` 只保留在 `title` 屬性（滑鼠移入的原生 tooltip），完整用途仍在本文件中維護。
 
 ---
 
-## 三、如何替換 Placeholder 為正式圖片
+## 三、如何替換／新增正式圖片
 
-1. 把正式圖片放進 `public/images/work/<case-slug>/`（例如 `public/images/work/house579/cover.webp`）。
-2. 找到對應元件呼叫處：
-   - 首頁封面卡在 `src/pages/[lang]/index.astro`（`SelectedWorkCard`）
-   - Case Hero／Execution／Key Decision 圖片在 `src/pages/[lang]/work/[slug].astro`、`src/components/CaseHero.astro`、`src/components/KeyDecision.astro` 的呼叫處
-   - Before／After 在 `src/components/BeforeAfter.astro`
-3. 目前這些位置呼叫的是沒有 `src` 的 `ResponsiveMedia`／`MediaPlaceholder`。要換成正式圖片，改用 `ResponsiveMedia` 並帶入 `src`（與需要的話 `srcset`／`sizes`／`width`／`height`），例如：
-
-   ```astro
-   <ResponsiveMedia
-     name="House579 — Case Cover"
-     variant="hero"
-     caseName="House579"
-     purpose="精選作品封面圖"
-     src="/images/work/house579/cover.webp"
-     alt="House579 手機版刊登管理介面"
-     width={1200}
-     height={900}
-   />
-   ```
-
-   只要有 `src`，`ResponsiveMedia` 會自動改為輸出真正的 `<img>`；沒有 `src` 時則自動落回灰階 Placeholder，所以可以逐張慢慢替換，不必一次全部到位。
-4. Hero 圖（Case Hero、首頁黑膠素材）建議設定 `loading="eager"`；其餘首屏以外的圖片維持預設 `lazy`。
-5. 替換後重新執行 `npm run build` 確認沒有版面跳動（Layout Shift）與型別錯誤。
+1. 把正式圖片放進 `public/images/work/<case-slug>/`（例如 `public/images/work/house579/cover.jpg`）。
+2. 找到對應的資料項目：
+   - 首頁封面卡：`src/components/SelectedWorkCard.astro`（`src={`/images/work/${card.slug}/cover.jpg`}`，逐案例自動對應 slug）
+   - Case Hero：`src/pages/[lang]/work/[slug].astro` 的 `heroImageBySlug`
+   - Key Decision／Before-After：`decisionMediaBySlug`
+   - Execution：`executionImageBySlug`
+3. 每個項目除了 `src`／`width`／`height`，**務必同時填寫 `ratio` 與 `display`**（型別為 `MediaRatio`／`MediaDisplay`，定義於 `src/components/MediaPlaceholder.astro`），不要只改 `src` 就以為完成。`ratio` 應根據圖片實際 `width`／`height` 換算，不可用猜測或沿用其他 variant 的預設值。
+4. 只要有 `src`，`ResponsiveMedia` 會自動改為輸出真正的 `<img>`；沒有 `src` 時則自動落回 Placeholder（用**同一組** `ratio`／`display`，畫面高度不會因為換圖而跳動）。
+5. Hero 圖建議設定 `loading="eager"`；其餘首屏以外的圖片維持預設 `lazy`。
+6. 替換後重新執行 `npm run build`，並在瀏覽器實際確認 `img.naturalWidth`／`naturalHeight` 與容器 `aspect-ratio`／`object-fit` 是否符合預期（不要只看程式碼或 Build 結果）。
 
 ---
 
-## 四、待補圖片素材（Placeholder → 正式圖片）
+## 四、正式圖片稽核表（實際讀取檔案 metadata 得出）
 
-### A. Selected Work 封面（首頁，3 張）
+以下 19 張圖片皆為正式素材（非 Placeholder），路徑、原始尺寸皆為實際讀取結果；「目前」欄位為第六輪修正後、瀏覽器實測的渲染結果。
 
-- **用途**：讓讀者在進入案例前，直覺理解該案例的產品類型
-- **Variant**：`hero`
-- **桌機最大 CSS 顯示寬度**：約 526px（首頁 `.container` 1200px 雙欄各半，扣除 gap／padding；此區塊本輪未調整）
-- **平板／手機**：切為單欄，寬度隨容器縮放（平板約 500–650px；手機約 320–360px）
-- **比例／裁切**：4:3、cover
-- **object-position**：`center`（若畫面重心偏上可改 `top`）
-- **安全區**：中央 80%，勿把標題文字烤進圖片四角
-- **建議輸出**：1200×900px（2x）、WebP（備援 JPG）
-- **2x／透明背景／Lightbox**：需要 2x／不需透明／不需 Lightbox
-- **清單**：
-  1. House579 — 房仲手機後台或刊登流程情境圖，alt 例：「House579 手機版刊登管理介面」
-  2. Rakuya Data Product — 每日日報列表或案源情報卡片畫面，alt 例：「樂屋案源情報每日日報畫面」
-  3. Design System — Figma Library／Token 面板情境截圖，alt 例：「Design System Figma 元件庫總覽」
+### A. 首頁 Selected Work 封面（3 張）
 
-### B. Case Hero（案例首頁主視覺，3 張）
+| 檔案 | Route | Component | 原始尺寸 | 原始比例 | 目前 ratio | 目前 display | 是否裁切 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| `house579/cover.jpg` | `/zh/`、`/en/` | `SelectedWorkCard.astro` | 1920×1440 | 4:3 | 4 / 3 | cover | 是（設計預期，重要內容需在安全區） |
+| `rakuya-data-product/cover.jpg` | 同上 | 同上 | 1920×1440 | 4:3 | 4 / 3 | cover | 是（同上） |
+| `design-system/cover.jpg` | 同上 | 同上 | 1920×1440 | 4:3 | 4 / 3 | cover | 是（同上） |
 
-- **頁面／區塊**：各案例頁最上方
-- **Variant**：`hero`
-- **桌機最大 CSS 顯示寬度**：約 1144px（`.case-wide` 上限 1240px，扣除左右 padding 各 48px）
-- **平板**：全寬，隨容器縮放（約 700–900px）
-- **手機**：全寬，約 320–360px，高度依 16:9 等比縮小
-- **比例／裁切**：16:9、cover
-- **object-position**：`center`
-- **安全區**：中央 70% 寬度、60% 高度
-- **建議輸出**：2300×1294px（2x）、WebP（備援 JPG）
-- **2x／透明背景／Lightbox**：需要 2x／不需透明／不需 Lightbox（情境主視覺，非資訊圖）
-- **清單**：
-  1. House579 Case Hero — 房仲、刊登平台、行動裝置管理的代表畫面
-  2. Rakuya Data Product Case Hero — 每日日報總覽或地圖／社區頁情境圖
-  3. Design System Case Hero — Token／Figma Library／前端元件庫並列總覽視覺
+原始比例本身就是 4:3，`cover` 只在極少數視窗寬高比下裁切邊緣，非內容關鍵區。
 
-### C. Key Decision 對應圖片（每案例 3 張，共 9 張）
+### B. Case Hero（3 張）
 
-每個 Key Decision 現在都有自己專屬的媒體位置，使用 `.case-split` 雙欄（桌機／平板≥1024px 圖文並排，交錯左右；<1024px 改單欄、文字先於圖片）。
+| 檔案 | Route | Component | 原始尺寸 | 原始比例 | 目前 ratio | 目前 display | 是否裁切 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| `house579/hero.jpg` | `/[lang]/work/house579/` | `CaseHero.astro` | 1920×1080 | 16:9 | 16 / 9 | cover | 否（原始比例＝容器比例，cover 與 contain 結果相同） |
+| `rakuya-data-product/hero.jpg` | `/[lang]/work/rakuya-data-product/` | 同上 | 1920×1080 | 16:9 | 16 / 9 | cover | 否 |
+| `design-system/hero.jpg` | `/[lang]/work/design-system/` | 同上 | 1920×1080 | 16:9 | 16 / 9 | cover | 否 |
 
-- **桌機最大 CSS 顯示寬度**：媒體欄約 633px（`.case-split__media` 佔 12 欄中的 7 欄，扣除 gap 與 `.case-wide` padding）
-- **平板（768–1023px）**：改單欄全寬，隨容器縮放
-- **手機**：單欄全寬，文字在上、圖片在下
-- **安全區**：`ui`／`diagram`／`process` 為 contain，全圖皆重要，不可裁切關鍵資訊
+> 三張 hero 來源檔目前 MD5 相同（同一張示意圖），使用者已確認這是暫時測試佔位、之後會替換正式素材，非本次稽核範圍的錯誤。
 
-| 案例 | Decision | Variant | 比例 | 建議內容 |
+### C. Key Decision 圖片（9 張，含 Before/After）
+
+| 案例 | Decision | 檔案 | 原始尺寸 | 原始比例 | Variant | 目前 ratio | 目前 display | 是否裁切 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| House579 | 01 | `decision-01.jpg` | 1920×1080 | 16:9 | `diagram` | 16 / 9 | contain | 否 |
+| House579 | 02 | `decision-02.jpg` | 1920×823 | 21:9 | `process` | 21 / 9 | contain | 否 |
+| House579 | 03 | `decision-03.jpg`（原 `decision-02.jpg`，因新增 Key Decision 2 而順延重新命名） | 1920×1440 | 4:3 | `ui` | 4 / 3 | contain | 否 |
+| House579 | 04（Before） | `decision-04-before.jpg`（原 `decision-03-before.jpg`） | 1920×1200 | 16:10 | `before-after` | 16 / 10 | contain | 否 |
+| House579 | 04（After） | `decision-04-after.jpg`（原 `decision-03-after.jpg`） | 1920×1200 | 16:10 | `before-after` | 16 / 10 | contain | 否 |
+| Rakuya | 01 | `decision-01.jpg` | 1920×823 | 21:9 | `process` | 21 / 9 | contain | **修正前會被裁切，現已修正** |
+| Rakuya | 02 | `decision-02.jpg` | 1920×1080 | 16:9 | `diagram` | 16 / 9 | contain | 否 |
+| Rakuya | 03 | `decision-03.jpg` | 1920×1440 | 4:3 | `ui` | 4 / 3 | contain | 否 |
+| Design System | 01 | `decision-01.jpg` | 1920×823 | 21:9 | `process` | 21 / 9 | contain | 修正前會被裁切，現已修正 |
+| Design System | 02 | `decision-02.jpg` | 1920×1080 | 16:9 | `diagram` | 16 / 9 | contain | 否 |
+| Design System | 03 | `decision-03.jpg` | 1920×1440 | 4:3 | `ui` | 4 / 3 | contain | 否 |
+
+Before／After 兩張圖片（House579 Decision 04）使用相同 `ratio`（16 / 10）與 `display`（contain），瀏覽器實測兩側渲染尺寸一致（369×231，桌機 1344px 視窗下）。
+
+#### 中英文圖片切換（`-EN` 命名慣例）
+
+每個案例上表列出的 Key Decision 圖片，現在都是 `LocalizedImageSource`（`{ zh, en }`，定義於 `src/content/media.ts`），由 `decisionMediaBySlug`（`src/pages/[lang]/work/[slug].astro`）用 `localizedSrc()` 建立，並在渲染時依 `lang` 用 `resolveLocalizedSrc()` 解析成單一路徑——正文縮圖與 PhotoSwipe 大圖都吃同一個解析結果，兩者不會用到兩套不同的圖檔邏輯。命名慣例：中文沿用原檔名，英文在副檔名前加上 `-EN`（例如 `decision-02.jpg` → `decision-02-EN.jpg`）。
+
+| 檔案 | 狀態 |
+| --- | --- |
+| `house579/decision-01-EN.jpg` | 正式英文圖片（非 `-EN` 慣例的暫存複製，內容與中文版不同） |
+| `house579/decision-02-EN.jpg` | **暫存複製**（`decision-02.jpg` 的原檔複製），等正式英文圖完成後直接覆蓋同路徑，不需改程式 |
+| `house579/decision-03-EN.jpg` | 暫存複製，同上 |
+| `house579/decision-04-before-EN.jpg` / `decision-04-after-EN.jpg` | 暫存複製，同上 |
+| `rakuya-data-product/decision-0{1,2,3}-EN.jpg` | 暫存複製，同上 |
+| `design-system/decision-0{1,2,3}-EN.jpg` | 暫存複製，同上 |
+
+Execution 圖片（見 D 節）也含有圖片內文字，已套用同一套機制（`executionImageBySlug` 改用 `LocalizedCaseImage`／`localizedSrc()`／`resolveLocalizedSrc()`）：
+
+| 檔案 | 狀態 |
+| --- | --- |
+| `house579/execution-EN.jpg` | 暫存複製（非本次任務建立，早已存在，未覆蓋） |
+| `rakuya-data-product/execution-EN.jpg` | 暫存複製 |
+| `design-system/execution-EN.jpg` | 暫存複製 |
+
+Hero（`hero.jpg`）、首頁封面（`cover.jpg`）目前維持單一路徑，未套用雙語機制——這兩者不是「圖片內含文字」的流程圖，且不在正式驗收範圍內；未來若需要雙語版本，`heroImageBySlug` 的 `CaseImage` 型別可以用同樣方式改成 `LocalizedImageSource`。
+
+### D. Execution 圖片（3 張）
+
+| 案例 | 檔案 | 原始尺寸 | 原始比例 | 目前 ratio | 目前 display | 是否裁切 |
+| --- | --- | --- | --- | --- | --- | --- |
+| House579 | `execution.jpg` | 1920×1080 | 16:9 | 16 / 9 | contain | 修正前會被裁切成 4:3，現已修正 |
+| Rakuya | `execution.jpg` | 1920×1080 | 16:9 | 16 / 9 | contain | 同上 |
+| Design System | `execution.jpg` | 1920×1080 | 16:9 | 16 / 9 | contain | 同上 |
+
+### 比例／裁切方式彙總
+
+| 分類 | 使用 4:3 | 使用 16:9 | 使用 16:10 | 使用 21:9 |
 | --- | --- | --- | --- | --- |
-| House579 | 01 先降低啟用阻力 | `diagram` | 16:9 | 註冊、身分認證與首次刊登的資料流程示意 |
-| House579 | 02 依風險建立資料品質優先順序 | `ui` | 4:3 | 依風險排序的欄位品質檢查介面 |
-| House579 | 03 手機資訊密度改版 | `before-after` | 16:10 | 見下方 D 節（Before／After） |
-| Rakuya | 01 完整工作旅程與 MVP 範圍 | `process` | 21:9 | 房仲完整工作旅程，以及 MVP 範圍選擇示意 |
-| Rakuya | 02 社區資料底層 | `diagram` | 16:9 | 社區與建物基礎資料的整合流程 |
-| Rakuya | 03 初次上架日報 | `ui` | 4:3 | 每日初次上架、降價與下架日報介面 |
-| Design System | 01 Sprint 導入時間軸 | `process` | 21:9 | Token 盤點到首批元件交付的時間軸 |
-| Design System | 02 元件決策流程 | `diagram` | 16:9 | 延伸、新增或保留特規的判斷流程 |
-| Design System | 03 治理協作流程 | `ui` | 4:3 | 元件新增與治理的日常協作介面 |
+| 圖片數量 | 4（3 封面 + 3 個 `ui` decision，扣除重複計算） | 9（3 hero + 3 diagram decision + 3 execution） | 2（House579 before/after） | 2（Rakuya／Design System 的 process decision） |
 
-建議輸出：`diagram`／`ui` 約 1270×715px（16:9，2x）或 1270×953px（4:3，2x）；`process` 約 1270×544px（21:9，2x）。格式 PNG／WebP（介面截圖需保持文字清晰）；流程圖若為向量內容可用 SVG。
+| 分類 | 使用 cover | 使用 contain |
+| --- | --- | --- |
+| 圖片數量 | 6（3 封面 + 3 hero） | 13（其餘全部：diagram／ui／process／before-after／execution） |
 
-### D. House579｜Mobile Admin Before / After
+**目前沒有任何正式圖片缺少明確 `ratio`／`display`**——`decisionMediaBySlug`、`heroImageBySlug`、`executionImageBySlug`、`SelectedWorkCard.astro` 的呼叫點都已逐一明確帶入。
 
-- **頁面／區塊**：House579 → Key Decision 03（媒體直接內嵌在該決策區塊內，非獨立章節）
-- **Variant**：`before-after`
-- **用途**：對比改版前後的手機後台資訊密度與物件管理效率
-- **建議內容**：
-  - Before：舊版手機後台，畫面約僅顯示 1.5 筆物件、留白多、無縮圖
-  - After：新版手機後台，同畫面可顯示約 5 筆物件、含縮圖與固定操作區
-- **桌機最大 CSS 顯示寬度**：每張約 556px（`.before-after` 於 `.case-wide` 內雙欄，扣除 gap）
-- **平板**：雙欄，寬度隨容器縮小
-- **手機**：改為單欄堆疊，每張全寬，「改版前／改版後」標籤在圖片上方
-- **比例／裁切**：16:10、contain
-- **建議輸出**：1112×695px（2x）、PNG（或無損 WebP）
-- **Lightbox**：建議提供
-- **alt text**：「House579 手機後台改版前：畫面僅顯示約 1.5 筆物件」／「改版後：同畫面可瀏覽約 5 筆物件」
+---
 
-### E. Execution Diagram（每案例 1 張，共 3 張）
+## 五、統一製作尺寸建議
 
-- **頁面／區塊**：各案例 Execution 區塊，`.case-split` 雙欄（文字約 5 欄／圖片約 7 欄）
-- **Variant**：`diagram`
-- **桌機最大 CSS 顯示寬度**：約 633px
-- **平板／手機**：改單欄，全寬
-- **比例／裁切**：16:9、contain
-- **建議輸出**：1270×715px（2x）、PNG／WebP
-- **清單**：
-  1. House579 — 問題重現到工程交付的驗證流程圖
-  2. Rakuya Data Product — Redash 漏斗分析示意，或案源判斷規則圖
-  3. Design System — 元件決策流程或治理關係圖
+| 比例 | 建議尺寸 |
+| --- | --- |
+| 4:3 | 1920 × 1440 |
+| 16:9 | 1920 × 1080 |
+| 16:10 | 1920 × 1200 |
+| 21:9 | 1920 × 823 |
+
+需要放大閱讀細節時才提高到約 2400px 寬等比例放大。以上尺寸與目前已 import 的正式素材實際尺寸完全一致。

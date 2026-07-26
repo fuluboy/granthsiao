@@ -93,10 +93,28 @@ export interface Signal {
   body: string;
 }
 
+export interface InfoCardRow {
+  label: string;
+  body?: string;
+  items?: string[];
+}
+
+/**
+ * Small supplementary card rendered beside/below case-study prose (e.g. a
+ * governance-cadence summary). Deliberately generic — only populated where a
+ * case study's content actually needs it (see design-system.ts) — so it adds
+ * no visual footprint to case studies that don't set it.
+ */
+export interface InfoCard {
+  label: string;
+  rows: InfoCardRow[];
+}
+
 export interface KeyDecision {
   kicker: string;
   heading: string;
   paragraphs: string[];
+  infoCard?: InfoCard;
 }
 
 export interface ImpactBlock {
@@ -138,6 +156,9 @@ export interface CaseStudyContent {
     paragraphs: string[];
     supportingMetrics?: Metric[];
     supportingMetricsCaption?: string;
+    /** Compact "resource conditions" stat card — not a results/KPI metric, see CaseMetrics for that. */
+    operatingContext?: { label: string; stats: Metric[] };
+    roleCard?: { label: string; items: string[]; footnote?: string };
   };
   impact: {
     kicker: string;

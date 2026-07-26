@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { withBase } from "../i18n/config";
 ---
 
 <BaseLayout locale="en" title="Page not found" description="This page could not be found.">
@@ -7,8 +8,8 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     <div class="container container-narrow" style="text-align:center;">
       <h1>Page not found</h1>
       <p style="margin-top: 1rem;">
-        <a class="btn" href="/en/">Back to the English site</a>
-        <a class="btn btn-outline" href="/zh/">回中文網站</a>
+        <a class="btn" href={withBase("/en/")}>Back to the English site</a>
+        <a class="btn btn-outline" href={withBase("/zh/")}>回中文網站</a>
       </p>
     </div>
   </section>

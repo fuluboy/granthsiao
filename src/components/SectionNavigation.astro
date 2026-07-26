@@ -8,36 +8,100 @@ interface NavItem {
 
 interface Props {
   locale: Locale;
-  items: NavItem[];
+  items: readonly NavItem[];
+  variant: "desktop" | "compact";
 }
 
-const { locale, items } = Astro.props;
+const { locale, items, variant } = Astro.props;
 const t = UI_TEXT[locale];
+const ariaLabel = t.accessibility.caseStudyNav;
 ---
 
-<nav class="section-nav" aria-label={t.onThisPage} data-section-nav>
-  <p class="section-nav__label">{t.onThisPage}</p>
-  <ul class="section-nav__list">
-    {items.map((item) => (
-      <li>
-        <a href={`#${item.id}`} data-section-link={item.id}>{item.label}</a>
-      </li>
-    ))}
-  </ul>
-</nav>
+{variant === "desktop" && (
+  <nav class="section-nav section-nav--desktop" aria-label={ariaLabel} data-section-nav-desktop>
+    <p class="section-nav__label">{t.onThisPage}</p>
+    <ol class="section-nav__list">
+      {items.map((item) => (
+        <li>
+          <a href={`#${item.id}`} class="section-nav__link" data-section-link={item.id}>
+            {item.label}
+          </a>
+        </li>
+      ))}
+    </ol>
+  </nav>
+)}
+
+{variant === "compact" && (
+  <div class="section-nav section-nav--compact case-wide" data-section-nav-compact>
+    <button
+      type="button"
+      class="section-nav__toggle"
+      aria-expanded="false"
+      aria-controls="case-section-nav-menu"
+      data-section-toggle
+    >
+      <span class="section-nav__toggle-label">{t.onThisPage}</span>
+      <span class="section-nav__current" data-section-current>{items[0]?.label}</span>
+      <svg class="section-nav__chevron" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true">
+        <path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </button>
+
+    <nav id="case-section-nav-menu" class="section-nav__menu" aria-label={ariaLabel} data-section-menu hidden>
+      <ol class="section-nav__list">
+        {items.map((item) => (
+          <li>
+            <a href={`#${item.id}`} class="section-nav__link" data-section-link={item.id}>
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ol>
+    </nav>
+  </div>
+)}
 
 <script>
-  const nav = document.querySelector<HTMLElement>("[data-section-nav]");
-  if (nav) {
-    const links = Array.from(nav.querySelectorAll<HTMLAnchorElement>("[data-section-link]"));
-    const sections = links
-      .map((link) => document.getElementById(link.dataset.sectionLink ?? ""))
+  // One shared script for both the desktop rail and the compact selector —
+  // whichever variant(s) are rendered on the page, this queries the whole
+  // document rather than a single wrapper, since the two variants live in
+  // different parts of the DOM (sidebar column vs. between Hero and Context).
+  // Astro hoists/dedupes this script once per page even though the
+  // component is invoked twice, so there is only ever one observer/listener.
+  const linkEls = Array.from(document.querySelectorAll<HTMLAnchorElement>("[data-section-link]"));
+
+  if (linkEls.length > 0) {
+    const idToLinks = new Map<string, HTMLAnchorElement[]>();
+    linkEls.forEach((link) => {
+      const id = link.dataset.sectionLink;
+      if (!id) return;
+      const group = idToLinks.get(id) ?? [];
+      group.push(link);
+      idToLinks.set(id, group);
+    });
+
+    // Defensive: a nav item pointing at a section that doesn't actually
+    // exist on this page would be a dead link — drop it instead of leaving
+    // it clickable.
+    idToLinks.forEach((links, id) => {
+      if (!document.getElementById(id)) {
+        links.forEach((link) => link.closest("li")?.remove());
+        idToLinks.delete(id);
+      }
+    });
+
+    const sections = Array.from(idToLinks.keys())
+      .map((id) => document.getElementById(id))
       .filter((el): el is HTMLElement => Boolean(el));
 
-    if (sections.length > 0 && "IntersectionObserver" in window) {
-      const setActive = (id: string) => {
+    const currentLabel = document.querySelector<HTMLElement>("[data-section-current]");
+    const desktopNav = document.querySelector<HTMLElement>("[data-section-nav-desktop]");
+
+    const setActive = (id: string) => {
+      idToLinks.forEach((links, linkId) => {
+        const isActive = linkId === id;
         links.forEach((link) => {
-          const isActive = link.dataset.sectionLink === id;
           link.classList.toggle("is-active", isActive);
           if (isActive) {
             link.setAttribute("aria-current", "true");
@@ -45,8 +109,25 @@ const t = UI_TEXT[locale];
             link.removeAttribute("aria-current");
           }
         });
-      };
+      });
 
+      const activeLink = idToLinks.get(id)?.[0];
+      if (currentLabel && activeLink) {
+        currentLabel.textContent = activeLink.textContent;
+      }
+
+      // The desktop rail has no background of its own — over a dark
+      // full-bleed section (Impact) its ink-soft/ink text would sit
+      // directly on near-black and lose contrast, so switch to light text
+      // for as long as a dark section is active.
+      if (desktopNav) {
+        const activeSection = document.getElementById(id);
+        const overDark = Boolean(activeSection?.classList.contains("case-section--dark"));
+        desktopNav.dataset.overDark = String(overDark);
+      }
+    };
+
+    if (sections.length > 0 && "IntersectionObserver" in window) {
       const observer = new IntersectionObserver(
         (entries) => {
           const visible = entries
@@ -58,134 +139,278 @@ const t = UI_TEXT[locale];
         },
         { rootMargin: "-40% 0px -50% 0px", threshold: 0 }
       );
-
       sections.forEach((section) => observer.observe(section));
     }
+
+    // Instant correctness for a direct #hash load/refresh, ahead of the
+    // observer's first async callback.
+    const initialId = window.location.hash.slice(1);
+    if (initialId && idToLinks.has(initialId)) {
+      setActive(initialId);
+    }
+  }
+
+  // Hero-stage dimming for the desktop rail (Plan A: stays in the DOM,
+  // dimmed and with no active item, full opacity once Context is reached).
+  const desktopNavEl = document.querySelector<HTMLElement>("[data-section-nav-desktop]");
+  const hero = document.getElementById("case-hero");
+  if (desktopNavEl && hero && "IntersectionObserver" in window) {
+    const heroObserver = new IntersectionObserver(
+      ([entry]) => {
+        desktopNavEl.dataset.heroVisible = entry.isIntersecting ? "true" : "false";
+      },
+      { rootMargin: "-10% 0px 0px 0px", threshold: 0 }
+    );
+    heroObserver.observe(hero);
+  }
+
+  // Compact selector: expand/collapse toggle.
+  const toggle = document.querySelector<HTMLButtonElement>("[data-section-toggle]");
+  const menu = document.querySelector<HTMLElement>("[data-section-menu]");
+  if (toggle && menu) {
+    const setOpen = (isOpen: boolean) => {
+      toggle.setAttribute("aria-expanded", String(isOpen));
+      menu.hidden = !isOpen;
+    };
+
+    toggle.addEventListener("click", () => {
+      setOpen(toggle.getAttribute("aria-expanded") !== "true");
+    });
+
+    menu.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => setOpen(false));
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && toggle.getAttribute("aria-expanded") === "true") {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+
+    document.addEventListener("click", (event) => {
+      if (
+        toggle.getAttribute("aria-expanded") === "true" &&
+        event.target instanceof Node &&
+        !toggle.contains(event.target) &&
+        !menu.contains(event.target)
+      ) {
+        setOpen(false);
+      }
+    });
   }
 </script>
 
 <style>
-  /*
-    Default (mobile / tablet, <1280px): sticky top bar directly under the
-    site header. Deliberately styled differently from the header nav —
-    sunken background strip + pill active state — so the two menus read as
-    separate layers.
-  */
-  .section-nav {
-    position: sticky;
-    top: var(--header-height-mobile);
-    z-index: 40;
-    background: var(--color-paper-sunken);
-    border-block: 1px solid var(--color-line);
-    margin-inline: calc(var(--container-pad) * -1);
-    padding-inline: var(--container-pad);
-  }
-
   .section-nav__label {
-    display: none;
+    display: block;
+    font-size: var(--fs-kicker);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-kicker);
+    color: var(--color-grey-500);
+    margin-bottom: var(--space-md);
   }
 
   .section-nav__list {
     display: flex;
-    align-items: center;
-    gap: var(--space-xs);
-    min-height: var(--case-nav-height-mobile);
-    overflow-x: auto;
-    scrollbar-width: none;
+    flex-direction: column;
+    gap: 0;
   }
 
-  .section-nav__list::-webkit-scrollbar {
+  .section-nav__link {
+    position: relative;
+    display: block;
+    text-decoration: none;
+    color: var(--color-ink-soft);
+    transition: color var(--duration-hover) var(--ease-out);
+  }
+
+  /* ---- Desktop: sticky vertical rail in the sidebar column ---- */
+  .section-nav--desktop {
     display: none;
   }
 
-  .section-nav__list a {
-    display: inline-block;
-    font-size: 0.8125rem;
-    font-weight: 600;
-    letter-spacing: 0.02em;
-    text-decoration: none;
-    color: var(--color-ink-soft);
-    white-space: nowrap;
-    padding: 0.4em 0.95em;
-    border-radius: 999px;
-    transition: color var(--duration-hover) var(--ease-out),
-      background-color var(--duration-hover) var(--ease-out);
-  }
-
-  .section-nav__list a:hover,
-  .section-nav__list a:focus-visible {
-    color: var(--color-ink);
-  }
-
-  .section-nav__list a.is-active {
-    color: var(--color-ink);
-    background: color-mix(in srgb, var(--color-mustard-soft) 45%, var(--color-paper-raised));
-  }
-
-  @media (min-width: 768px) {
-    .section-nav {
-      top: var(--header-height);
-      margin-inline: 0;
-      padding-inline: 0;
-    }
-
-    .section-nav__list {
-      min-height: var(--case-nav-height);
-    }
-  }
-
-  /*
-    Desktop rail (≥1280px): vertical sidebar in the left grid column,
-    sticky under the header. Visual language: hairline + mustard indicator,
-    small caps label — nothing like the horizontal header nav.
-  */
-  @media (min-width: 1280px) {
-    .section-nav {
-      position: sticky;
-      top: calc(var(--header-height) + var(--space-xl));
-      align-self: start;
-      z-index: 10;
-      background: transparent;
-      border-block: none;
-      margin-inline: 0;
-      padding-inline: 0;
-    }
-
-    .section-nav__label {
+  @media (min-width: 1100px) {
+    .section-nav--desktop {
       display: block;
-      font-size: var(--fs-kicker);
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: var(--tracking-kicker);
-      color: var(--color-grey-500);
-      margin-bottom: var(--space-md);
+      position: sticky;
+      top: calc(var(--header-height) + 28px);
+      opacity: 1;
+      transition: opacity var(--duration-hover) var(--ease-out), color var(--duration-hover) var(--ease-out);
     }
 
-    .section-nav__list {
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
-      gap: 0;
-      min-height: 0;
-      overflow: visible;
+    .section-nav--desktop[data-hero-visible="true"] {
+      opacity: 0.55;
+    }
+
+    .section-nav--desktop .section-nav__list {
       border-left: 1px solid var(--color-line);
     }
 
-    .section-nav__list a {
-      display: block;
-      padding: 0.5em 0 0.5em 1.1em;
-      border-radius: 0;
+    .section-nav--desktop .section-nav__link {
+      font-size: var(--fs-case-sidebar);
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      padding: 0.55em 0 0.55em 1.1em;
       border-left: 2px solid transparent;
       margin-left: -1.5px;
-      white-space: normal;
-      line-height: 1.4;
+      line-height: 1.45;
+      transition: color var(--duration-hover) var(--ease-out), border-color var(--duration-hover) var(--ease-out);
     }
 
-    .section-nav__list a.is-active {
-      background: none;
+    .section-nav--desktop .section-nav__link:hover,
+    .section-nav--desktop .section-nav__link:focus-visible {
+      color: var(--color-ink);
+    }
+
+    .section-nav--desktop .section-nav__link.is-active {
       color: var(--color-ink);
       font-weight: 700;
       border-left-color: var(--color-mustard-strong);
+    }
+
+    /* Dark full-bleed section (Impact) behind the sidebar: swap to light
+       text so it stays legible against near-black instead of vanishing. */
+    .section-nav--desktop[data-over-dark="true"] .section-nav__label {
+      color: rgba(247, 243, 234, 0.6);
+    }
+
+    .section-nav--desktop[data-over-dark="true"] .section-nav__list {
+      border-left-color: rgba(247, 243, 234, 0.25);
+    }
+
+    .section-nav--desktop[data-over-dark="true"] .section-nav__link {
+      color: rgba(247, 243, 234, 0.72);
+    }
+
+    .section-nav--desktop[data-over-dark="true"] .section-nav__link:hover,
+    .section-nav--desktop[data-over-dark="true"] .section-nav__link:focus-visible {
+      color: var(--color-paper-raised);
+    }
+
+    .section-nav--desktop[data-over-dark="true"] .section-nav__link.is-active {
+      color: var(--color-paper-raised);
+    }
+  }
+
+  /* ---- Tablet/Mobile: compact selector between Hero and Context ---- */
+  .section-nav--compact {
+    display: block;
+    margin-top: var(--case-inner-space);
+    position: sticky;
+    top: var(--header-height);
+    z-index: 20;
+    background: color-mix(in srgb, var(--color-paper-raised) 88%, transparent);
+    backdrop-filter: blur(4px);
+    border-top: 1px solid var(--color-line);
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  @media (max-width: 767px) {
+    .section-nav--compact {
+      top: var(--header-height-mobile);
+    }
+  }
+
+  @media (min-width: 1100px) {
+    .section-nav--compact {
+      display: none;
+    }
+  }
+
+  .section-nav__toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    width: 100%;
+    min-height: var(--case-compact-nav-height);
+    padding-block: 10px;
+    padding-inline: var(--container-pad);
+    background: none;
+    border: none;
+    font: inherit;
+    color: var(--color-ink-soft);
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .section-nav__toggle-label {
+    flex-shrink: 0;
+    font-size: var(--fs-kicker);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-kicker);
+    color: var(--color-grey-500);
+  }
+
+  .section-nav__current {
+    flex: 1;
+    min-width: 0;
+    text-align: right;
+    font-size: var(--fs-case-sidebar);
+    font-weight: 700;
+    color: var(--color-mustard);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .section-nav__chevron {
+    flex-shrink: 0;
+    color: var(--color-ink-soft);
+    transition: transform var(--duration-hover) var(--ease-out);
+  }
+
+  .section-nav__toggle[aria-expanded="true"] .section-nav__chevron {
+    transform: rotate(180deg);
+  }
+
+  .section-nav__toggle:focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: -2px;
+  }
+
+  .section-nav__menu {
+    border-top: 1px solid var(--color-line);
+    padding: var(--space-sm) var(--container-pad) var(--space-md);
+  }
+
+  .section-nav__menu[hidden] {
+    display: none;
+  }
+
+  .section-nav--compact .section-nav__list {
+    gap: 2px;
+  }
+
+  .section-nav--compact .section-nav__link {
+    font-size: var(--fs-case-body);
+    padding-block: 10px;
+    border-radius: var(--radius-sm);
+  }
+
+  .section-nav--compact .section-nav__link:hover,
+  .section-nav--compact .section-nav__link:focus-visible {
+    color: var(--color-ink);
+  }
+
+  .section-nav--compact .section-nav__link.is-active {
+    color: var(--color-ink);
+    font-weight: 700;
+  }
+
+  .section-nav--compact .section-nav__link:focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .section-nav--desktop,
+    .section-nav__link,
+    .section-nav__chevron {
+      transition-duration: 1ms;
     }
   }
 </style>

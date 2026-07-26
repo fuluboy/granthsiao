@@ -2,23 +2,30 @@
 // Root entry point: no locale in the URL yet.
 // Server-side fallback points crawlers/no-JS clients at the default locale;
 // the inline script upgrades that to the visitor's preferred language.
+import { withBase } from "../i18n/config";
+
+const zhHref = withBase("/zh/");
+const enHref = withBase("/en/");
 ---
 
 <!doctype html>
 <html lang="zh-Hant">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="refresh" content="0; url=/zh/" />
-    <link rel="canonical" href="/zh/" />
+    <meta http-equiv="refresh" content={`0; url=${zhHref}`} />
+    <link rel="canonical" href={zhHref} />
     <title>Grant Hsiao</title>
     <script>
-      const preferred = navigator.language?.toLowerCase().startsWith("zh") ? "/zh/" : "/en/";
+      // import.meta.env.BASE_URL mirrors astro.config's `base` (e.g. "/granthsiao/")
+      // so this redirect keeps working under a GitHub Pages project subpath.
+      const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+      const preferred = navigator.language?.toLowerCase().startsWith("zh") ? `${base}/zh/` : `${base}/en/`;
       window.location.replace(preferred);
     </script>
   </head>
   <body>
     <p>
-      <a href="/zh/">繼續前往中文網站</a> ／ <a href="/en/">Continue to the English site</a>
+      <a href={zhHref}>繼續前往中文網站</a> ／ <a href={enHref}>Continue to the English site</a>
     </p>
   </body>
 </html>

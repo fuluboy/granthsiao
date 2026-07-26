@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Quote from "../../components/Quote.astro";
-import { LOCALES, type Locale } from "../../i18n/config";
+import { LOCALES, withBase, type Locale } from "../../i18n/config";
 import { getAbout } from "../../content";
 import { siteConfig } from "../../content/siteConfig";
 
@@ -30,8 +30,8 @@ const about = getAbout(lang);
       </div>
 
       <div class="about__actions">
-        <a class="btn" href={`/${lang}/#selected-work`}>{about.profile.primaryAction}</a>
-        <a class="btn btn-outline" href={siteConfig.resumeHref[lang]} target="_blank" rel="noopener noreferrer">{about.profile.secondaryAction}</a>
+        <a class="btn" href={withBase(`/${lang}/#selected-work`)}>{about.profile.primaryAction}</a>
+        <a class="btn btn-outline" href={withBase(siteConfig.resumeHref[lang])} target="_blank" rel="noopener noreferrer">{about.profile.secondaryAction}</a>
       </div>
     </div>
   </section>

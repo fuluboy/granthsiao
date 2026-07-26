@@ -19,3 +19,8 @@ npm-debug.log*
 
 # macOS
 .DS_Store
+
+# raw design source files (PSD/docx working files) — not used by the built
+# site (Astro only reads from public/images/), several exceed GitHub's
+# 100MB per-file limit, and they're personal working files, not deploy assets.
+source/

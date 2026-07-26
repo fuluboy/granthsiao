@@ -1,0 +1,32 @@
+---
+/**
+ * Groups one or more lightbox-enabled ResponsiveMedia/BeforeAfter images into
+ * a single PhotoSwipe gallery. `id` becomes the `data-pswp-gallery` value
+ * that src/scripts/case-study-lightbox.ts scopes clicks and slide sets to —
+ * it must be stable and unique per gallery (e.g. `${slug}-decision-3`,
+ * `${slug}-execution`), never derived from DOM position, so inserting or
+ * reordering Key Decisions can never shift an image into the wrong gallery.
+ *
+ * A gallery groups images that should be swipeable/arrow-navigable together
+ * (e.g. a Before/After pair). Different Key Decisions — and always different
+ * case studies — must use different ids so they never merge into one
+ * left/right sequence.
+ */
+interface Props {
+  /** Omit to render a plain (non-lightbox) wrapper — used when no real asset exists yet. */
+  id?: string;
+  class?: string;
+}
+
+const { id, class: className } = Astro.props;
+---
+
+<div class:list={["case-study-gallery", className]} data-pswp-gallery={id || undefined}>
+  <slot />
+</div>
+
+<style>
+  .case-study-gallery {
+    width: 100%;
+  }
+</style>

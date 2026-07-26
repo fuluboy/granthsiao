@@ -1,22 +1,36 @@
 ---
 import CaseMetrics from "./CaseMetrics.astro";
 import ResponsiveMedia from "./ResponsiveMedia.astro";
+import CaseStudyGallery from "./CaseStudyGallery.astro";
 import type { CaseStudyContent } from "../content/types";
-import type { Locale } from "../i18n/config";
+import { UI_TEXT, withBase, type Locale } from "../i18n/config";
+import type { MediaRatio, MediaDisplay } from "./MediaPlaceholder.astro";
+
+interface HeroImage {
+  src: string;
+  width: number;
+  height: number;
+  ratio: MediaRatio;
+  display: MediaDisplay;
+}
 
 interface Props {
   locale: Locale;
   caseData: CaseStudyContent;
+  heroImage?: HeroImage;
+  /** PhotoSwipe gallery id for the hero image. Omit to render the hero without a lightbox trigger. */
+  lightboxGalleryId?: string;
 }
 
-const { locale, caseData } = Astro.props;
+const { locale, caseData, heroImage, lightboxGalleryId } = Astro.props;
+const t = UI_TEXT[locale];
 ---
 
-<header class="case-hero">
+<header class="case-hero" id="case-hero">
   <div class="case-wide case-hero__intro">
     <p class="kicker">{caseData.kicker}</p>
     <h1 class="case-hero__title">{caseData.title}</h1>
-    <p class="case-hero__lead">{caseData.lead}</p>
+    <p class="case-hero__lead case-reading">{caseData.lead}</p>
   </div>
 
   <div class="case-wide">
@@ -31,14 +45,24 @@ const { locale, caseData } = Astro.props;
   </div>
 
   <div class="case-wide case-hero__media">
-    <ResponsiveMedia
-      name={caseData.heroImageName}
-      variant="hero"
-      caseName={caseData.title}
-      purpose={locale === "zh" ? "案例首頁主視覺" : "Case study hero visual"}
-      ratio="16 / 9"
-      loading="eager"
-    />
+    <CaseStudyGallery id={lightboxGalleryId}>
+      <ResponsiveMedia
+        locale={locale}
+        name={caseData.heroImageName}
+        variant="hero"
+        caseName={caseData.title}
+        purpose={t.caseStudy.heroMediaPurpose}
+        ratio={heroImage?.ratio ?? "16 / 9"}
+        display={heroImage?.display}
+        loading="eager"
+        src={heroImage?.src ? withBase(heroImage.src) : undefined}
+        width={heroImage?.width}
+        height={heroImage?.height}
+        alt={t.caseStudy.heroMediaPurpose}
+        lightbox={Boolean(lightboxGalleryId)}
+        zoomLabel={t.lightbox.viewLargerImage}
+      />
+    </CaseStudyGallery>
   </div>
 
   <div class="case-wide case-hero__metrics">
@@ -48,7 +72,7 @@ const { locale, caseData } = Astro.props;
 
 <style>
   .case-hero {
-    padding-top: clamp(2.5rem, 2rem + 2vw, 4rem);
+    padding-top: clamp(2rem, 1.7rem + 1.2vw, 3rem);
   }
 
   .case-hero__intro {
@@ -57,31 +81,37 @@ const { locale, caseData } = Astro.props;
 
   .case-hero__title {
     font-size: var(--fs-case-hero);
-    line-height: 1.08;
-    max-width: 26ch;
+    line-height: 1.24;
+    max-width: 780px;
     margin-top: var(--space-sm);
   }
 
   .case-hero__lead {
-    font-size: var(--fs-lead);
+    font-size: var(--fs-case-lead);
+    line-height: 1.65;
     color: var(--color-ink-soft);
-    margin-top: var(--space-lg);
-    max-width: 56ch;
+    margin-top: var(--space-md);
   }
 
-  /* CJK: em-based measure (1 full-width char ≈ 1em) + denser-glyph line-height */
+  /* CJK: em-based measure (1 full-width char ≈ 1em) for the H1 only — the
+     lead paragraph's width now comes from .case-reading (see markup). */
   :global([data-lang="zh"]) .case-hero__title {
-    max-width: 16em;
-    line-height: 1.22;
+    max-width: 20em;
   }
 
   :global([data-lang="zh"]) .case-hero__lead {
-    max-width: 32em;
+    line-height: 1.75;
   }
 
+  /*
+    Content-flexible meta grid: Role/Period are short, Stage/Responsibility
+    run long — equal-width columns forced the long values into narrow,
+    heavily-wrapped cells. Column widths follow that content shape instead.
+  */
   .case-hero__facts {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: 1fr;
+    row-gap: var(--space-md);
     border-top: 1px solid var(--color-line);
     border-bottom: 1px solid var(--color-line);
     margin-top: var(--case-inner-space);
@@ -89,19 +119,10 @@ const { locale, caseData } = Astro.props;
 
   .case-hero__fact {
     padding-block: var(--space-md);
-    padding-inline: var(--space-md);
-  }
-
-  .case-hero__fact:first-child {
-    padding-inline-start: 0;
-  }
-
-  .case-hero__fact + .case-hero__fact {
-    border-left: 1px solid var(--color-line);
   }
 
   .case-hero__fact dt {
-    font-size: var(--fs-small);
+    font-size: var(--fs-case-meta-label);
     font-weight: 600;
     color: var(--color-mustard);
     text-transform: uppercase;
@@ -111,8 +132,8 @@ const { locale, caseData } = Astro.props;
   .case-hero__fact dd {
     margin: 0;
     margin-top: var(--space-xs);
-    font-size: var(--fs-small);
-    line-height: 1.5;
+    font-size: var(--fs-case-meta-value);
+    line-height: 1.55;
   }
 
   .case-hero__media {
@@ -120,41 +141,49 @@ const { locale, caseData } = Astro.props;
   }
 
   .case-hero__metrics {
-    margin-top: var(--space-xl);
+    margin-top: var(--case-inner-space);
   }
 
-  @media (max-width: 1279px) {
+  @media (min-width: 768px) {
     .case-hero__facts {
       grid-template-columns: repeat(2, 1fr);
-      row-gap: var(--space-md);
+      column-gap: var(--space-md);
     }
 
     .case-hero__fact:nth-child(odd) {
-      padding-inline-start: 0;
-      border-left: none;
+      padding-inline-end: var(--space-md);
+    }
+
+    .case-hero__fact:nth-child(even) {
+      padding-inline-start: var(--space-md);
+      border-left: 1px solid var(--color-line);
     }
 
     .case-hero__fact:nth-child(n + 3) {
       border-top: 1px solid var(--color-line);
-      padding-top: var(--space-md);
     }
   }
 
-  @media (max-width: 599px) {
+  @media (min-width: 1100px) {
     .case-hero__facts {
-      grid-template-columns: 1fr;
+      grid-template-columns:
+        minmax(120px, 0.8fr) minmax(100px, 0.65fr) minmax(160px, 1fr)
+        minmax(260px, 1.6fr);
+      row-gap: 0;
     }
 
     .case-hero__fact {
-      padding-inline-start: 0 !important;
-      border-left: none !important;
-      border-top: 1px solid var(--color-line);
-      padding-top: var(--space-md);
+      padding-inline: var(--space-md);
+      border-top: none;
     }
 
     .case-hero__fact:first-child {
-      border-top: none;
-      padding-top: 0;
+      padding-inline-start: 0;
+      border-left: none;
+    }
+
+    .case-hero__fact:nth-child(n + 2) {
+      border-left: 1px solid var(--color-line);
     }
   }
 </style>
