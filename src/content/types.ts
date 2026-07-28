@@ -67,14 +67,22 @@ export interface HomeContent {
   };
 }
 
+export interface AboutLink {
+  label: string;
+  href: string;
+  external?: boolean;
+  icon?: "linkedin" | "soundcloud";
+}
+
 export interface AboutContent {
   meta: { title: string; description: string };
   kicker: string;
   heading: string;
   paragraphs: string[];
-  quote: string;
-  quoteAttribution: string;
-  profile: ProfileCard;
+  stats: Metric[];
+  links: AboutLink[];
+  resumeLabel: string;
+  contactLabel: string;
 }
 
 export interface ContactContent {
