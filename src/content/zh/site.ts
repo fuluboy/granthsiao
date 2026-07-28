@@ -4,7 +4,7 @@ export const siteMeta: SiteMeta = {
   siteName: "Grant Hsiao",
   titleSuffix: " · Grant Hsiao",
   defaultDescription:
-    "我擅長沿著完整的用戶旅程找出問題根因，並在商業、資料與技術條件下，將洞察轉化為能落地、能持續經營的產品解法。",
+    "我擅長沿著完整的使用者旅程找出問題根因，並在商業、資料與技術條件下，將洞察轉化為能落地、能持續經營的產品決策。",
 };
 
 export const profile: ProfileCard = {

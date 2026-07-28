@@ -50,6 +50,7 @@
   --fs-h2: clamp(1.625rem, 1.3rem + 1.6vw, 2.25rem);
   --fs-h1: clamp(2rem, 1.5rem + 2.6vw, 3.25rem);
   --fs-display: clamp(2.25rem, 1.5rem + 4vw, 4rem);
+  --fs-case-nav-title:clamp(1.25rem, 1.1rem + 0.55vw, 1.625rem);
 
   /*
     ---- Case study grid ----

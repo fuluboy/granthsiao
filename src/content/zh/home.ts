@@ -4,7 +4,7 @@ export const home: HomeContent = {
   meta: {
     title: "Product & Design Lead",
     description:
-      "我擅長沿著完整的用戶旅程找出問題根因，並在商業、資料與技術條件下，將洞察轉化為能落地、能持續經營的產品解法。",
+      "我擅長沿著完整的使用者旅程找出問題根因，並在商業、資料與技術條件下，將洞察轉化為能落地、能持續經營的產品決策。",
   },
   profile: {
     name: "Grant Hsiao／蕭宏彬",
@@ -15,13 +15,13 @@ export const home: HomeContent = {
   },
   hero: {
     kicker: "HOME",
-    title: "洞察用戶真實需求，打造兼顧使用體驗與商業動能的產品。",
-    lead: "我擅長沿著完整的用戶旅程找出問題根因，並在商業、資料與技術條件下，將洞察轉化為能落地、能持續經營的產品解法。",
+    title: "把複雜的使用者問題，轉成能落地、能成長的產品。",
+    lead: "我擅長沿著完整的使用者旅程找出問題根因，並在商業、資料與技術條件下，將洞察轉化為能落地、能持續經營的產品決策。",
     eyebrow: "0→1 Product · Data Product · Design Leadership",
   },
   selectedWork: {
     kicker: "SELECTED WORK",
-    heading: "三個案例，三種產品挑戰",
+    heading: "精選案例",
     cards: [
       {
         slug: "house579",
@@ -39,12 +39,12 @@ export const home: HomeContent = {
         slug: "rakuya-data-product",
         index: "02",
         eyebrow: "Product Strategy · B2B PropTech · Agent Intelligence",
-        name: "樂屋案源情報",
+        name: "樂屋房仲案源情報",
         title: "把分散的市場訊號，轉成房仲每天可採取行動的案源情報",
         description:
           "從房仲每天跨平台找新案、比對價格與判斷地址的工作出發，建立初次上架、降價與下架日報，再推進品牌試用、系統整合與付費合作。",
         tags: ["Product Strategy", "B2B PropTech", "Agent Intelligence"],
-        metric: "每日案源掃描 1–2 小時 → 5–10 分鐘 · 2 家品牌續約付費",
+        metric: "案源掃描 1–2 小時 → 5–10 分鐘 · 2 家品牌續約付費",
         imageSide: "right",
       },
       {
