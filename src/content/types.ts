@@ -78,7 +78,9 @@ export interface AboutContent {
   meta: { title: string; description: string };
   kicker: string;
   heading: string;
+  photoAlt: string;
   paragraphs: string[];
+  quote: { text: string; source: string };
   stats: Metric[];
   links: AboutLink[];
   resumeLabel: string;

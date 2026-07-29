@@ -24,47 +24,71 @@ const resolveLink = (link: { href: string; external?: boolean }) =>
 
 <BaseLayout locale={lang} title={about.meta.title} description={about.meta.description}>
   <section class="section">
-    <div class="container container-narrow">
-      <p class="kicker">{about.kicker}</p>
-      <h1 class="about__heading">{about.heading}</h1>
+    <div class="container">
+      <div class="about__layout">
+        <aside class="about__sidebar">
+          <img
+            class="about__photo"
+            src={withBase("/images/about/avatar.jpg")}
+            alt={about.photoAlt}
+            width="320"
+            height="435"
+            loading="eager"
+            decoding="async"
+          />
 
-      <div class="about__body">
-        {about.paragraphs.map((paragraph) => (
-          <p>{paragraph}</p>
-        ))}
-      </div>
+          <div class="about__sidebar-heading">
+            <p class="kicker">{about.kicker}</p>
+            <h1 class="about__heading">{about.heading}</h1>
+          </div>
 
-      <ul class="about__stats">
-        {about.stats.map((stat) => (
-          <li class="about__stats-item">
-            <p class="about__stats-value">{stat.value}</p>
-            <p class="about__stats-label">{stat.label}</p>
-          </li>
-        ))}
-      </ul>
+          <div class="about__actions">
+            <a class="btn btn-outline" href={withBase(siteConfig.resumeHref[lang])} target="_blank" rel="noopener noreferrer">{about.resumeLabel}</a>
+            <a class="btn" href={withBase(`/${lang}/contact/`)}>{about.contactLabel}</a>
+          </div>
 
-      <div class="about__row">
-        <div class="about__actions">
-          <a class="btn btn-outline" href={withBase(siteConfig.resumeHref[lang])} target="_blank" rel="noopener noreferrer">{about.resumeLabel}</a>
-          <a class="btn" href={withBase(`/${lang}/contact/`)}>{about.contactLabel}</a>
-        </div>
+          <div class="about__social">
+            {about.links.map((link) => (
+              <a
+                class="about__social-link"
+                href={resolveLink(link)}
+                target={link.external ? "_blank" : undefined}
+                rel={link.external ? "noopener noreferrer" : undefined}
+                aria-label={link.label}
+              >
+                {link.icon && (
+                  <svg class="about__social-icon" viewBox="0 0 640 640" aria-hidden="true" focusable="false">
+                    <path d={SOCIAL_ICON_PATHS[link.icon]}></path>
+                  </svg>
+                )}
+              </a>
+            ))}
+          </div>
+        </aside>
 
-        <div class="about__social">
-          {about.links.map((link) => (
-            <a
-              class="about__social-link"
-              href={resolveLink(link)}
-              target={link.external ? "_blank" : undefined}
-              rel={link.external ? "noopener noreferrer" : undefined}
-              aria-label={link.label}
-            >
-              {link.icon && (
-                <svg class="about__social-icon" viewBox="0 0 640 640" aria-hidden="true" focusable="false">
-                  <path d={SOCIAL_ICON_PATHS[link.icon]}></path>
-                </svg>
-              )}
-            </a>
-          ))}
+        <div class="about__main">
+          <div class="about__body">
+            {about.paragraphs.map((paragraph, index) => (
+              <>
+                <p>{paragraph}</p>
+                {index === about.paragraphs.length - 2 && (
+                  <blockquote class="about__quote">
+                    <p>{about.quote.text}</p>
+                    <cite>— {about.quote.source}</cite>
+                  </blockquote>
+                )}
+              </>
+            ))}
+          </div>
+
+          <ul class="about__stats">
+            {about.stats.map((stat) => (
+              <li class="about__stats-item">
+                <p class="about__stats-value">{stat.value}</p>
+                <p class="about__stats-label">{stat.label}</p>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </div>
@@ -72,58 +96,39 @@ const resolveLink = (link: { href: string; external?: boolean }) =>
 </BaseLayout>
 
 <style>
+  .about__layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-2xl);
+  }
+
+  .about__sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--space-lg);
+  }
+
+  .about__photo {
+    width: 160px;
+    aspect-ratio: 640 / 870;
+    height: auto;
+    border-radius: var(--radius-md);
+    object-fit: cover;
+    border: 1px solid var(--color-line);
+  }
+
   .about__heading {
     font-size: var(--fs-h1);
     margin-top: var(--space-sm);
-  }
-
-  .about__body {
-    margin-top: var(--space-xl);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
-    font-size: var(--fs-lead);
-  }
-
-  .about__stats {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-lg) var(--space-2xl);
-    margin-top: var(--space-2xl);
-    padding-top: var(--space-lg);
-    border-top: 1px solid var(--color-line);
-  }
-
-  .about__stats-item {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2xs);
-  }
-
-  .about__stats-value {
-    font-size: var(--fs-lead);
-    font-weight: 700;
-    line-height: 1.15;
-  }
-
-  .about__stats-label {
-    font-size: var(--fs-small);
-    color: var(--color-ink-soft);
-  }
-
-  .about__row {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-lg);
-    margin-top: var(--space-2xl);
   }
 
   .about__actions {
     display: flex;
     gap: var(--space-sm);
     flex-wrap: wrap;
+    justify-content: center;
   }
 
   .about__social {
@@ -155,5 +160,87 @@ const resolveLink = (link: { href: string; external?: boolean }) =>
     width: 18px;
     height: 18px;
     fill: currentColor;
+  }
+
+  .about__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    font-size: var(--fs-lead);
+    max-width: 640px;
+  }
+
+  .about__quote {
+    margin: var(--space-sm) 0;
+    padding-left: var(--space-md);
+    border-left: 3px solid var(--color-mustard-strong);
+  }
+
+  .about__quote p {
+    font-size: var(--fs-h4);
+    font-weight: 600;
+    line-height: var(--lh-heading);
+    color: var(--color-ink);
+  }
+
+  .about__quote cite {
+    display: block;
+    margin-top: var(--space-xs);
+    font-size: var(--fs-small);
+    font-style: normal;
+    color: var(--color-ink-soft);
+  }
+
+  .about__stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-lg) var(--space-2xl);
+    margin-top: var(--space-2xl);
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--color-line);
+  }
+
+  .about__stats-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+  }
+
+  .about__stats-value {
+    font-size: var(--fs-lead);
+    font-weight: 700;
+    line-height: 1.15;
+  }
+
+  .about__stats-label {
+    font-size: var(--fs-small);
+    color: var(--color-ink-soft);
+  }
+
+  @media (min-width: 1024px) {
+    .about__layout {
+      grid-template-columns: 240px 1fr;
+      align-items: start;
+    }
+
+    .about__sidebar {
+      position: sticky;
+      top: calc(var(--header-height) + var(--space-lg));
+      align-items: stretch;
+      text-align: left;
+    }
+
+    .about__photo {
+      width: 100%;
+    }
+
+    .about__actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .about__actions .btn {
+      justify-content: center;
+    }
   }
 </style>
