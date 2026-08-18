@@ -4,7 +4,7 @@ export const home: HomeContent = {
   meta: {
     title: "Product & Design Lead",
     description:
-      "我擅長沿著完整的使用者旅程找出問題根因，並在商業、資料與技術條件下，將洞察轉化為能落地、能持續經營的產品決策。",
+      "結合產品策略、UX、資料與技術能力，透過 AI 加速研究、驗證與實作，將產品想法一路推進到可驗證、可落地的成果。",
   },
   profile: {
     name: "Grant Hsiao／蕭宏彬",
@@ -15,9 +15,9 @@ export const home: HomeContent = {
   },
   hero: {
     kicker: "HOME",
-    title: "把複雜的使用者問題，轉成能落地、能成長的產品。",
-    lead: "我擅長沿著完整的使用者旅程找出問題根因，並在商業、資料與技術條件下，將洞察轉化為能落地、能持續經營的產品決策。",
-    eyebrow: "0→1 Product · Data Product · Design Leadership",
+    title: "從產品策略到上線，透過 AI 加速把想法變成產品。",
+    lead: "結合產品策略、UX、資料與技術能力，從問題探索與產品決策一路推進到設計、驗證與上線；也運用 AI 加速研究、原型、小規模前後端實作與測試，在投入完整開發前更快驗證產品與技術可行性。",
+    eyebrow: "Product Strategy · UI/UX Leadership · AI-assisted Validation & Building",
   },
   selectedWork: {
     kicker: "SELECTED WORK",
@@ -65,13 +65,13 @@ export const home: HomeContent = {
     kicker: "ABOUT",
     heading: "嗨，我是 Grant。",
     paragraph:
-      "我從網頁設計與前端開始，一路走進產品設計、產品策略與團隊領導。早期同時做設計和前端，讓我很快發現：畫面在設計稿上合理，真正進入系統後，還要面對資料、工程、營運，以及使用者不一定照預期操作的現實。",
+      "我是橫跨產品策略、UX、技術與團隊管理的 Product & Design Lead。我擅長從複雜問題中整理產品方向，並把策略一路推進到設計、驗證與實作；近年也持續將 AI 納入產品工作流程，加速探索、驗證與交付。",
     cta: "了解更多",
   },
   contactCta: {
     kicker: "CONTACT",
     title: "一起把複雜的問題，整理成能往前推進的產品。",
-    lead: "我關注產品與設計領導、資料產品、0→1 建置，以及需要跨設計、工程與營運協作的挑戰。",
+    lead: "我關注產品策略、AI 產品應用、0→1 建置，以及需要整合 UX、資料、技術與跨職能協作的產品挑戰。",
     cta: "聯絡我",
   },
 };
