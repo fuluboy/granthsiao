@@ -4,25 +4,26 @@ export const about: AboutContent = {
   meta: {
     title: "About",
     description:
-      "I started in visual design and front-end development, then moved into product design, strategy, and team management.",
+      "Working across product strategy, UX, technology, and team leadership, while integrating AI into product discovery, validation, execution, and delivery.",
   },
   kicker: "ABOUT",
   heading: "Hi, I'm Grant.",
   photoAlt: "Photo of Grant Hsiao",
   paragraphs: [
-    "I started in visual design and front-end development, then moved into product design, product strategy, and team management. Over the years I've worked on portals, job platforms, real estate platforms, and real estate data products, and have led cross-functional teams of PMs, UI/UX designers, and front-end engineers.",
-    "I like working on problems that look messy on the surface but actually have a logic underneath. Rather than jumping straight to a solution, I usually start by understanding what users are really experiencing, then lay out the problem, the business goals, and the technical constraints before finding a direction forward with the team.",
-    "To me, product work isn't just about shipping features — it's about helping the team understand what problem they're actually solving, and gradually turning that direction into a product that people actually use and that stays maintainable.",
-    "Outside of work, I enjoy independent music and make some of my own. The visual design and illustration experience I built up early on still shapes how I think about layout, information hierarchy, and product craft today. I also believe good collaboration doesn't need one person to have all the answers — it's about different disciplines covering for each other to make the product better.",
-    "I'd love to find a team like that.",
+    "I'm a Product & Design Lead working across product strategy, UX, technology, and team leadership. I enjoy turning complex user and business problems into clear product direction, then helping move that direction through design, development, validation, and launch. I've worked across portals, job platforms, real estate products, and data products, and have led cross-functional teams of PMs, UI/UX designers, and front-end engineers.",
+    "When approaching a new product problem, I prefer to build enough evidence before making a major investment. Alongside user research, product data, and market signals, I often use prototypes or small-scale front-end and back-end experiments to test workflows, data assumptions, and technical feasibility before committing to full development.",
+    "In recent years, I've increasingly integrated AI into my product workflow—from research and problem framing to data processing, product planning, rapid implementation, and testing. I use different tools depending on the problem, expanding how quickly I can explore and execute while grounding decisions in real evidence, user context, and product goals.",
+    "This way of working comes from experience across design, front-end development, product, and management. I can discuss experience and design systems with designers, data flows and implementation constraints with engineers, and help cross-functional teams align around the product problem, decision criteria, and priorities.",
+    "I see AI as a collaborator within the product workflow. It can accelerate exploration, generate early solutions, and help create testable implementations and automation. My role is to define the problem, evaluate the evidence, set the constraints, and decide what is worth pursuing further.",
+    "Outside of work, I'm into independent music and make some of my own. My early background in visual design and illustration still shapes how I think about layout, information hierarchy, and product craft. I also enjoy experimenting with new technologies and ways of working to see what they can make possible.",
   ],
   quote: {
     text: "Listen up — in volleyball, everyone on this side of the net is an ally!",
     source: "Haikyuu!!",
   },
   stats: [
-    { value: "20 years", label: "Product & design experience" },
-    { value: "7 people", label: "Cross-functional team led" },
+    { value: "0→1 → Launch", label: "Product strategy through launch" },
+    { value: "7 people", label: "PM · UI/UX · Front-end team led" },
     { value: "3 product teams", label: "Design System rollout" },
   ],
   links: [
