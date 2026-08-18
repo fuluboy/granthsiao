@@ -21,7 +21,7 @@ export const home: HomeContent = {
   },
   selectedWork: {
     kicker: "SELECTED WORK",
-    heading: "Three case studies. Three kinds of product challenge.",
+    heading: "Selected case studies",
     cards: [
       {
         slug: "house579",
@@ -58,6 +58,18 @@ export const home: HomeContent = {
         tags: ["Design Leadership", "Design System", "Team Transformation"],
         metric: "3 product teams adopted · First components shipped in 2 weeks",
         imageSide: "left",
+      },
+      {
+        slug: "star-metric",
+        index: "04",
+        eyebrow: "AI-assisted Product · 0-to-1 · Mobile App",
+        name: "Star Metric",
+        title: "From AI experiment to shipped product",
+        description:
+          "Combining zodiac, MBTI, and Zi Wei signals into a 27,648-combination dataset and two-stage AI pipeline, then taking the product through UI/UX, AI-assisted development, and Android release.",
+        tags: ["AI-assisted Product", "0-to-1", "Mobile App"],
+        metric: "27,648 combinations · Android released",
+        imageSide: "right",
       },
     ],
   },
