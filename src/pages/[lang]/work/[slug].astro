@@ -232,6 +232,68 @@ const decisionMediaBySlug: Record<string, DecisionMedia[]> = {
     // inline governance-cadence info card (see KeyDecision.infoCard on the
     // content model) rather than the old "Governance Workflow" screenshot.
   ],
+  "star-metric": [
+    {
+      decision: 1,
+      variant: "process",
+      name: "Star-metric — Core User Flow",
+      purpose: {
+        zh: "從人格辨識到每日使用",
+        en: "From personality signals to daily use",
+      },
+      ratio: "21 / 9",
+      display: "contain",
+      // decision-01-EN.png is a temporary copy pending the real English asset.
+      src: localizedSrc("/images/work/star-metric/decision-01.png"),
+      width: 1920,
+      height: 823,
+    },
+    {
+      decision: 2,
+      variant: "diagram",
+      name: "AI Data Pipeline",
+      purpose: {
+        zh: "預生成內容 × Runtime Matching × Daily Signals",
+        en: "Pre-generated Content × Runtime Matching × Daily Signals",
+      },
+      ratio: "16 / 9",
+      display: "contain",
+      // decision-02-EN.png is a temporary copy pending the real English asset.
+      src: localizedSrc("/images/work/star-metric/decision-02.png"),
+      width: 1920,
+      height: 1080,
+    },
+    {
+      decision: 3,
+      variant: "diagram",
+      name: "Prompt Quality",
+      purpose: {
+        zh: "PROMPT／品質優化 FLOW 從品質漂移診斷到選擇性重跑",
+        en: "PROMPT / QUALITY OPTIMIZATION FLOW From Quality-drift Diagnosis to Selective Rerun",
+      },
+      ratio: "16 / 9",
+      display: "contain",
+      // decision-03-EN.png is a temporary copy pending the real English asset.
+      src: localizedSrc("/images/work/star-metric/decision-03.png"),
+      width: 1920,
+      height: 1440,
+    },
+    {
+      decision: 4,
+      variant: "diagram",
+      name: "AI Build Workflow",
+      purpose: {
+        zh: "AI-ASSISTED BUILD WORKFLOW 從產品決策到雙平台上架",
+        en: "AI-ASSISTED BUILD WORKFLOW From Product Decision to Dual-platform Release",
+      },
+      ratio: "16 / 9",
+      display: "contain",
+      // decision-04-EN.png is a temporary copy pending the real English asset.
+      src: localizedSrc("/images/work/star-metric/decision-04.png"),
+      width: 1920,
+      height: 1440,
+    },
+  ],
 };
 
 interface CaseImage {
@@ -256,7 +318,13 @@ interface LocalizedCaseImage {
 }
 
 const heroImageBySlug: Record<string, CaseImage> = {
-  house579: { src: "/images/work/house579/hero.jpg", width: 1920, height: 1080, ratio: "16 / 9", display: "cover" },
+  house579: { 
+    src: "/images/work/house579/hero.jpg", 
+    width: 1920, 
+    height: 1080, 
+    ratio: "16 / 9", 
+    display: "cover" 
+    },
   "rakuya-data-product": {
     src: "/images/work/rakuya-data-product/hero.jpg",
     width: 1920,
@@ -266,6 +334,13 @@ const heroImageBySlug: Record<string, CaseImage> = {
   },
   "design-system": {
     src: "/images/work/design-system/hero.jpg",
+    width: 1920,
+    height: 1080,
+    ratio: "16 / 9",
+    display: "cover",
+  },
+    "star-metric": {
+    src: "/images/work/star-metric/hero.jpg",
     width: 1920,
     height: 1080,
     ratio: "16 / 9",
@@ -286,6 +361,14 @@ const executionImageBySlug: Record<string, LocalizedCaseImage> = {
   "rakuya-data-product": {
     // execution-EN.jpg is a temporary copy pending the real English asset.
     src: localizedSrc("/images/work/rakuya-data-product/execution.jpg"),
+    width: 1920,
+    height: 1080,
+    ratio: "16 / 9",
+    display: "contain",
+  },
+  "star-metric": {
+    // execution-EN.png is a temporary copy pending the real English asset.
+    src: localizedSrc("/images/work/star-metric/execution.png"),
     width: 1920,
     height: 1080,
     ratio: "16 / 9",
