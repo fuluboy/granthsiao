@@ -59,6 +59,18 @@ export const home: HomeContent = {
         metric: "3 個產品團隊導入 · 首批元件 2 週交付",
         imageSide: "left",
       },
+      {
+        slug: "star-metric",
+        index: "04",
+        eyebrow: "AI-assisted Product · 0-to-1 · Mobile App",
+        name: "Star Metric",
+        title: "從 AI 實驗到上架產品",
+        description:
+          "整合星座、MBTI 與紫微訊號，建立 27,648 組內容資料與兩階段 AI 生成流程，完成 UI/UX、AI 協作開發與 Android 上架。",
+        tags: ["AI-assisted Product", "0-to-1", "Mobile App"],
+        metric: "27,648 組內容 · Android 已上架",
+        imageSide: "right",
+      },
     ],
   },
   aboutTeaser: {
