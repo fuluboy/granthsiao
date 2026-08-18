@@ -13,7 +13,7 @@ export const OG_LOCALE: Record<Locale, string> = {
   en: "en_US",
 };
 
-export const WORK_SLUGS = ["house579", "rakuya-data-product", "design-system"] as const;
+export const WORK_SLUGS = ["house579", "rakuya-data-product", "design-system", "star-metric"] as const;
 export type WorkSlug = (typeof WORK_SLUGS)[number];
 
 export function otherLocale(locale: Locale): Locale {
