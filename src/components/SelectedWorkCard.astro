@@ -11,6 +11,7 @@ interface Props {
 const { locale, card } = Astro.props;
 const t = UI_TEXT[locale];
 const href = withBase(`/${locale}/work/${card.slug}/`);
+const coverSrc = card.slug === "star-metric" ? undefined : withBase(`/images/work/${card.slug}/cover.jpg`);
 ---
 
 <article class:list={["work-card", `work-card--${card.imageSide}`]} id={card.slug === "house579" ? "selected-work" : undefined}>
@@ -23,7 +24,7 @@ const href = withBase(`/${locale}/work/${card.slug}/`);
         purpose={t.media.selectedWorkCoverPurpose}
         ratio="4 / 3"
         display="cover"
-        src={withBase(`/images/work/${card.slug}/cover.jpg`)}
+        src={coverSrc}
         width={1920}
         height={1440}
         alt={card.title}
