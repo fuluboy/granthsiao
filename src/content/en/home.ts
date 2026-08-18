@@ -4,7 +4,7 @@ export const home: HomeContent = {
   meta: {
     title: "Product & Design Lead",
     description:
-      "I trace problems across the full user journey, then turn insight into practical, sustainable product solutions within real business, data, and technical constraints.",
+      "Combining product strategy, UX, data, and technical thinking, using AI to accelerate research, validation, and execution from early ideas to working products.",
   },
   profile: {
     name: "Grant Hsiao / 蕭宏彬",
@@ -15,9 +15,9 @@ export const home: HomeContent = {
   },
   hero: {
     kicker: "HOME",
-    title: "Uncovering real user needs to build products that work for people and the business.",
-    lead: "I trace problems across the full user journey, then turn insight into practical, sustainable product solutions within real business, data, and technical constraints.",
-    eyebrow: "0-to-1 Product · Data Product · Design Leadership",
+    title: "From product strategy to launch, using AI to turn ideas into products faster.",
+    lead: "Combining product strategy, UX, data, and technical thinking to move from problem discovery and product decisions through design, validation, and launch, while using AI to accelerate research, prototyping, small-scale front-end and back-end experiments, and testing before committing to full development.",
+    eyebrow: "Product Strategy · UI/UX Leadership · AI-assisted Validation & Building",
   },
   selectedWork: {
     kicker: "SELECTED WORK",
@@ -65,13 +65,13 @@ export const home: HomeContent = {
     kicker: "ABOUT",
     heading: "Hi, I'm Grant.",
     paragraph:
-      "I began in web design and front-end development, then moved into product design, strategy, and team leadership. Working across design and code taught me that an interface can look right in a design file and still fail when it meets real data, engineering constraints, operations, and users who behave differently than expected.",
+      "I'm a Product & Design Lead working across product strategy, UX, technology, and cross-functional leadership. I turn complex problems into product direction and help move that direction through design, validation, and execution, while increasingly integrating AI into how I explore, test, and deliver products.",
     cta: "More about me",
   },
   contactCta: {
     kicker: "CONTACT",
     title: "Let's turn complex problems into products teams can move forward with.",
-    lead: "I am interested in product and design leadership, data products, 0-to-1 builds, and challenges that require close collaboration across design, engineering, and operations.",
+    lead: "I'm interested in product strategy, practical AI applications, 0-to-1 product development, and challenges that bring together UX, data, technology, and cross-functional collaboration.",
     cta: "Contact me",
   },
 };
