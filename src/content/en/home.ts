@@ -16,7 +16,7 @@ export const home: HomeContent = {
   hero: {
     kicker: "HOME",
     title: "From product strategy to launch, using AI to turn ideas into products faster.",
-    lead: "Combining product strategy, UX, data, and technical thinking to move from problem discovery and product decisions through design, validation, and launch, while using AI to accelerate research, prototyping, small-scale front-end and back-end experiments, and testing before committing to full development.",
+    lead: "Combining product strategy, UX, data, and technical thinking to move from problem discovery and product decisions through design, validation, and launch, while using AI to accelerate research, prototyping, data processing, front-end implementation, and testing before committing to full development.",
     eyebrow: "Product Strategy · UI/UX Leadership · AI-assisted Validation & Building",
   },
   selectedWork: {
