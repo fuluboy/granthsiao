@@ -11,7 +11,7 @@ interface Props {
 const { locale, card } = Astro.props;
 const t = UI_TEXT[locale];
 const href = withBase(`/${locale}/work/${card.slug}/`);
-const coverSrc = withBase(`/images/work/${card.slug}/cover.jpg`);
+const coverSrc = card.slug === "speedmeter" ? undefined : withBase(`/images/work/${card.slug}/cover.jpg`);
 ---
 
 <article class:list={["work-card", `work-card--${card.imageSide}`]} id={card.slug === "house579" ? "selected-work" : undefined}>
