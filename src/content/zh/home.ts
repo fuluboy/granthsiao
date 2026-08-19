@@ -71,6 +71,18 @@ export const home: HomeContent = {
         metric: "27,648 組內容 · Android 已上架",
         imageSide: "right",
       },
+      {
+        slug: "speedmeter",
+        index: "05",
+        eyebrow: "AI-assisted Product Workflow · Data Quality · Validation",
+        name: "SpeedMeter",
+        title: "用 AI 縮短從不確定到證據的距離",
+        description:
+          "從駕駛警示體驗與道路資料可信度出發，把 AI 接進產品訪談、規劃、可操作原型、工作管理、開發與品質驗證，讓產品假設更快進入真實測試。",
+        tags: ["AI-assisted Workflow", "Data Quality", "Product Validation"],
+        metric: "Discovery → Prototype → Validation",
+        imageSide: "left",
+      },
     ],
   },
   aboutTeaser: {
