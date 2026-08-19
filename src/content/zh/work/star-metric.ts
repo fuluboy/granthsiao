@@ -5,13 +5,13 @@ export const starMetric: CaseStudyContent = {
   meta: {
     title: "Star Metric｜從 AI 實驗到上架產品",
     description:
-      "從產品假設、個人化資料架構與 UI/UX，到 AI 協作開發與 Android 上架，完整走過一輪 0→1 產品實驗。",
+      "從產品假設、個人化資料架構與 UI/UX，到 AI 輔助開發與 Android 上架，完整走過一輪 0→1 產品實驗。",
   },
   caseNumber: "04",
   kicker: "CASE STUDY 04 · STAR METRIC",
   title: "從 AI 實驗到上架產品",
   lead:
-    "從產品假設、個人化資料架構與 UI/UX，到 AI-assisted development 與 Android 正式上架；產品發布後，再根據真實使用與平台審核重新檢視 acquisition 與定位。",
+    "從產品假設、個人化資料架構與 UI/UX，一路做到 AI 輔助開發與 Android 正式上架。產品發布後，我再根據真實使用與平台審核結果，重新檢視獲客方式與產品定位。",
   heroImageName: "Star Metric Case Hero",
   metrics: [
     { value: "27,648", label: "預先生成的人格內容組合" },
@@ -21,10 +21,10 @@ export const starMetric: CaseStudyContent = {
   facts: [
     { label: "角色", value: "Independent Product Builder／Product & Design Lead" },
     { label: "期間", value: "2024–2026" },
-    { label: "階段", value: "Product Experiment · 0→1 · Release · Learn" },
+    { label: "階段", value: "產品實驗 · 0→1 · 上架 · 驗證" },
     {
       label: "責任",
-      value: "產品策略、UI/UX、AI 資料管線、前端調整、AI 協作開發與上架",
+      value: "產品策略、UI/UX、AI 資料流程、前端調整、AI 輔助開發與上架",
     },
   ],
   context: {
@@ -75,73 +75,73 @@ export const starMetric: CaseStudyContent = {
       kicker: "KEY DECISION 2",
       heading: "預先生成 27,648 組內容",
       paragraphs: [
-        "12 星座 × 12 命宮 × 12 主星 × 16 MBTI，形成 27,648 種有限組合。產品仍在實驗階段，如果每次使用都即時呼叫 LLM，就會在 retention 尚未被驗證前持續產生 inference cost；有限的組合空間讓預先生成成為更適合當時階段的選擇。",
-        "因此我先建立完整內容資料：Prompt A 將組合拆成結構化內容因子，Prompt B 再依這些因子產出使用者可讀內容，最後整理為 JSON 並透過 Firebase CLI 匯入。把 AI 成本集中在資料建置階段，讓日常使用不必每次重新推論。",
+        "12 星座 × 12 命宮 × 12 主星 × 16 種人格類型，形成 27,648 種有限組合。產品仍在實驗階段，如果每次使用都即時呼叫模型，就會在留存還沒被驗證前持續增加成本；有限的組合空間，讓預先生成更適合當時的產品階段。",
+        "因此我先把完整內容資料建好：Prompt A 將每種組合拆成結構化內容因子，Prompt B 再轉成使用者可讀的內容，最後整理為 JSON 並透過 Firebase CLI 匯入。AI 成本集中在資料建置階段，日常使用時不必每次重新推論。",
       ],
     },
     {
       kicker: "KEY DECISION 3",
-      heading: "把 AI 品質變成可驗證流程",
+      heading: "把 AI 內容品質變成可以檢查的流程",
       paragraphs: [
-        "大量生成後，我發現不同組合開始出現相似語詞與句型，個人化差異逐漸收斂。問題不只靠換模型解決，而是回到 Prompt、輸出結構與資料品質本身。",
-        "我重新拆分 Prompt 與輸出結構，加入語義、詞彙與 JSON validation，並建立抽樣檢查與 selective rerun。當內容出現品質問題時，只重新生成受影響的資料，而不是整批重跑。這讓生成式 AI 從一次性的內容產生工具，變成可以被檢查、定位問題與持續修正的資料流程。",
+        "大量生成後，我發現不同組合開始出現相似語詞與句型，個人化差異逐漸收斂。這個問題不能只靠換模型處理，必須回到 Prompt、輸出結構與資料品質本身。",
+        "我重新拆分 Prompt 與輸出結構，加入語義、詞彙與 JSON 格式檢查，再搭配抽樣檢查。當某批內容出現問題時，只重新生成受影響的資料，不需要整批重跑。這讓生成式 AI 從一次性的內容產生工具，變成可以持續檢查、找出問題並修正的資料流程。",
       ],
     },
     {
       kicker: "KEY DECISION 4",
-      heading: "用 AI 擴大執行範圍，保留產品與 UX 決策權",
+      heading: "用 AI 擴大實作範圍，產品與 UX 決策仍由我負責",
       paragraphs: [
-        "我先在 Figma 完成產品流程與 UI/UX，再讓 AI coding tools 依設計推進實作，並利用自己的前端能力檢查與調整介面、互動與技術可行性。",
-        "Claude 主要負責程式實作，ChatGPT 與 Gemini 用於技術驗證與第二意見。AI 擴大了一個人能完成的範圍；產品方向、UX、需求優先順序、驗證標準與最終取捨仍由我負責。",
+        "我先在 Figma 完成產品流程與 UI/UX，再用 AI 開發工具推進實作，並利用自己的前端能力檢查與調整介面、互動與技術可行性。",
+        "AI 主要協助初始程式實作與技術檢查；產品方向、UX、需求優先順序、驗證標準與最終取捨仍由我負責。這讓一個人可以完成更多實作工作，同時保留產品與設計判斷。",
       ],
     },
   ],
   execution: {
     kicker: "BUILD & SHIP",
-    heading: "從 Figma 到正式上架",
+    heading: "從 Figma 做到正式上架",
     paragraphs: [
-      "完成產品流程與 UI 後，我透過 AI-assisted development 推進實作、Firebase 整合、測試與修正，並完成 Android 與 iOS 的 release pipeline。Android 最終正式上架 Google Play，iOS 則進入 App Store review。",
-      "這讓產品真正走過 hypothesis → design → implementation → release，而不是停留在 prototype。",
+      "完成產品流程與 UI 後，我透過 AI 輔助開發推進實作、Firebase 整合、測試與修正，並完成 Android 與 iOS 的上架流程。Android 最終正式上架 Google Play，iOS 則進入 App Store 審核。",
+      "這個實驗因此真的走過產品假設、設計、開發到上架，而沒有停在 Prototype。",
     ],
     roleCard: {
-      label: "MY ROLE",
+      label: "我的責任",
       items: [
-        "Product strategy & MVP scope",
-        "UI Flow & UI/UX design in Figma",
-        "AI data pipeline & quality rules",
-        "Front-end refinement & validation",
-        "Release planning & store submission",
+        "產品策略與 MVP 範圍",
+        "User Flow 與 Figma UI/UX",
+        "AI 資料流程與品質規則",
+        "前端調整與驗證",
+        "上架規劃與商店送審",
       ],
       footnote:
-        "AI 負責多數初始程式實作；產品方向、UI/UX、需求、驗證標準與上架由我負責。",
+        "AI 協助多數初始程式實作；產品方向、UI/UX、需求、驗證標準與上架由我負責。",
     },
   },
   impact: {
     kicker: "SHIP & LEARN",
-    heading: "上架後，風險轉向市場驗證",
+    heading: "上架之後，真正要解的問題轉向市場",
     blocks: [
       {
-        heading: "從 Prototype 到 Production",
+        heading: "從 Prototype 走到正式產品",
         body:
-          "產品從概念、資料與 UI/UX 一路推進到 Android production release，證明這套 AI-assisted workflow 能支撐完整的 0→1 delivery。",
+          "產品從概念、資料與 UI/UX 一路推進到 Android 正式上架，也讓我確認這套 AI 協作方式確實能把一個產品從假設一路推到可公開使用的版本。",
       },
       {
-        heading: "建立可修正的 AI Data Pipeline",
+        heading: "建立可以持續修正的 AI 資料流程",
         body:
-          "Prompt 分流、validation、抽樣與 selective rerun，讓生成內容可以被診斷與局部修復，而不是每次品質出問題就全部重做。",
+          "Prompt 分流、格式檢查、抽樣與局部重跑，讓生成內容出問題時可以找到原因並修正，不必每次都把整批資料重新產生。",
       },
       {
-        heading: "下一個風險是 Acquisition 與定位",
+        heading: "下一個風險是獲客與定位",
         body:
-          "上架後自然流量不足，使原本設定的 retention hypothesis 還沒有足夠樣本可驗證；App Store review 也暴露了產品差異化與類別定位的問題。我探索過「每日狀態」方向，但在 acquisition 與定位都尚未解決前，選擇停止追加投入。",
+          "上架後自然流量不足，原本設定的留存假設還沒有足夠樣本可以驗證；App Store 審核也讓產品差異化與類別定位的問題更明顯。我探索過「每日狀態」方向，但在獲客與定位都還沒解決前，選擇先停止追加投入。",
       },
     ],
   },
   reflection: {
     kicker: "REFLECTION",
-    heading: "把驗證順序往前移",
+    heading: "把最重要的驗證往前移",
     paragraphs: [
-      "Star Metric 最重要的學習，是 AI 可以大幅降低 build cost，卻不會替產品解決 acquisition、positioning 與 product-market risk。之後的產品實驗，我開始把更多驗證放到完整開發之前，優先確認最高風險的假設，再決定值得投入多少 build effort。",
+      "Star Metric 最重要的學習，是 AI 能大幅降低開發成本，但不會替產品解決市場切入、定位與獲客問題。之後做新的產品實驗時，我會更早找出風險最高的假設，先取得足夠證據，再決定值得投入多少開發成本。",
     ],
   },
 };
