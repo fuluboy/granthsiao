@@ -11,7 +11,7 @@ export const speedMeter: CaseStudyContent = {
   kicker: "CASE STUDY 05 · SPEEDMETER",
   title: "Using AI to validate product ideas faster",
   lead:
-    "I started with problems I had repeatedly noticed while using speed-camera apps: distracting alerts, questionable data, and interfaces that were not always easy to read while driving. I also used the project to bring AI into discovery, prototyping, development, and validation so ideas could reach a real device sooner. Product direction, data trust, and acceptance criteria still remained human decisions.",
+    "I started with problems I had repeatedly noticed while using speed-camera apps: distracting alerts, questionable data, and interfaces that were not always easy to read while driving. I also used the project to bring AI into discovery, prototyping, development, and validation so ideas could reach a real device sooner. I remained responsible for product direction, data trust, and acceptance criteria.",
   heroImageName: "SpeedMeter Case Hero",
   metrics: [
     { value: "0→1", label: "From idea to a testable build" },
@@ -40,7 +40,7 @@ export const speedMeter: CaseStudyContent = {
   },
   whatWeSaw: {
     kicker: "PRODUCT HYPOTHESIS",
-    heading: "Get the few things that matter most right first",
+    heading: "Start with the few things that matter most",
     signals: [
       {
         number: "1",
@@ -93,6 +93,7 @@ export const speedMeter: CaseStudyContent = {
       paragraphs: [
         "When I found an interface direction that might work for an in-car dashboard, I gave the reference image to Codex and used it to produce a structurally similar UI that could actually run. I then checked information density, type size, visual hierarchy, and interaction on a real device rather than judging everything from a static mockup.",
         "The point was not to let AI replace design. It was to answer a practical question earlier: does this direction still work when it is running in the real context? A visual idea could quickly become something I could see and use, making it easier to refine, rework, or drop before spending more time on polish.",
+        "Visual reference: Magnific.com, “Speedometer with neon LED light gauge meter.” The image was used only as a reference for visual direction, color, and gauge styling; SpeedMeter’s information structure, layout, and interaction were designed and validated separately.",
       ],
     },
     {
@@ -126,7 +127,7 @@ export const speedMeter: CaseStudyContent = {
   },
   impact: {
     kicker: "CURRENT VALIDATION",
-    heading: "What I know so far — and what still needs the road",
+    heading: "What I know so far — and what still needs real-road validation",
     blocks: [
       {
         heading: "Where the product is now",
