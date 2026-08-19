@@ -5,7 +5,7 @@ export const house579: CaseStudyContent = {
   meta: {
     title: "House579",
     description:
-      "Building a real estate listing platform from zero: lowering onboarding friction, using targeted promotion to prove value, and creating the foundation for sustainable paid operations.",
+      "Building a real estate listing platform from zero by lowering onboarding friction, proving value through real outcomes, and moving the product into paid operations.",
   },
   caseNumber: "01",
   kicker: "CASE STUDY 01 · HOUSE579",
@@ -14,14 +14,13 @@ export const house579: CaseStudyContent = {
     "We first reduced the effort required to register, verify an account, and migrate existing listings. After building supply and usage habits, we used targeted promotion to help agents see real exposure and inquiry results, establish product credibility, and create the foundation for paid operations.",
   heroImageName: "House579 Case Hero",
   metrics: [
-    { value: "Nearly 200K", label: "Listings onboarded during free rollout" },
     { value: "50K+", label: "Paid listings" },
     { value: "3,000+", label: "Agents" },
     { value: "2", label: "Brokerage HQ partnerships" },
   ],
   facts: [
     { label: "Role", value: "Head of Product / Product Lead" },
-    { label: "Period", value: "Mar 2025–Present" },
+    { label: "Period", value: "Mar 2025–Aug 2026" },
     {
       label: "Stage",
       value: "0-to-1, free onboarding, monetization, and ongoing operations",
@@ -46,7 +45,7 @@ export const house579: CaseStudyContent = {
   },
   whatWeSaw: {
     kicker: "WHAT WE SAW",
-    heading: "Signals from real use and operations changed our priorities",
+    heading: "What mattered to agents changed as the product moved from onboarding to paid use",
     signals: [
       {
         number: "1",
@@ -56,18 +55,12 @@ export const house579: CaseStudyContent = {
       },
       {
         number: "2",
-        heading: "Long sessions were not always a good sign",
-        body:
-          "Clarity sessions showed agents repeatedly paging after editing a listing. Recreating the flow revealed a sorting defect. Behavioral data only becomes useful when read in context.",
-      },
-      {
-        number: "3",
         heading: "Ease of use alone was not enough to support monetization",
         body:
           "Free onboarding reduced the barrier to trying the platform, but willingness to pay depended on whether the service could generate exposure, inquiries, and real business opportunities. The product had to prove that it was not only easy to use, but genuinely useful.",
       },
       {
-        number: "4",
+        number: "3",
         heading: "Once the product charged, the value standard changed",
         body:
           "During the free phase, speed of migration mattered most. Once agents paid, field accuracy, update speed, regulatory risk, and mobile efficiency became matters of trust and retention.",
@@ -114,11 +107,11 @@ export const house579: CaseStudyContent = {
   execution: {
     kicker: "EXECUTION",
     heading:
-      "In a small team, clarify the root cause first, then find the fastest path to evidence",
+      "In a small team, find the root cause before deciding how much engineering to invest",
     paragraphs: [
-      "When sales or users surfaced a problem, I reproduced it first and clarified the underlying cause before turning it into Product Backlog items, acceptance criteria, and priorities. With AI-assisted workflows, I could process large data sets more quickly, build Python scripts, execute front-end prototypes, and review tracking plans and product flows, allowing some assumptions to reach a first round of evidence without waiting for full engineering capacity.",
-      "For items that could be tested in a controlled way, I built a working version first. When backend, database, or production-service logic was involved, I clarified the product rules, interface behavior, data conditions, and test cases before handing the work to engineering for integration and deployment.",
-      "After launch, I continued validating outcomes through Clarity, GA4, sample checks, and frontline feedback. This allowed a resource-constrained team to clarify the root cause, test the direction, and reserve engineering effort for problems that were truly worth developing formally.",
+      "When sales or users surfaced a problem, I reproduced the situation first and clarified the underlying cause before turning it into Product Backlog items, acceptance criteria, and priorities. One Clarity pattern showed unusually long sessions; instead of reading that as high engagement, I retraced the flow and found a sorting defect. Behavioral data only becomes useful when read in context.",
+      "For questions that could be tested in a controlled way, I used data processing, Python, or front-end prototypes to get an initial answer. When backend, database, or production-service logic was involved, I clarified product rules, interface behavior, data conditions, and test cases before handing the work to engineering for integration and deployment.",
+      "After launch, I continued checking outcomes through Clarity, GA4, sample reviews, and frontline feedback. This helped a resource-constrained team reserve engineering effort for problems that truly affected users or business results.",
     ],
   },
   impact: {
@@ -127,35 +120,29 @@ export const house579: CaseStudyContent = {
       "From low-friction onboarding and proof of value to sustainable paid operations",
     blocks: [
       {
-        heading: "Supply and adoption",
+        heading: "Build supply and usage habits first",
         body:
-          "Through faster registration, identity verification, data handoff, and listing migration, the free rollout accumulated nearly 200,000 listings and established a broad supply base, agent adoption, and day-to-day usage habits.",
+          "Through faster registration, identity verification, data handoff, and listing migration, the free rollout peaked at nearly 200,000 listings and established a broad supply base, agent adoption, and day-to-day usage habits.",
       },
       {
-        heading: "Results and trust",
+        heading: "Use outcomes to build trust",
         body:
           "The team connected selected listings with targeted marketing support, helping agents receive real exposure and inquiries. The platform's value expanded from simply making listings easier to manage to creating business opportunities, gradually building word of mouth and product credibility.",
       },
       {
-        heading: "Paid operations",
+        heading: "Move into paid operations",
         body:
           "With an existing supply base, established usage habits, and visible outcome experience, the paid platform reached 50K+ paid listings, 3,000+ agents, 6,000+ members, and partnerships with two brokerage brand headquarters. These outcomes came from product, sales, marketing, data, and operations working together.",
-      },
-      {
-        heading: "Team capability",
-        body:
-          "The team developed a repeatable method: use behavioral data to locate the context behind frontline complaints, reproduce and classify the issue, and prioritize data problems by regulatory risk, likelihood, and reach. When an item could be validated quickly, we gathered evidence before committing to formal development.",
       },
     ],
   },
   reflection: {
     kicker: "REFLECTION",
     heading:
-      "Free lowers the cost of trying; visible results create the reason to pay",
+      "Free lowers the cost of trying; results create the reason to pay",
     paragraphs: [
-      "House579 showed me that free adoption does not mean product value has already been established. Low-friction registration, listing migration, and mobile management can persuade agents to start using a platform, but sustained willingness to pay depends on whether the product can deliver exposure, inquiries, and greater operational efficiency.",
-      "As the platform moved from free onboarding to paid operations, the standard of value changed. Accuracy, update speed, and ease of management were no longer secondary experience issues; they directly influenced whether agents trusted the platform enough to continue using it.",
-      "If I were starting again, I would instrument registration, verification, first listing, and downstream outcome conversion earlier. I would also establish data-quality, anomaly, and regulatory monitoring as foundational capabilities. A product lead cannot finish everything at once; the job is to identify what matters most at each stage: lower the cost of trying, prove the outcome, and then protect the trust that paid usage requires.",
+      "House579 showed me that low-friction registration, listing migration, and mobile management can persuade agents to start using a platform, but sustained willingness to pay still depends on whether the product can generate exposure, inquiries, and operational value. Once the platform became paid, accuracy, update speed, and ease of management also became part of the trust users were paying for.",
+      "If I were starting again, I would instrument registration, verification, first listing, and downstream outcomes earlier, and establish data-quality, anomaly, and regulatory monitoring sooner. Each stage has a different product problem: lower the cost of trying, prove the outcome, then protect the trust that paid usage requires.",
     ],
   },
 };
