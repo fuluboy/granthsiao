@@ -1,5 +1,6 @@
 ---
 import { UI_TEXT, HTML_LANG, swapLocaleInPath, otherLocale, withBase, type Locale } from "../i18n/config";
+import { getWork } from "../content";
 
 interface Props {
   locale: Locale;
@@ -8,7 +9,10 @@ interface Props {
 const { locale } = Astro.props;
 const target = otherLocale(locale);
 const t = UI_TEXT[locale];
-const altPath = swapLocaleInPath(Astro.url.pathname, target);
+const currentPath = Astro.url.pathname;
+const workSlug = currentPath.match(/\/work\/([^/]+)\/?$/)?.[1];
+const hasTranslatedCase = workSlug ? Boolean(getWork(target, workSlug)) : true;
+const altPath = hasTranslatedCase ? swapLocaleInPath(currentPath, target) : withBase(`/${target}/`);
 ---
 
 <a
