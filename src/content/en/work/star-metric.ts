@@ -5,19 +5,18 @@ export const starMetric: CaseStudyContent = {
   meta: {
     title: "Star Metric | From AI Experiment to Shipped Product",
     description:
-      "An independent AI product experiment combining zodiac, MBTI, and Zi Wei data into a 27,648-combination content pipeline, then taking the product through UI/UX, AI-assisted development, and Android release.",
+      "A full 0-to-1 product experiment spanning product hypothesis, personalized data architecture, UI/UX, AI-assisted development, and Android release.",
   },
   caseNumber: "04",
   kicker: "CASE STUDY 04 · STAR METRIC",
   title: "From AI experiment to shipped product",
   lead:
-    "I combined zodiac, MBTI, and Zi Wei signals into personalized content, then moved from product hypothesis and UI/UX through a 27,648-combination data pipeline, quality validation, and a production Android release. Shipping also exposed acquisition and positioning as the next risks to solve.",
+    "From product hypothesis, personalized data architecture, and UI/UX to AI-assisted development and an Android production release, Star Metric completed a full 0-to-1 cycle. After launch, real usage and platform review shifted the focus toward acquisition and positioning.",
   heroImageName: "Star Metric Case Hero",
   metrics: [
     { value: "27,648", label: "Pre-generated personality combinations" },
-    { value: "2-stage", label: "AI content pipeline" },
     { value: "Android", label: "Released on Google Play" },
-    { value: "iOS", label: "App Store submission completed" },
+    { value: "iOS", label: "Reached App Store review" },
   ],
   facts: [
     { label: "Role", value: "Independent Product Builder / Product & Design Lead" },
@@ -45,27 +44,21 @@ export const starMetric: CaseStudyContent = {
     signals: [
       {
         number: "1",
-        heading: "First, it had to feel like you",
+        heading: "Make the first result worth trusting",
         body:
-          "Personality analysis was the first trust layer. If the initial interpretation did not feel personally relevant, users had little reason to trust the daily status or advice that followed.",
+          "Personality analysis was the first moment users could decide whether the product understood them. If that first result did not feel personally relevant, there was little reason to keep using the daily experience.",
       },
       {
         number: "2",
-        heading: "Relationship matching was not MVP",
+        heading: "Keep complexity behind the experience",
         body:
-          "Deeper relationship analysis would add little value before the first layer of trust was established, and the funnel did not justify prioritizing it early.",
+          "Users did not need to understand Zi Wei, Western astrology, or the calculations behind them. Those systems worked as personalization signals underneath the product, while the interface surfaced only results users could understand and act on.",
       },
       {
         number: "3",
-        heading: "Retention was the real goal",
+        heading: "Validate daily use, not a one-time test",
         body:
-          "Success was not completing a test once. The hypothesis was that users would return for a daily check-in, especially when a day felt off and they wanted another perspective.",
-      },
-      {
-        number: "4",
-        heading: "Zi Wei stayed under the hood",
-        body:
-          "The primary audience was already familiar with zodiac signs and MBTI. Zi Wei added another personalization signal without requiring users to understand the underlying system first.",
+          "The real product question was whether users would keep returning to check their daily status and gradually treat it as part of their everyday reference routine.",
       },
     ],
   },
@@ -74,32 +67,32 @@ export const starMetric: CaseStudyContent = {
       kicker: "KEY DECISION 1",
       heading: "Personality first, daily status next",
       paragraphs: [
-        "The first-release flow moved from Google or Apple sign-in to personality questions, birth information confirmation, personality analysis, Zi Wei and zodiac charts, and then daily status. Birth information was not freely editable after confirmation to reduce repeated trial-and-error profiles and keep a stable personal identity in the product.",
-        "I postponed relationship matching and focused limited effort on two questions: could the first analysis establish enough trust, and could a daily experience create a reason to return?",
+        "The first-release flow moved from Google or Apple sign-in to personality questions, birth information confirmation, personality analysis, Zi Wei and zodiac charts, and then daily status. Birth information was not freely editable after confirmation, helping keep the personalized profile stable instead of encouraging repeated trial-and-error inputs.",
+        "The MVP focused on two questions: was the first result worth trusting, and was there enough ongoing value to give users a reason to return?",
       ],
     },
     {
       kicker: "KEY DECISION 2",
-      heading: "Pre-generate 27,648 combinations",
+      heading: "Pre-generate 27,648 content combinations",
       paragraphs: [
-        "12 zodiac signs × 12 palaces × 12 primary stars × 16 MBTI types created a finite set of 27,648 combinations. Because the product was still experimental, generating every result at runtime would have introduced recurring inference cost before value and retention were proven.",
-        "Instead, Prompt A converted each combination into structured content factors, while Prompt B turned those factors into user-facing interpretation. The results were consolidated into JSON and imported through Firebase CLI, concentrating AI cost in the data-building stage instead of every product interaction.",
+        "12 zodiac signs × 12 palaces × 12 primary stars × 16 MBTI types created a finite set of 27,648 combinations. Because the product was still experimental, calling an LLM at every use would have introduced recurring inference cost before retention had been validated. The finite combination space made pre-generation a better fit for the product stage.",
+        "I therefore built the content dataset upfront: Prompt A turned each combination into structured content factors, while Prompt B converted those factors into user-facing interpretation. The output was consolidated into JSON and imported through Firebase CLI, concentrating AI cost in the data-building stage instead of every product interaction.",
       ],
     },
     {
       kicker: "KEY DECISION 3",
-      heading: "Turn AI quality into a testable system",
+      heading: "Turn AI quality into a testable workflow",
       paragraphs: [
-        "At scale, different combinations began converging on similar wording and sentence structures. The problem was not solved by simply switching models; I went back to prompt design, output structure, and the quality rules around the dataset.",
-        "I iterated the prompts, split different chart characteristics into separate paths, and added semantic and vocabulary constraints, JSON validation, content-length checks, and sampled quality review. Repairs selectively regenerated only affected records, preserving roughly 55% that did not need to be rerun. Retry logic, rate-limit handling, and token/thread tuning helped manage quality, throughput, and cost together.",
+        "At scale, different combinations began converging on similar wording and sentence structures, reducing the sense of personalization. The answer was not simply to switch models, but to revisit prompt design, output structure, and the quality rules around the dataset.",
+        "I reworked the prompt and output structure, added semantic, vocabulary, and JSON validation, and introduced sampled review with selective reruns. When quality issues appeared, only affected records were regenerated instead of rerunning the entire dataset. That turned generative AI from a one-off content tool into a data workflow that could be inspected, diagnosed, and continuously repaired.",
       ],
     },
     {
       kicker: "KEY DECISION 4",
-      heading: "Let AI code; keep product judgment human",
+      heading: "Use AI to extend execution capacity while keeping product and UX decisions human-owned",
       paragraphs: [
-        "I defined the UI flow and designed the interface in Figma. At the time, AI-generated design was not at the quality bar I wanted, so I established the interaction and visual direction first, then used AI coding tools for implementation and refined the interface and behavior with my own front-end skills.",
-        "Claude handled most implementation, while ChatGPT and Gemini were used for strategy discussion, technical validation, and second opinions. On the back end, I focused on product rules, risk, and security requirements and used multiple AI systems for cross-checking. AI expanded what one person could execute, while product direction, UX, validation criteria, and trade-offs remained mine.",
+        "I first defined the product flow and UI/UX in Figma, then used AI coding tools to move implementation forward and relied on my front-end skills to review and refine the interface, interaction details, and technical feasibility.",
+        "Claude handled most of the implementation, while ChatGPT and Gemini were used for technical validation and second opinions. AI expanded what one person could execute; product direction, UX, prioritization, validation criteria, and final trade-offs remained mine.",
       ],
     },
   ],
@@ -107,17 +100,9 @@ export const starMetric: CaseStudyContent = {
     kicker: "BUILD & SHIP",
     heading: "From Figma to production release",
     paragraphs: [
-      "After defining the product flow and UI, I used AI-assisted development to move through implementation, Firebase integration, testing, and fixes, then handled interface refinement, the app icon, store screenshots, and release assets. AI helped generate source visual material, while I used Photoshop for art direction, composition, and final production.",
-      "The Android version was released on Google Play, and the iOS version reached App Store submission. The experiment therefore moved through the full product lifecycle—from hypothesis, data, and UX to implementation, platform review, and public release—rather than stopping at a prototype.",
+      "After defining the product flow and UI, I used AI-assisted development to move through implementation, Firebase integration, testing, and fixes, then completed the Android and iOS release pipeline. Android was released on Google Play, while iOS reached App Store review.",
+      "The product therefore moved through hypothesis → design → implementation → release instead of stopping at a prototype.",
     ],
-    operatingContext: {
-      label: "OPERATING CONTEXT",
-      stats: [
-        { value: "1 person", label: "Independent product experiment" },
-        { value: "3 AI", label: "Claude · ChatGPT · Gemini" },
-        { value: "2 platforms", label: "Android release · iOS submission" },
-      ],
-    },
     roleCard: {
       label: "MY ROLE",
       items: [
@@ -125,7 +110,7 @@ export const starMetric: CaseStudyContent = {
         "UI flow & UI/UX design in Figma",
         "AI data pipeline & quality rules",
         "Front-end refinement & validation",
-        "Store assets, submission & release",
+        "Release planning & store submission",
       ],
       footnote:
         "AI handled most initial code implementation; I owned product direction, UI/UX, requirements, validation criteria, and release.",
@@ -133,38 +118,30 @@ export const starMetric: CaseStudyContent = {
   },
   impact: {
     kicker: "SHIP & LEARN",
-    heading: "Shipping exposed the real bottleneck",
+    heading: "After launch, the risk shifted to market validation",
     blocks: [
       {
-        heading: "End-to-end delivery",
+        heading: "From prototype to production",
         body:
-          "Star Metric moved from concept to an Android production release, proving that an AI-assisted workflow could take a solo product experiment beyond ideas and prototypes into a public product.",
+          "The product moved from concept, data, and UI/UX through to an Android production release, showing that the AI-assisted workflow could support a complete 0-to-1 delivery cycle.",
       },
       {
-        heading: "A repairable data pipeline",
+        heading: "A repairable AI data pipeline",
         body:
-          "The 27,648 records were not treated as a one-time generation job. Prompt branching, structure validation, sampling, and selective reruns made the dataset diagnosable, repairable, and versionable.",
+          "Prompt branching, validation, sampling, and selective reruns made generated content diagnosable and locally repairable instead of requiring a full regeneration whenever quality issues appeared.",
       },
       {
-        heading: "Acquisition came first",
+        heading: "The next risk was acquisition and positioning",
         body:
-          "Organic usage was close to zero without paid promotion. That meant the retention hypothesis did not yet have enough traffic for a reliable answer—and exposed acquisition and marketing as a capability gap in the original experiment.",
-      },
-      {
-        heading: "iOS forced a positioning rethink",
-        body:
-          "App Store review pushed me to reconsider differentiation and category positioning. I explored shifting the product toward a broader daily-status experience, but paused further investment while both positioning and acquisition remained unresolved.",
+          "Organic traffic after launch was too limited to give the original retention hypothesis enough data for a reliable answer. App Store review also exposed questions around differentiation and category positioning. I explored a broader daily-status direction, but chose not to add further investment while acquisition and positioning remained unresolved.",
       },
     ],
-    footnote:
-      "The value of this case is completing a product experiment and gaining feasibility and market learning; release itself is not presented as market validation.",
   },
   reflection: {
     kicker: "REFLECTION",
-    heading: "Pause, then carry the learning forward",
+    heading: "Move validation earlier",
     paragraphs: [
-      "AI dramatically lowered the cost of building data and software, but it did not solve market entry, differentiation, or acquisition. The project reinforced that building faster matters most when the highest-risk assumption is identified early.",
-      "I paused the next Star Metric iteration and carried what I learned about AI collaboration, data quality, cost control, release, and platform constraints into my next product experiment, SpeedMeter, with more validation moved ahead of full development.",
+      "The most important learning from Star Metric was that AI can dramatically reduce build cost, but it does not solve acquisition, positioning, or product-market risk. In later product experiments, I moved more validation ahead of full development, prioritizing the highest-risk assumption before deciding how much build effort was justified.",
     ],
   },
 };
