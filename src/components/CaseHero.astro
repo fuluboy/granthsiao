@@ -3,6 +3,7 @@ import CaseMetrics from "./CaseMetrics.astro";
 import ResponsiveMedia from "./ResponsiveMedia.astro";
 import CaseStudyGallery from "./CaseStudyGallery.astro";
 import type { CaseStudyContent } from "../content/types";
+import { getHome } from "../content";
 import { UI_TEXT, withBase, type Locale } from "../i18n/config";
 import type { MediaRatio, MediaDisplay } from "./MediaPlaceholder.astro";
 
@@ -24,11 +25,16 @@ interface Props {
 
 const { locale, caseData, heroImage, lightboxGalleryId } = Astro.props;
 const t = UI_TEXT[locale];
+const orderedCards = getHome(locale).selectedWork.cards;
+const orderIndex = orderedCards.findIndex((card) => card.slug === caseData.slug);
+const displayNumber = orderIndex >= 0 ? String(orderIndex + 1).padStart(2, "0") : caseData.caseNumber;
+const caseLabel = caseData.kicker.replace(/^CASE STUDY\s+\d+\s*·\s*/i, "");
+const displayKicker = `CASE STUDY ${displayNumber} · ${caseLabel}`;
 ---
 
 <header class="case-hero" id="case-hero">
   <div class="case-wide case-hero__intro">
-    <p class="kicker">{caseData.kicker}</p>
+    <p class="kicker">{displayKicker}</p>
     <h1 class="case-hero__title">{caseData.title}</h1>
     <p class="case-hero__lead case-reading">{caseData.lead}</p>
   </div>
