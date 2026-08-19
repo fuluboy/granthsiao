@@ -41,7 +41,12 @@ export function getWork(locale: Locale, slug: string) {
   return table[slug];
 }
 
+export function getWorkSlugs(locale: Locale) {
+  const table = locale === "zh" ? workZh : workEn;
+  return Object.keys(table);
+}
+
 export function getAllWork(locale: Locale) {
   const table = locale === "zh" ? workZh : workEn;
-  return workOrder.map((slug) => table[slug]);
+  return workOrder.flatMap((slug) => (table[slug] ? [table[slug]] : []));
 }
