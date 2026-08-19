@@ -5,17 +5,16 @@ export const starMetric: CaseStudyContent = {
   meta: {
     title: "Star Metric｜從 AI 實驗到上架產品",
     description:
-      "整合星座、MBTI 與紫微資料，建立 27,648 組兩階段 AI 內容管線，完成產品策略、UI/UX、AI 協作開發與 Android 上架。",
+      "從產品假設、個人化資料架構與 UI/UX，到 AI 協作開發與 Android 上架，完整走過一輪 0→1 產品實驗。",
   },
   caseNumber: "04",
   kicker: "CASE STUDY 04 · STAR METRIC",
   title: "從 AI 實驗到上架產品",
   lead:
-    "把星座、MBTI 與紫微訊號整合成個人化內容，從產品假設、UI/UX、27,648 組資料生成與品質驗證，一路推進到 Android 正式上架；真正發布後，也看見 acquisition 與產品定位仍待驗證。",
+    "從產品假設、個人化資料架構與 UI/UX，到 AI-assisted development 與 Android 正式上架；產品發布後，再根據真實使用與平台審核重新檢視 acquisition 與定位。",
   heroImageName: "Star Metric Case Hero",
   metrics: [
     { value: "27,648", label: "預先生成的人格內容組合" },
-    { value: "2-stage", label: "AI 內容生成管線" },
     { value: "Android", label: "Google Play 正式上架" },
     { value: "iOS", label: "完成 App Store 送審" },
   ],
@@ -45,27 +44,21 @@ export const starMetric: CaseStudyContent = {
     signals: [
       {
         number: "1",
-        heading: "先讓使用者覺得「像自己」",
+        heading: "先讓結果值得相信",
         body:
-          "人格特質是第一層信任。只有使用者先認為分析貼近自己，後續每日狀態與建議才有被參考的可能。",
+          "人格分析是使用者第一次判斷產品是否「理解我」的時刻。只有第一層結果具備足夠的個人相關性，後續每日狀態才有被持續參考的理由。",
       },
       {
         number: "2",
-        heading: "合盤不是 MVP",
+        heading: "把複雜計算藏在體驗後面",
         body:
-          "如果第一層信任還沒建立，更深的關係分析不會有足夠說服力；從使用漏斗來看，也不值得優先投入。",
+          "使用者不需要先理解紫微、西占或背後的計算方式。這些系統作為個人化訊號存在，前台只呈現能直接理解與使用的結果。",
       },
       {
         number: "3",
-        heading: "真正想驗證的是留存",
+        heading: "驗證每日使用，而不是一次性測驗",
         body:
-          "成功條件不是完成一次測驗，而是使用者會每天查看狀態，甚至在不順時主動回來確認與調整自己的節奏。",
-      },
-      {
-        number: "4",
-        heading: "紫微是底層訊號，不是學習門檻",
-        body:
-          "主要使用者仍以熟悉星座與 MBTI 的族群為主；紫微被放在底層增加個人化差異，不要求使用者先理解命理系統。",
+          "真正要驗證的產品價值，是使用者是否會持續回來查看每日狀態，逐漸把它變成日常參考。",
       },
     ],
   },
@@ -75,15 +68,15 @@ export const starMetric: CaseStudyContent = {
       heading: "先做人格，再延伸每日狀態",
       paragraphs: [
         "第一版流程從 Google／Apple 登入、人格題目、出生資料確認，進到人格特質分析，再延伸到紫微命盤、星座命盤與每日狀態。出生資料確認後不開放任意修改，避免使用者反覆嘗試不同資料，破壞個人化資料的穩定性。",
-        "我把合盤延後，把有限資源先放在建立第一層可信度與每日使用理由。這讓 MVP 聚焦在兩件事：分析是否讓人覺得貼近自己，以及產品是否有機會形成持續回訪。",
+        "MVP 聚焦在兩個問題：第一次結果是否值得相信，以及之後是否有足夠理由讓使用者再回來。",
       ],
     },
     {
       kicker: "KEY DECISION 2",
       heading: "預先生成 27,648 組內容",
       paragraphs: [
-        "12 星座 × 12 命宮 × 12 主星 × 16 MBTI，形成 27,648 種有限組合。產品仍在實驗階段，如果每次使用都即時呼叫高品質 LLM，推論成本會隨使用量持續增加，也會讓尚未驗證的產品先背上固定營運壓力。",
-        "因此我選擇先建立完整內容資料：Prompt A 將組合拆成結構化內容因子，Prompt B 再依這些因子產出使用者可讀內容，最後整理為 JSON 並透過 Firebase CLI 匯入。把 AI 成本集中在資料建置階段，讓日常使用不必每次重新推論。",
+        "12 星座 × 12 命宮 × 12 主星 × 16 MBTI，形成 27,648 種有限組合。產品仍在實驗階段，如果每次使用都即時呼叫 LLM，就會在 retention 尚未被驗證前持續產生 inference cost；有限的組合空間讓預先生成成為更適合當時階段的選擇。",
+        "因此我先建立完整內容資料：Prompt A 將組合拆成結構化內容因子，Prompt B 再依這些因子產出使用者可讀內容，最後整理為 JSON 並透過 Firebase CLI 匯入。把 AI 成本集中在資料建置階段，讓日常使用不必每次重新推論。",
       ],
     },
     {
@@ -91,15 +84,15 @@ export const starMetric: CaseStudyContent = {
       heading: "把 AI 品質變成可驗證流程",
       paragraphs: [
         "大量生成後，我發現不同組合開始出現相似語詞與句型，個人化差異逐漸收斂。問題不只靠換模型解決，而是回到 Prompt、輸出結構與資料品質本身。",
-        "我持續迭代 Prompt，將不同命盤特質分流，加入語義與詞彙限制、JSON 結構檢查、內容長度與抽樣品質驗證；需要修復時只重跑受影響資料，保留約 55% 不需重新生成的內容。API 端也加入 retry、rate-limit handling 與 token／thread 調校，讓品質、速度與成本一起被管理。",
+        "我重新拆分 Prompt 與輸出結構，加入語義、詞彙與 JSON validation，並建立抽樣檢查與 selective rerun。當內容出現品質問題時，只重新生成受影響的資料，而不是整批重跑。這讓生成式 AI 從一次性的內容產生工具，變成可以被檢查、定位問題與持續修正的資料流程。",
       ],
     },
     {
       kicker: "KEY DECISION 4",
-      heading: "AI 寫程式，我保留產品判斷",
+      heading: "用 AI 擴大執行範圍，保留產品與 UX 決策權",
       paragraphs: [
-        "UI Flow 與介面由我規劃並在 Figma 完成。當時 AI 產出的設計品質仍無法直接使用，因此我先定義互動與視覺，再讓 AI coding tools 依設計實作，最後利用自己的前端能力微調介面與行為。",
-        "Claude 是主要實作工具，ChatGPT 與 Gemini 用於策略討論、技術驗證與第二意見；後端部分我以產品規則、風險與安全要求為主，再透過不同 AI 交叉審核。AI 擴大了單人專案的執行範圍，但產品方向、UX、驗證標準與最終取捨仍由我決定。",
+        "我先在 Figma 完成產品流程與 UI/UX，再讓 AI coding tools 依設計推進實作，並利用自己的前端能力檢查與調整介面、互動與技術可行性。",
+        "Claude 主要負責程式實作，ChatGPT 與 Gemini 用於技術驗證與第二意見。AI 擴大了一個人能完成的範圍；產品方向、UX、需求優先順序、驗證標準與最終取捨仍由我負責。",
       ],
     },
   ],
@@ -107,17 +100,9 @@ export const starMetric: CaseStudyContent = {
     kicker: "BUILD & SHIP",
     heading: "從 Figma 到正式上架",
     paragraphs: [
-      "完成產品流程與 UI 後，我透過 AI-assisted development 推進前後端實作、整合 Firebase、測試與修正，再自行完成介面細節、App icon、Store screenshots 與發布素材。視覺素材部分由 AI 協助產生基礎素材，我再以 Photoshop 完成版面與成品控制。",
-      "Android 版本最終正式上架 Google Play；iOS 也完成 App Store 送審。這讓實驗真正走完整個產品生命週期：從假設、資料、UX、實作，到平台審核與公開發布，而不是停在 prototype。",
+      "完成產品流程與 UI 後，我透過 AI-assisted development 推進實作、Firebase 整合、測試與修正，並完成 Android 與 iOS 的 release pipeline。Android 最終正式上架 Google Play，iOS 則進入 App Store review。",
+      "這讓產品真正走過 hypothesis → design → implementation → release，而不是停留在 prototype。",
     ],
-    operatingContext: {
-      label: "OPERATING CONTEXT",
-      stats: [
-        { value: "1 人", label: "Independent product experiment" },
-        { value: "3 AI", label: "Claude · ChatGPT · Gemini" },
-        { value: "2 平台", label: "Android 上架 · iOS 送審" },
-      ],
-    },
     roleCard: {
       label: "MY ROLE",
       items: [
@@ -125,7 +110,7 @@ export const starMetric: CaseStudyContent = {
         "UI Flow & UI/UX design in Figma",
         "AI data pipeline & quality rules",
         "Front-end refinement & validation",
-        "Store assets, submission & release",
+        "Release planning & store submission",
       ],
       footnote:
         "AI 負責多數初始程式實作；產品方向、UI/UX、需求、驗證標準與上架由我負責。",
@@ -133,38 +118,30 @@ export const starMetric: CaseStudyContent = {
   },
   impact: {
     kicker: "SHIP & LEARN",
-    heading: "上架，才看到真正的瓶頸",
+    heading: "上架後，風險轉向市場驗證",
     blocks: [
       {
-        heading: "真正完成交付",
+        heading: "從 Prototype 到 Production",
         body:
-          "Star Metric 從概念一路做到 Android production release，驗證 AI-assisted workflow 能把單人產品實驗推進到公開上架，而不只停在概念與 prototype。",
+          "產品從概念、資料與 UI/UX 一路推進到 Android production release，證明這套 AI-assisted workflow 能支撐完整的 0→1 delivery。",
       },
       {
-        heading: "資料管線可持續修正",
+        heading: "建立可修正的 AI Data Pipeline",
         body:
-          "27,648 組內容不是一次性生成後就結束；Prompt 分流、結構驗證、品質抽樣與 selective rerun 讓資料可以被診斷、修正與版本化。",
+          "Prompt 分流、validation、抽樣與 selective rerun，讓生成內容可以被診斷與局部修復，而不是每次品質出問題就全部重做。",
       },
       {
-        heading: "Acquisition 先卡住",
+        heading: "下一個風險是 Acquisition 與定位",
         body:
-          "上架後，在沒有付費推廣的情況下幾乎沒有自然使用者。原本想驗證的 retention，因此還沒有足夠流量可以得到可靠答案；我也看見自己在 acquisition 與行銷上的能力缺口。",
-      },
-      {
-        heading: "iOS 迫使定位重新思考",
-        body:
-          "App Store review 讓我重新檢視產品差異化與類別定位。我曾探索從命理內容轉向「每日狀態」的方向，但在定位與 acquisition 都尚未解決的情況下，決定先暫停投入。",
+          "上架後自然流量不足，使原本設定的 retention hypothesis 還沒有足夠樣本可驗證；App Store review 也暴露了產品差異化與類別定位的問題。我探索過「每日狀態」方向，但在 acquisition 與定位都尚未解決前，選擇停止追加投入。",
       },
     ],
-    footnote:
-      "本案例的成果重點是完成一輪產品實驗並取得可行性與市場學習；上架本身不等同於市場驗證成功。",
   },
   reflection: {
     kicker: "REFLECTION",
-    heading: "先暫停，把學習帶到下一個產品",
+    heading: "把驗證順序往前移",
     paragraphs: [
-      "AI 大幅降低了資料建置與產品實作門檻，但沒有替產品解決市場進入、差異化與 acquisition。這次經驗讓我更清楚：能快速 build 很重要，更要在投入前確認哪個風險最值得先驗證。",
-      "因此我暫停 Star Metric 的後續轉型，把這次在 AI 協作、資料品質、成本控制、上架與平台限制上的經驗帶進下一個產品實驗 SpeedMeter，將更多驗證提前到完整開發之前。",
+      "Star Metric 最重要的學習，是 AI 可以大幅降低 build cost，卻不會替產品解決 acquisition、positioning 與 product-market risk。之後的產品實驗，我開始把更多驗證放到完整開發之前，優先確認最高風險的假設，再決定值得投入多少 build effort。",
     ],
   },
 };
