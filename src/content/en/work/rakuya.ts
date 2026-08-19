@@ -21,14 +21,8 @@ export const rakuya: CaseStudyContent = {
     { value: "2", label: "Paid brand renewals" },
   ],
   facts: [
-    {
-      label: "Role",
-      value: "Chief of Experience / Product Lead",
-    },
-    {
-      label: "Period",
-      value: "Aug 2021–Mar 2025",
-    },
+    { label: "Role", value: "Chief of Experience / Product Lead" },
+    { label: "Period", value: "Aug 2021–Mar 2025" },
     {
       label: "Stage",
       value:
@@ -122,22 +116,22 @@ export const rakuya: CaseStudyContent = {
   impact: {
     kicker: "IMPACT",
     heading:
-      "From a daily listing scan to enterprise adoption and paid renewals",
+      "From saving time every morning to enterprise adoption and paid renewals",
     blocks: [
       {
-        heading: "User value",
+        heading: "User efficiency",
         body:
-          "Daily reports consolidated market changes from multiple platforms into a single entry point. Agents could first review new-to-market listings, price reductions, and delistings, then open the details to assess price, address, community, and Street View before deciding whether to request additional records or contact the property owner.",
+          "Based on feedback from agents and field teams, the daily listing scan fell from roughly 1–2 hours to 5–10 minutes. Agents could review new-to-market listings, price reductions, and delistings in one place before assessing address, price, community, and Street View details.",
       },
       {
-        heading: "Business outcome",
+        heading: "Product behavior",
+        body:
+          "Internal behavioral analysis showed that around 70% of listing-search sessions continued into a detail view, suggesting that users were not only scanning the list but actively evaluating whether an opportunity was worth pursuing.",
+      },
+      {
+        heading: "Business adoption",
         body:
           "The product progressed from demos and brand trials to the integrations required for real-world adoption, followed by a per-seat pricing model. Of the three partner brands, two renewed and became paying customers.",
-      },
-      {
-        heading: "Product principle",
-        body:
-          "The team established a shared standard: every feature needed to help agents identify opportunities faster, interpret the market more accurately, and complete the next action more easily—not simply add more data or functionality.",
       },
     ],
     footnote:
@@ -146,12 +140,10 @@ export const rakuya: CaseStudyContent = {
   reflection: {
     kicker: "REFLECTION",
     heading:
-      "A useful product still needs to become part of the agent’s existing workflow",
+      "A useful product still needs to fit the agent’s existing workflow",
     paragraphs: [
-      "This project reinforced that a PropTech product should begin with the user’s most frequent and time-sensitive task. Data quality and interpretation are essential foundations, but the product’s value ultimately depends on whether agents can use it naturally within their daily work and reach the next action more quickly.",
-      "Markets, communities, and listing practices continue to change, so listing intelligence requires ongoing recalibration. The product could not be completed through a single development cycle; data rules, user feedback, and observed behavior needed to remain part of the iteration loop.",
-      "If I were approaching the project again, I would connect the intelligence more directly to Rakuya’s existing listing, inventory-management, and buyer-contact workflows, reducing the need for agents to enter a separate product, link a LINE account, or discover it through external promotion.",
-      "The product had already reduced prospecting time, but organic reach and habitual use remained limited. Delivering relevant intelligence at the right moment within an agent’s existing workflow would have created a stronger path toward repeated use and compounding product growth.",
+      "This project reinforced that a PropTech product should begin with the user’s most frequent and time-sensitive task. Data quality and interpretation are essential foundations, but the product’s value ultimately depends on whether agents can use it naturally in daily work and reach the next action more quickly.",
+      "If I were approaching the project again, I would connect the intelligence more directly to Rakuya’s existing listing, inventory-management, and buyer-contact workflows, reducing the need to enter a separate product or rely on external promotion. The product had already reduced prospecting time; the next challenge was to surface that value at the right moment in the workflow so repeated use could become a habit.",
     ],
   },
 };
