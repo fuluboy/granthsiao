@@ -17,12 +17,12 @@ import CaseStudyGallery from "../../../components/CaseStudyGallery.astro";
 import CaseStudyLightbox from "../../../components/CaseStudyLightbox.astro";
 import CaseInfoCard from "../../../components/CaseInfoCard.astro";
 import type { PlaceholderVariant, MediaRatio, MediaDisplay } from "../../../components/MediaPlaceholder.astro";
-import { LOCALES, WORK_SLUGS, UI_TEXT, type Locale, type LocalizedText } from "../../../i18n/config";
-import { getWork, getHome, workOrder } from "../../../content";
+import { LOCALES, UI_TEXT, type Locale, type LocalizedText } from "../../../i18n/config";
+import { getWork, getWorkSlugs, getHome, workOrder } from "../../../content";
 import { localizedSrc, resolveLocalizedSrc, type LocalizedImageSource } from "../../../content/media";
 
 export function getStaticPaths() {
-  return LOCALES.flatMap((lang) => WORK_SLUGS.map((slug) => ({ params: { lang, slug } })));
+  return LOCALES.flatMap((lang) => getWorkSlugs(lang).map((slug) => ({ params: { lang, slug } })));
 }
 
 const { lang, slug } = Astro.params as { lang: Locale; slug: string };
@@ -292,6 +292,73 @@ const decisionMediaBySlug: Record<string, DecisionMedia[]> = {
       src: localizedSrc("/images/work/star-metric/decision-04.png"),
       width: 1920,
       height: 1440,
+    },
+  ],
+  speedmeter: [
+    {
+      decision: 1,
+      variant: "process",
+      name: "SpeedMeter — Driving Alert Journey",
+      purpose: {
+        zh: "接近、近距離、持續超速與通過後的警示狀態與提醒規則",
+        en: "Driving alert states and reminder rules from approach through passing the point",
+      },
+      ratio: "21 / 9",
+      display: "contain",
+      width: 1920,
+      height: 823,
+    },
+    {
+      decision: 2,
+      variant: "diagram",
+      name: "SpeedMeter — Traceable Data Pipeline",
+      purpose: {
+        zh: "從官方與第三方來源到資料合約、驗證與 App 輸出的可追溯資料流程",
+        en: "Traceable data flow from official and third-party sources through contracts, validation, and app output",
+      },
+      ratio: "16 / 9",
+      display: "contain",
+      width: 1920,
+      height: 1080,
+    },
+    {
+      decision: 3,
+      variant: "diagram",
+      name: "From Conversation to Product Structure",
+      purpose: {
+        zh: "ChatGPT 訪談如何逐步轉成 Lean Canvas、Impact Mapping 與 User Flow",
+        en: "How a structured ChatGPT interview becomes Lean Canvas, Impact Mapping, and User Flow artifacts",
+      },
+      ratio: "16 / 9",
+      display: "contain",
+      width: 1920,
+      height: 1080,
+    },
+    {
+      decision: 4,
+      variant: "diagram",
+      name: "SpeedMeter — Reference to Working Prototype",
+      purpose: {
+        zh: "從範例圖片、Codex 可執行介面到真實裝置可行性判斷的流程",
+        en: "From reference image to Codex-generated working UI and on-device feasibility decision",
+      },
+      ratio: "16 / 9",
+      display: "contain",
+      width: 1920,
+      height: 1080,
+    },
+    {
+      decision: 5,
+      variant: "diagram",
+      name: "SpeedMeter — Conversation to Trello Execution",
+      purpose: {
+        zh: "從產品討論、任務拆解到 Trello 卡片、優先順序與進度追蹤",
+        en: "From product discussion and task decomposition to Trello cards, priority, and progress tracking",
+      },
+      ratio: "16 / 9",
+      display: "contain",
+      width: 1920,
+      height: 1080,
     },
   ],
 };
