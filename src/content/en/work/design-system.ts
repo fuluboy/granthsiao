@@ -30,7 +30,7 @@ export const designSystem: CaseStudyContent = {
     heading: "The same interaction could have three different answers across three products",
     paragraphs: [
       "The company was moving from legacy design tools to Figma, while front-end teams were becoming more proficient with Vue. An audit of existing products showed that the problem went beyond visual inconsistency: buttons, forms, and modals serving the same purpose could look and behave differently. Users had to relearn patterns, while engineers maintained duplicate code and multiple versions.",
-      "I proposed the initiative to the general manager and VP of Product, using the tool and technology transition to build the design library, front-end components, and decision process together - not just a new UI guideline.",
+      "I proposed the initiative to the general manager and VP of Product, using the tool and technology transition to build the design library, front-end components, and decision process together—not just a new UI guideline.",
     ],
     coreChallengeLabel: "Core challenge",
     coreChallengeQuote:
@@ -76,11 +76,10 @@ export const designSystem: CaseStudyContent = {
     },
     {
       kicker: "KEY DECISION 3",
-      heading: "Embed Component Creation and Updates into the Day-to-Day Development Process",
+      heading: "Make component decisions part of everyday delivery",
       paragraphs: [
-        "During daily stand-ups, the UI/UX team shared the pages in progress, component changes, and Token requirements, allowing us to identify early whether similar needs had already appeared in other products. Weekly Design QA sessions were used to review cross-product impact and prevent different teams from creating separate specifications for similar scenarios. When proposing a change, designers needed to explain the use case, product purpose, why the existing component could not support it, and its potential for reuse. Frontend engineers assessed the implementation approach, configurable parameters, compatibility, and impact on existing pages, while PMs confirmed priority, exception criteria, and acceptance scope.",
-        "When product requirements conflicted with shared rules, I helped the team decide whether to extend an existing component, introduce controlled Variants or Props, or retain a product-specific specification. Each decision was documented with its applicable product, use case, and constraints, so future teams could understand why the difference existed. When similar needs later appeared in another product, we could reassess whether the pattern was ready to be consolidated into a shared component.",
-        "This way of working allowed component issues to surface early in the design and development process, reducing late-stage specification changes and duplicated implementation. It also lowered the risk of the Figma Library, frontend components, and production interfaces gradually drifting apart. Product-specific components could still exist, but their purpose and boundaries remained traceable, while shared components continued to mature through real usage instead of accumulating unnecessary variables solely for visual consistency.",
+        "Once a new need entered a sprint, design, front-end, and PM worked through the use case, reuse potential, implementation approach, and acceptance criteria together. Daily stand-ups surfaced similar needs across products early, while weekly Design QA handled shared scope and exceptions.",
+        "When a requirement conflicted with existing rules, I helped decide whether to extend a shared component, introduce controlled variants or props, or keep a clearly justified product-specific exception. We documented the use case and constraints so the decision could be revisited if another product later needed something similar.",
       ],
       infoCard: {
         label: "GOVERNANCE CADENCE",
@@ -107,10 +106,10 @@ export const designSystem: CaseStudyContent = {
   ],
   execution: {
     kicker: "EXECUTION",
-    heading: "With Limited Resources, the Design System Had to Ship with the Product",
+    heading: "With limited resources, the Design System had to ship with the product",
     paragraphs: [
-      "As Chief of Experience, I led three UI/UX designers, while two frontend engineers supported three product teams. Spending several months building a complete component library upfront would have delayed product delivery and risked creating specifications that did not fit real use cases. We therefore integrated Design System development into our existing two-week Sprints, prioritizing components that were immediately needed by the product and also had clear potential for reuse.",
-      "During this period, I defined the adoption and governance process, participated in daily stand-ups, and led Design QA sessions to help the team identify similar needs across products and clarify the appropriate scope for shared components. When product requirements conflicted with existing system rules, I decided whether to revise the shared component, introduce controlled variants or props, or retain a clearly defined product-specific exception. This approach allowed the component library to mature through real product use while preventing it from accumulating excessive variables that would make it difficult to understand, implement, and maintain.",
+      "As Chief of Experience, I led three UI/UX designers, while two front-end engineers supported three product teams. Spending several months building a complete component library upfront would have slowed product delivery and risked creating specifications without enough real use cases. We therefore integrated Design System work into the existing two-week sprint cycle and prioritized components that were needed immediately and had clear reuse value.",
+      "My role was to keep design, front-end, and PM working from the same decision model: what should be shared, what should remain different, and how to keep the Figma Library, front-end components, and production UI aligned. That allowed the system to mature through real product use without stopping three teams for a one-time rebuild.",
     ],
     supportingMetrics: [
       { value: "1 month", label: "Audit and tokens completed" },
