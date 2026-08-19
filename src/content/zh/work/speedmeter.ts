@@ -93,6 +93,7 @@ export const speedMeter: CaseStudyContent = {
       paragraphs: [
         "看到可能適合車用儀表的介面方向時，我會把參考圖片交給 Codex，先產生結構相近、可以直接執行的 UI，再放到真實裝置上看資訊密度、字級、視覺層級和互動是否適合駕駛情境。",
         "這個做法不是要讓 AI 代替設計，而是提早回答一個更實際的問題：這個方向真的跑起來好不好用？原本只能看靜態 mockup 想像的東西，可以很快變成能看、能操作的版本，再決定要繼續調整、重做，或直接放棄。",
+        "視覺參考來源：Magnific.com〈Speedometer with neon LED light gauge meter〉。該圖片僅用於參考風格、配色與儀表方向；SpeedMeter 的資訊架構、版面與互動另行設計與驗證。",
       ],
     },
     {
