@@ -16,7 +16,7 @@ export const home: HomeContent = {
   hero: {
     kicker: "HOME",
     title: "從產品策略到上線，透過 AI 加速把想法變成產品。",
-    lead: "結合產品策略、UX、資料與技術能力，從問題探索與產品決策一路推進到設計、驗證與上線；也運用 AI 加速研究、原型、小規模前後端實作與測試，在投入完整開發前更快驗證產品與技術可行性。",
+    lead: "結合產品策略、UX、資料與技術能力，從問題探索與產品決策一路推進到設計、驗證與上線；也運用 AI 加速研究、原型、資料處理、前端實作與測試，在投入完整開發前更快驗證產品與技術可行性。",
     eyebrow: "Product Strategy · UI/UX Leadership · AI-assisted Validation & Building",
   },
   selectedWork: {
