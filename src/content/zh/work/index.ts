@@ -7,10 +7,10 @@ import type { CaseStudyContent } from "../../types";
 
 export const workBySlug: Record<string, CaseStudyContent> = {
   house579,
+  "star-metric": starMetric,
   "rakuya-data-product": rakuya,
   "design-system": designSystem,
-  "star-metric": starMetric,
   speedmeter: speedMeter,
 };
 
-export const workOrder = ["house579", "rakuya-data-product", "design-system", "star-metric", "speedmeter"] as const;
+export const workOrder = ["house579", "star-metric", "rakuya-data-product", "design-system", "speedmeter"] as const;
