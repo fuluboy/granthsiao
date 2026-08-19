@@ -71,6 +71,18 @@ export const home: HomeContent = {
         metric: "27,648 combinations · Android released",
         imageSide: "right",
       },
+      {
+        slug: "speedmeter",
+        index: "05",
+        eyebrow: "AI-assisted Product Workflow · Data Quality · Validation",
+        name: "SpeedMeter",
+        title: "Using AI to validate product ideas faster",
+        description:
+          "Starting with speed-camera alerts and road-data quality, I used AI across structured discovery, working prototypes, task organization, development, and testing to move ideas into real validation faster.",
+        tags: ["AI-assisted Workflow", "Data Quality", "Product Validation"],
+        metric: "Product idea → working prototype → GPS validation",
+        imageSide: "left",
+      },
     ],
   },
   aboutTeaser: {
