@@ -9,7 +9,7 @@ export const siteMeta: SiteMeta = {
 
 export const profile: ProfileCard = {
   name: "Grant Hsiao / 蕭宏彬",
-  role: "Product & Design Lead",
+  role: "Senior Product Manager",
   location: "Taipei, Taiwan",
   primaryAction: "View selected work",
   secondaryAction: "Download resume",
@@ -17,7 +17,7 @@ export const profile: ProfileCard = {
 
 export const footer: FooterContent = {
   name: "Grant Hsiao / 蕭宏彬",
-  role: "Product & Design Lead",
+  role: "Senior Product Manager",
   location: "Taipei, Taiwan",
   actionsLabel: "Download resume / Contact me",
   resumeLabel: "Download resume",

@@ -14,7 +14,7 @@ export const house579: CaseStudyContent = {
     "We first reduced the effort required to register, verify an account, and migrate existing listings. After building supply and usage habits, we used targeted promotion to help agents see real exposure and inquiry results, establish product credibility, and create the foundation for paid operations.",
   heroImageName: "House579 Case Hero",
   metrics: [
-    { value: "50K+", label: "Paid listings" },
+    { value: "50K", label: "Peak paid listings" },
     { value: "3,000+", label: "Agents" },
     { value: "2", label: "Brokerage HQ partnerships" },
   ],
@@ -122,7 +122,7 @@ export const house579: CaseStudyContent = {
       {
         heading: "Build supply and usage habits first",
         body:
-          "Through faster registration, identity verification, data handoff, and listing migration, the free rollout peaked at nearly 200,000 listings and established a broad supply base, agent adoption, and day-to-day usage habits.",
+          "Through faster registration, identity verification, data handoff, and listing migration, the platform gained nearly 200,000 free listings within three months of launch, building a supply base, agent adoption, and day-to-day usage habits.",
       },
       {
         heading: "Use outcomes to build trust",
@@ -132,7 +132,7 @@ export const house579: CaseStudyContent = {
       {
         heading: "Move into paid operations",
         body:
-          "With an existing supply base, established usage habits, and visible outcome experience, the paid platform reached 50K+ paid listings, 3,000+ agents, 6,000+ members, and partnerships with two brokerage brand headquarters. These outcomes came from product, sales, marketing, data, and operations working together.",
+          "After a six-month free period, the platform introduced paid listings. Paid listings peaked at 50K, alongside 3,000+ agents, 6,000+ members, and partnerships with two brokerage brand headquarters. These outcomes came from product, sales, marketing, data, and operations working together.",
       },
     ],
   },

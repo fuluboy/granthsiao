@@ -1,17 +1,30 @@
 ---
 import type { HomeContent } from "../content/types";
-import { withBase } from "../i18n/config";
+import { withBase, type Locale } from "../i18n/config";
+import { siteConfig } from "../content/siteConfig";
 
 interface Props {
   home: HomeContent;
+  locale: Locale;
 }
 
-const { home } = Astro.props;
+const { home, locale } = Astro.props;
 ---
 
 <section class="vinyl-hero-section bg-dot">
-  <div class="container vinyl-hero-stage">
-    <div class="vinyl-hero" data-vinyl-hero>
+  <div class="container vinyl-hero-layout">
+    <div class="vinyl-hero-copy">
+      <p class="vinyl-hero-kicker">{home.profile.role}</p>
+      <h1 class="vinyl-hero-title">{home.hero.title}</h1>
+      <p class="vinyl-hero-lead">{home.hero.lead}</p>
+      <div class="vinyl-hero-actions">
+        <a class="btn" href="#selected-work">{home.profile.primaryAction}</a>
+        <a class="btn btn-outline" href={withBase(siteConfig.resumeHref[locale])}>{home.profile.secondaryAction}</a>
+      </div>
+    </div>
+
+    <div class="vinyl-hero-stage">
+      <div class="vinyl-hero" data-vinyl-hero>
       <div class="vinyl-group">
         <img
           class="vinyl-disc"
@@ -35,7 +48,7 @@ const { home } = Astro.props;
           <div class="vinyl-label-content" lang="en">
             <div class="vinyl-label__band">
               <p class="vinyl-label__greeting">Hi! I’m Grant Hsiao.</p>
-              <p class="vinyl-label__role">A Product &amp; Design Lead</p>
+              <p class="vinyl-label__role">{home.profile.role}</p>
             </div>
             <div class="vinyl-label__meta">
               <div class="vinyl-label__meta-left">
@@ -116,55 +129,12 @@ const { home } = Astro.props;
         height="631"
         decoding="async"
       />
+      </div>
     </div>
-  </div>
-
-  <div class="container vinyl-hero-copy" data-reveal>
-    <h1 class="vinyl-hero-title">{home.hero.title}</h1>
-    <p class="vinyl-hero-lead">{home.hero.lead}</p>
   </div>
 </section>
 
-<noscript>
-  <style>
-    .vinyl-hero-title,
-    .vinyl-hero-lead {
-      opacity: 1 !important;
-      transform: none !important;
-    }
-  </style>
-</noscript>
-
 <script>
-  const copy = document.querySelector("[data-reveal]");
-  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  if (copy instanceof HTMLElement && !prefersReduced) {
-    // Only reveal after a real scroll — on tall/large screens the copy can
-    // already sit inside the first viewport, so an IntersectionObserver
-    // would fire (and reveal) immediately on load with no scroll at all.
-    let hasScrolled = false;
-
-    const tryReveal = () => {
-      if (!hasScrolled) return;
-      const rect = copy.getBoundingClientRect();
-      const inView = rect.top < window.innerHeight * 0.85 && rect.bottom > 0;
-      if (inView) {
-        copy.classList.add("is-revealed");
-        window.removeEventListener("scroll", onScroll);
-      }
-    };
-
-    const onScroll = () => {
-      hasScrolled = true;
-      tryReveal();
-    };
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-  } else if (copy instanceof HTMLElement) {
-    copy.classList.add("is-revealed");
-  }
-
   // Tonearm entrance: disc appears -> tonearm swings onto the platter ->
   // thunder + spin start together. Then, once scrolled past ~100px, the
   // platter stops and the tonearm returns to its resting position; scrolling
@@ -217,22 +187,27 @@ const { home } = Astro.props;
 
 <style>
   .vinyl-hero-section {
-    text-align: center;
     overflow: hidden;
   }
 
-  .vinyl-hero-stage {
+  .vinyl-hero-layout {
     min-height: calc(100dvh - var(--header-height));
-    display: flex;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    gap: clamp(2rem, 4vw, 4.5rem);
     align-items: center;
-    justify-content: center;
-    padding-block: var(--space-lg);
-    padding-bottom: 0;
+    padding-block: clamp(2.5rem, 5vw, 4.5rem);
+  }
+
+  .vinyl-hero-stage {
+    min-width: 0;
+    display: grid;
+    place-items: center;
   }
 
   .vinyl-hero {
     position: relative;
-    width: clamp(300px, 58vw, 860px);
+    width: min(100%, 600px);
     aspect-ratio: 1 / 1;
     margin-inline: auto;
     container-type: inline-size;
@@ -494,46 +469,87 @@ const { home } = Astro.props;
   }
 
   .vinyl-hero-copy {
-    max-width: var(--container-narrow);
-    margin-inline: auto;
-    margin-bottom: var(--space-xl);
+    min-width: 0;
+    max-width: 540px;
   }
 
-  .vinyl-hero-title,
-  .vinyl-hero-lead {
-    opacity: 0;
-    transform: translateY(28px);
-    transition: opacity 800ms var(--ease-out), transform 800ms var(--ease-out);
+  .vinyl-hero-kicker {
+    color: var(--color-mustard);
+    font-size: var(--fs-kicker);
+    font-weight: 800;
+    letter-spacing: var(--tracking-kicker);
+    text-transform: uppercase;
+    margin-bottom: var(--space-lg);
   }
 
   .vinyl-hero-title {
-    font-size: var(--fs-h2);
+    font-size: clamp(2.5rem, 3.8vw, 3.2rem);
+    font-weight: 800;
+    line-height: 1.28;
+    letter-spacing: -0.045em;
+    white-space: pre-line;
+  }
+
+  :global([data-lang="en"]) .vinyl-hero-title {
+    font-size: clamp(2.3rem, 3vw, 3rem);
   }
 
   .vinyl-hero-lead {
-    font-size: var(--fs-lead);
+    font-size: clamp(1rem, 1.25vw, 1.1875rem);
     color: var(--color-ink-soft);
-    margin-top: var(--space-md);
-    transition-delay: 120ms;
-    background: #fff;
-    padding: 5px;
+    line-height: 1.75;
+    margin-top: var(--space-lg);
   }
 
-  .vinyl-hero-copy.is-revealed .vinyl-hero-title,
-  .vinyl-hero-copy.is-revealed .vinyl-hero-lead {
-    opacity: 1;
-    transform: translateY(0);
+  .vinyl-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-top: var(--space-lg);
   }
 
-  @media (max-width: 767px) {
+  @media (max-width: 1099px) {
+    .vinyl-hero-layout {
+      min-height: 0;
+      grid-template-columns: 1fr;
+      justify-items: center;
+      gap: var(--space-xl);
+    }
+
+    .vinyl-hero-copy {
+      width: min(100%, 720px);
+      max-width: none;
+    }
+
     .vinyl-hero-stage {
-      min-height: calc(100dvh - var(--header-height-mobile));
+      width: min(100%, 600px);
     }
   }
 
   @media (max-width: 599px) {
+    .vinyl-hero-layout {
+      padding-block: var(--space-xl);
+      gap: var(--space-lg);
+    }
+
+    .vinyl-hero-kicker {
+      margin-bottom: var(--space-md);
+    }
+
+    .vinyl-hero-title {
+      font-size: clamp(1.75rem, 7.8vw, 3rem);
+    }
+
+    .vinyl-hero-lead {
+      margin-top: var(--space-md);
+    }
+
+    .vinyl-hero-actions {
+      margin-top: var(--space-md);
+    }
+
     .vinyl-hero {
-      width: clamp(240px, 86vw, 380px);
+      width: min(82vw, 380px);
     }
   }
 
@@ -558,11 +574,5 @@ const { home } = Astro.props;
       transition: none;
     }
 
-    .vinyl-hero-title,
-    .vinyl-hero-lead {
-      opacity: 1;
-      transform: none;
-      transition: none;
-    }
   }
 </style>

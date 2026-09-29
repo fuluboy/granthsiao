@@ -2,21 +2,21 @@ import type { HomeContent } from "../types";
 
 export const home: HomeContent = {
   meta: {
-    title: "Product & Design Lead",
+    title: "Senior Product Manager",
     description:
-      "Combining product strategy, UX, data, and technical thinking, using AI to accelerate research, validation, and execution from early ideas to working products.",
+      "Grant Hsiao is a Senior Product Manager who built a real estate listing platform from zero. It drew nearly 200K free listings in three months, and paid listings later peaked at 50K.",
   },
   profile: {
     name: "Grant Hsiao / 蕭宏彬",
-    role: "Product & Design Lead",
+    role: "Senior Product Manager",
     location: "Taipei, Taiwan",
-    primaryAction: "View selected work",
+    primaryAction: "View featured work",
     secondaryAction: "Download resume",
   },
   hero: {
     kicker: "HOME",
-    title: "From product strategy to launch, using AI to turn ideas into products faster.",
-    lead: "Combining product strategy, UX, data, and technical thinking to move from problem discovery and product decisions through design, validation, and launch, while using AI to accelerate research, prototyping, data processing, front-end implementation, and testing before committing to full development.",
+    title: "Built from zero.\n50K paid listings at peak.",
+    lead: "Nearly 200K free listings in the first three months; paid listings launched after a six-month free period.",
     eyebrow: "Product Strategy · UI/UX Leadership · AI-assisted Validation & Building",
   },
   selectedWork: {
@@ -32,12 +32,36 @@ export const home: HomeContent = {
         description:
           "With no established brand and limited support capacity, I helped build the journey from registration and listing migration to mobile management, moving the platform from free onboarding into paid operations.",
         tags: ["0-to-1 Product", "Commercialization", "Product Operations"],
-        metric: "50K+ paid listings · 3,000+ agents",
+        metric: "50K paid listings at peak · 3,000+ agents",
+        imageSide: "left",
+      },
+      {
+        slug: "rakuya-data-product",
+        index: "02",
+        eyebrow: "Product Strategy · B2B PropTech · Agent Intelligence",
+        name: "Rakuya Agent Intelligence",
+        title: "Matching the same property across platforms to reconstruct its history",
+        description:
+          "Weighted matching inferred addresses and property links, then connected sales records, title information, and land parcels; I sampled results each quarter to check accuracy.",
+        tags: ["Product Strategy", "B2B PropTech", "Agent Intelligence"],
+        metric: "Daily listing scan: 1–2 hours → 5–10 minutes · 2 paid brand renewals",
+        imageSide: "right",
+      },
+      {
+        slug: "design-system",
+        index: "03",
+        eyebrow: "Design Leadership · Design System · Team Transformation",
+        name: "Design System",
+        title: "Turning fragmented components and interaction patterns into a shared product foundation",
+        description:
+          "Using the shift to Figma and Vue, I helped establish shared tokens, design components, front-end components, and governance so three product teams could gradually work from the same foundation.",
+        tags: ["Design Leadership", "Design System", "Team Transformation"],
+        metric: "3 product teams adopted · First components shipped in 2 weeks",
         imageSide: "left",
       },
       {
         slug: "speedmeter",
-        index: "02",
+        index: "04",
         eyebrow: "AI-assisted Product Workflow · Data Quality · Validation",
         name: "SpeedMeter",
         title: "Using AI to validate product ideas faster",
@@ -49,7 +73,7 @@ export const home: HomeContent = {
       },
       {
         slug: "star-metric",
-        index: "03",
+        index: "05",
         eyebrow: "AI-assisted Product · 0-to-1 · Mobile App",
         name: "Star Metric",
         title: "From AI experiment to shipped product",
@@ -59,37 +83,13 @@ export const home: HomeContent = {
         metric: "27,648 combinations · Android released",
         imageSide: "left",
       },
-      {
-        slug: "rakuya-data-product",
-        index: "04",
-        eyebrow: "Product Strategy · B2B PropTech · Agent Intelligence",
-        name: "Rakuya Agent Intelligence",
-        title: "Turning fragmented market signals into actionable daily listing intelligence",
-        description:
-          "Starting with agents’ daily routine of tracking new listings, price changes, and property addresses across multiple platforms, I helped build an intelligence workflow that later expanded into brand trials, system integrations, and paid partnerships.",
-        tags: ["Product Strategy", "B2B PropTech", "Agent Intelligence"],
-        metric: "Daily listing scan: 1–2 hours → 5–10 minutes · 2 paid brand renewals",
-        imageSide: "right",
-      },
-      {
-        slug: "design-system",
-        index: "05",
-        eyebrow: "Design Leadership · Design System · Team Transformation",
-        name: "Design System",
-        title: "Turning fragmented components and interaction patterns into a shared product foundation",
-        description:
-          "Using the shift to Figma and Vue, I helped establish shared tokens, design components, front-end components, and governance so three product teams could gradually work from the same foundation.",
-        tags: ["Design Leadership", "Design System", "Team Transformation"],
-        metric: "3 product teams adopted · First components shipped in 2 weeks",
-        imageSide: "left",
-      },
     ],
   },
   aboutTeaser: {
     kicker: "ABOUT",
     heading: "Hi, I'm Grant.",
     paragraph:
-      "I'm a Product & Design Lead working across product strategy, UX, technology, and cross-functional leadership. I turn complex problems into product direction and help move that direction through design, validation, and execution, while increasingly integrating AI into how I explore, test, and deliver products.",
+      "I'm a Senior Product Manager with a background in UX, front-end development, and team leadership. I've built a platform from zero through paid operations and worked on data products for real estate agents. I start by understanding how people work, then decide with the team what is worth building.",
     cta: "More about me",
   },
   contactCta: {
