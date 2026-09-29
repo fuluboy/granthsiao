@@ -188,6 +188,10 @@ const { home, locale } = Astro.props;
 <style>
   .vinyl-hero-section {
     overflow: hidden;
+    /* Keep the dot texture behind the copy, at roughly 30% of its original strength. */
+    background-image:
+      linear-gradient(rgb(247 243 234 / 70%), rgb(247 243 234 / 70%)),
+      url("/brand/bg-dot.png");
   }
 
   .vinyl-hero-layout {
