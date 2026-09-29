@@ -15,10 +15,9 @@ export const rakuya: CaseStudyContent = {
     "Starting with agents’ daily routine of checking multiple platforms for new listings, price changes, and delistings, I led the development of a workflow that turned those signals into intelligence agents could assess and act on—then expanded it into brand trials, system integrations, and paid partnerships.",
   heroImageName: "Rakuya Agent Intelligence Case Hero",
   metrics: [
-    { value: "3 months", label: "Technical MVP completed" },
-    { value: "5–10 min", label: "Daily listing scan" },
-    { value: "~70%", label: "Search sessions opened listing details" },
+    { value: "5–10 min", label: "Daily listing scan, down from 1–2 hours (agent and field feedback)" },
     { value: "2", label: "Paid brand renewals" },
+    { value: "3 months", label: "Technical MVP completed" },
   ],
   facts: [
     { label: "Role", value: "Chief of Experience / Product Lead" },

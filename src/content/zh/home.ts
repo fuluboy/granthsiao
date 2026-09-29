@@ -28,11 +28,11 @@ export const home: HomeContent = {
         index: "01",
         eyebrow: "0-to-1 Product · Commercialization · Product Operations",
         name: "House579",
-        title: "從零建立房產刊登平台，並推進至付費營運",
+        title: "先降低房仲刊登門檻，再建立付費理由",
         description:
           "在沒有品牌知名度與大量客服資源的情況下，從註冊、刊登、資料搬移到手機管理一步步建立，讓平台從免費導入走向付費營運。",
         tags: ["0-to-1 Product", "Commercialization", "Product Operations"],
-        metric: "付費刊登最高 5 萬筆 · 3,000+ 房仲",
+        metric: "三個月近 20 萬筆免費刊登 · 付費刊登最高 5 萬筆",
         imageSide: "left",
       },
       {

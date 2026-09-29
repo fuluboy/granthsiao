@@ -28,11 +28,11 @@ export const home: HomeContent = {
         index: "01",
         eyebrow: "0-to-1 Product · Commercialization · Product Operations",
         name: "House579",
-        title: "Building a real estate listing platform from zero and taking it into paid operations",
+        title: "Lowering agents’ listing effort before earning the right to charge",
         description:
           "With no established brand and limited support capacity, I helped build the journey from registration and listing migration to mobile management, moving the platform from free onboarding into paid operations.",
         tags: ["0-to-1 Product", "Commercialization", "Product Operations"],
-        metric: "50K paid listings at peak · 3,000+ agents",
+        metric: "Nearly 200K free listings in 3 months · 50K paid listings at peak",
         imageSide: "left",
       },
       {
