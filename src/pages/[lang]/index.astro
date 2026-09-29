@@ -15,7 +15,7 @@ const home = getHome(lang);
 ---
 
 <BaseLayout locale={lang} title={home.meta.title} description={home.meta.description}>
-  <VinylHero home={home} />
+  <VinylHero home={home} locale={lang} />
 
   <section class="section" aria-labelledby="selected-work-heading">
     <div class="container">
