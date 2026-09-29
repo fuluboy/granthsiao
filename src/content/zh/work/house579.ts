@@ -14,8 +14,8 @@ export const house579: CaseStudyContent = {
     "先降低房仲註冊、認證與搬移物件的成本，累積供給與使用習慣；再透過重點物件廣告投放，讓房仲看見實際曝光與詢問成效，建立產品信用，最後推進至付費營運。",
   heroImageName: "House579 Case Hero",
   metrics: [
-    { value: "5 萬筆", label: "付費刊登最高量" },
-    { value: "3,000+", label: "房仲" },
+    { value: "近 20 萬筆", label: "上線三個月免費刊登" },
+    { value: "最高 5 萬筆", label: "六個月免費期後的付費刊登" },
     { value: "2 家", label: "品牌總部合作" },
   ],
   facts: [

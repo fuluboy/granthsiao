@@ -39,6 +39,10 @@ const displayKicker = `CASE STUDY ${displayNumber} · ${caseLabel}`;
     <p class="case-hero__lead case-reading">{caseData.lead}</p>
   </div>
 
+  <div class="case-wide case-hero__metrics">
+    <CaseMetrics metrics={caseData.metrics} />
+  </div>
+
   <div class="case-wide">
     <dl class="case-hero__facts">
       {caseData.facts.map((fact) => (
@@ -69,10 +73,6 @@ const displayKicker = `CASE STUDY ${displayNumber} · ${caseLabel}`;
         zoomLabel={t.lightbox.viewLargerImage}
       />
     </CaseStudyGallery>
-  </div>
-
-  <div class="case-wide case-hero__metrics">
-    <CaseMetrics metrics={caseData.metrics} />
   </div>
 </header>
 

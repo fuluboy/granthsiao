@@ -14,8 +14,8 @@ export const house579: CaseStudyContent = {
     "We first reduced the effort required to register, verify an account, and migrate existing listings. After building supply and usage habits, we used targeted promotion to help agents see real exposure and inquiry results, establish product credibility, and create the foundation for paid operations.",
   heroImageName: "House579 Case Hero",
   metrics: [
-    { value: "50K", label: "Peak paid listings" },
-    { value: "3,000+", label: "Agents" },
+    { value: "Nearly 200K", label: "Free listings in the first 3 months" },
+    { value: "50K at peak", label: "Paid listings after a 6-month free period" },
     { value: "2", label: "Brokerage HQ partnerships" },
   ],
   facts: [

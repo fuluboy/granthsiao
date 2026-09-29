@@ -13,10 +13,9 @@ export const rakuya: CaseStudyContent = {
   lead: "從房仲每天早上的跨平台「海巡」出發，我帶領團隊將初次上架、降價、下架、地址、社區與價格變化，整理成可判讀、可追蹤的日常工作入口，並由技術 MVP 推進到品牌試用、系統整合與付費合作。",
   heroImageName: "Rakuya Agent Intelligence Case Hero",
   metrics: [
-    { value: "3 個月", label: "完成技術 MVP" },
-    { value: "5–10 分鐘", label: "每日案源掃描" },
-    { value: "約 70%", label: "案源搜尋 Session 查看詳情" },
+    { value: "5–10 分鐘", label: "每日案源掃描，原約 1–2 小時（房仲與推廣回饋）" },
     { value: "2 家", label: "合作品牌續約付費" },
+    { value: "3 個月", label: "完成技術 MVP" },
   ],
   facts: [
     { label: "角色", value: "Chief of Experience／Product Lead" },
