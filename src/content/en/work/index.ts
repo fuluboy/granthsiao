@@ -3,14 +3,25 @@ import { rakuya } from "./rakuya";
 import { designSystem } from "./design-system";
 import { starMetric } from "./star-metric";
 import { speedMeter } from "./speedmeter";
+import { shunfeng } from "./shunfeng";
 import type { CaseStudyContent } from "../../types";
 
 export const workBySlug: Record<string, CaseStudyContent> = {
   house579,
+  shunfeng,
   speedmeter: speedMeter,
   "star-metric": starMetric,
   "rakuya-data-product": rakuya,
   "design-system": designSystem,
 };
 
-export const workOrder = ["house579", "speedmeter", "star-metric", "rakuya-data-product", "design-system"] as const;
+// Same order as the home page cards: previous/next case navigation looks up
+// cards by this order, so the two lists must stay aligned.
+export const workOrder = [
+  "house579",
+  "rakuya-data-product",
+  "design-system",
+  "shunfeng",
+  "speedmeter",
+  "star-metric",
+] as const;

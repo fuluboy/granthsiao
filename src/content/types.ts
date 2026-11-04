@@ -138,6 +138,29 @@ export interface FactRow {
   value: string;
 }
 
+export interface ShowcaseItem {
+  /** Path under public/, language-neutral (design artifacts, not diagrams with localized text). */
+  src: string;
+  width: number;
+  height: number;
+  alt: string;
+  caption: string;
+}
+
+/**
+ * Optional "design & demo" section for case studies whose artifacts don't fit
+ * one-image-per-decision (design system pages, motion specs, a demo video).
+ * Only Shunfeng sets it today; case studies without it render exactly as before.
+ */
+export interface ShowcaseContent {
+  navLabel: string;
+  kicker: string;
+  heading: string;
+  intro?: string;
+  video?: { youtubeId: string; title: string; caption?: string };
+  items: ShowcaseItem[];
+}
+
 export interface CaseStudyContent {
   slug: string;
   meta: { title: string; description: string };
@@ -171,6 +194,7 @@ export interface CaseStudyContent {
     operatingContext?: { label: string; stats: Metric[] };
     roleCard?: { label: string; items: string[]; footnote?: string };
   };
+  showcase?: ShowcaseContent;
   impact: {
     kicker: string;
     heading: string;

@@ -11,6 +11,8 @@ Product & Design Lead 個人作品集網站，中英雙語，收錄三個完整�
 - **House579** — 從零打造房地產刊登平台，並推進至付費維運
 - **Rakuya Agent Intelligence** — 把分散的市場訊號整理成房仲每日可用的情報
 - **Design System** — 把跨產品分散的元件與體驗邏輯，整合為共用的治理基礎
+- **Shunfeng 順風** — 為聽障旅客聽機場廣播，只為你的航班震動（Meta 黑客松作品）
+- **SpeedMeter** — 透過 AI 快速驗證產品假設
 - **Star Metric** — 從 AI 實驗到上架產品
 
 ## 技術架構
