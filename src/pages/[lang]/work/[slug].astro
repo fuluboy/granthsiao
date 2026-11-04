@@ -17,7 +17,7 @@ import CaseStudyGallery from "../../../components/CaseStudyGallery.astro";
 import CaseStudyLightbox from "../../../components/CaseStudyLightbox.astro";
 import CaseInfoCard from "../../../components/CaseInfoCard.astro";
 import type { PlaceholderVariant, MediaRatio, MediaDisplay } from "../../../components/MediaPlaceholder.astro";
-import { LOCALES, UI_TEXT, type Locale, type LocalizedText } from "../../../i18n/config";
+import { LOCALES, UI_TEXT, withBase, type Locale, type LocalizedText } from "../../../i18n/config";
 import { getWork, getWorkSlugs, getHome, workOrder } from "../../../content";
 import { localizedSrc, resolveLocalizedSrc, type LocalizedImageSource } from "../../../content/media";
 
@@ -34,11 +34,13 @@ const prevCard = workCards[(currentIdx - 1 + workCards.length) % workCards.lengt
 const nextCard = workCards[(currentIdx + 1) % workCards.length];
 
 const sectionNav = t.caseStudy.sectionNav;
+const showcase = caseData.showcase;
 const navItems = [
   { id: "context", label: sectionNav.context },
   { id: "what-we-saw", label: sectionNav.whatWeSaw },
   { id: "key-decisions", label: sectionNav.keyDecisions },
   { id: "execution", label: sectionNav.execution },
+  ...(showcase ? [{ id: "showcase", label: showcase.navLabel }] : []),
   { id: "impact", label: sectionNav.impact },
   { id: "reflection", label: sectionNav.reflection },
 ];
@@ -326,6 +328,78 @@ const decisionMediaBySlug: Record<string, DecisionMedia[]> = {
       height: 1080,
     },
   ],
+  shunfeng: [
+    {
+      decision: 1,
+      variant: "diagram",
+      name: "Shunfeng — Deaf Traveler Journey Map",
+      purpose: {
+        zh: "聽障旅客從停車場到登機門的旅程地圖（前段）",
+        en: "Journey map of a deaf traveler from the car park to the gate (opening stops; labels in Traditional Chinese)",
+      },
+      ratio: "16 / 9",
+      display: "contain",
+      src: localizedSrc("/images/work/shunfeng/decision-01.png"),
+      width: 2560,
+      height: 1440,
+    },
+    {
+      decision: 2,
+      variant: "ui",
+      name: "Shunfeng — Vibration Language & Alert States",
+      purpose: {
+        zh: "確定、可能、馬上行動與鎖屏四種提醒狀態，以及對應的震動次數",
+        en: "Confirmed, maybe, go-now and lock-screen alert states with their buzz patterns",
+      },
+      ratio: "16 / 9",
+      display: "contain",
+      src: localizedSrc("/images/work/shunfeng/decision-02.png"),
+      width: 3840,
+      height: 2160,
+    },
+    {
+      decision: 3,
+      variant: "diagram",
+      name: "Shunfeng — Keyword Hints vs Plain Audio",
+      purpose: {
+        zh: "給辨識器班號提示造成誤報，與純音訊加手機規則的比較",
+        en: "Why keyword hints caused a false alarm, compared with plain audio plus on-phone rules",
+      },
+      ratio: "16 / 9",
+      display: "contain",
+      src: localizedSrc("/images/work/shunfeng/decision-03.png"),
+      width: 3840,
+      height: 2160,
+    },
+    {
+      decision: 4,
+      variant: "ui",
+      name: "Shunfeng — Deaf-first UI Flow",
+      purpose: {
+        zh: "Figma UI Flow：首頁、登機證確認、聆聽中、鎖屏通知與三種提醒卡",
+        en: "Figma UI flow: home, boarding-pass check, listening, lock-screen notification and the three alert cards (labels in Traditional Chinese)",
+      },
+      ratio: "4 / 3",
+      display: "contain",
+      src: localizedSrc("/images/work/shunfeng/decision-04.png"),
+      width: 2830,
+      height: 2122,
+    },
+    {
+      decision: 5,
+      variant: "diagram",
+      name: "Shunfeng — Motion Spec M03",
+      purpose: {
+        zh: "動態規格 M03：提醒卡圓點與每一下震動同步",
+        en: "Motion spec M03: alert-card dots in sync with each buzz",
+      },
+      ratio: "16 / 9",
+      display: "contain",
+      src: localizedSrc("/images/work/shunfeng/decision-05.png"),
+      width: 3840,
+      height: 2160,
+    },
+  ],
 };
 
 interface CaseImage {
@@ -380,6 +454,13 @@ const heroImageBySlug: Record<string, CaseImage> = {
     ratio: "16 / 9",
     display: "cover",
   },
+  shunfeng: {
+    src: "/images/work/shunfeng/hero.jpg",
+    width: 1920,
+    height: 1080,
+    ratio: "16 / 9",
+    display: "cover",
+  },
 };
 
 const executionImageBySlug: Record<string, LocalizedCaseImage> = {
@@ -408,6 +489,13 @@ const executionImageBySlug: Record<string, LocalizedCaseImage> = {
     src: localizedSrc("/images/work/speedmeter/execution.png"),
     width: 1920,
     height: 1080,
+    ratio: "16 / 9",
+    display: "contain",
+  },
+  shunfeng: {
+    src: localizedSrc("/images/work/shunfeng/execution.png"),
+    width: 3840,
+    height: 2160,
     ratio: "16 / 9",
     display: "contain",
   },
@@ -598,6 +686,46 @@ const hasExecutionSupport = Boolean(operatingContext && roleCard);
         )}
       </CaseSection>
 
+      {showcase && (
+        <CaseSection id="showcase" kicker={showcase.kicker} heading={showcase.heading} bodyWidth="wide">
+          {showcase.intro && <p class="case-paragraph showcase-intro">{showcase.intro}</p>}
+
+          {showcase.video && (
+            <figure class="showcase-video">
+              <div class="showcase-video__frame">
+                <iframe
+                  src={`https://www.youtube-nocookie.com/embed/${showcase.video.youtubeId}?rel=0`}
+                  title={showcase.video.title}
+                  loading="lazy"
+                  allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerpolicy="strict-origin-when-cross-origin"
+                  allowfullscreen
+                ></iframe>
+              </div>
+              {showcase.video.caption && <figcaption class="showcase-caption">{showcase.video.caption}</figcaption>}
+            </figure>
+          )}
+
+          <div class="showcase-grid" data-pswp-gallery={`${slug}-showcase`}>
+            {showcase.items.map((item) => (
+              <figure class="showcase-item">
+                <a
+                  class="showcase-item__link"
+                  href={withBase(item.src)}
+                  data-pswp-width={item.width}
+                  data-pswp-height={item.height}
+                  data-pswp-caption={item.caption}
+                >
+                  <img src={withBase(item.src)} width={item.width} height={item.height} alt={item.alt} loading="lazy" decoding="async" />
+                  <span class="visually-hidden">{t.lightbox.viewLargerImage}</span>
+                </a>
+                <figcaption class="showcase-caption">{item.caption}</figcaption>
+              </figure>
+            ))}
+          </div>
+        </CaseSection>
+      )}
+
       <CaseSection
         id="impact"
         kicker={caseData.impact.kicker}
@@ -737,6 +865,72 @@ const hasExecutionSupport = Boolean(operatingContext && roleCard);
   }
 
   .role-card-list li {
+    font-size: var(--fs-case-caption);
+    color: var(--color-ink-soft);
+    line-height: 1.6;
+  }
+
+  .showcase-intro {
+    margin-bottom: var(--case-inner-space);
+  }
+
+  .showcase-video {
+    margin: 0 0 var(--case-inner-space);
+  }
+
+  .showcase-video__frame {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: var(--radius-md);
+    background: var(--color-ink);
+  }
+
+  .showcase-video__frame iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .showcase-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-lg) var(--case-split-gap);
+  }
+
+  @media (min-width: 768px) {
+    .showcase-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .showcase-item {
+    margin: 0;
+    min-width: 0;
+  }
+
+  /* Tall artifacts (component library, UI flow) are shown as a top crop; the lightbox shows the whole page. */
+  .showcase-item__link {
+    display: block;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border-radius: var(--radius-md);
+    background: var(--color-paper-sunken);
+    border: 1px solid var(--color-line);
+    cursor: zoom-in;
+  }
+
+  .showcase-item__link img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+  }
+
+  .showcase-caption {
+    margin-top: var(--space-xs);
     font-size: var(--fs-case-caption);
     color: var(--color-ink-soft);
     line-height: 1.6;
