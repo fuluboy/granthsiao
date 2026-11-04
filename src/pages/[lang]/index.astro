@@ -2,6 +2,7 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import VinylHero from "../../components/VinylHero.astro";
 import SelectedWorkCard from "../../components/SelectedWorkCard.astro";
+import SignalGrid from "../../components/SignalGrid.astro";
 import { LOCALES, withBase, type Locale } from "../../i18n/config";
 import { getHome } from "../../content";
 import { siteConfig } from "../../content/siteConfig";
@@ -12,6 +13,7 @@ export function getStaticPaths() {
 
 const { lang } = Astro.params as { lang: Locale };
 const home = getHome(lang);
+const ai = home.aiWorkflow;
 ---
 
 <BaseLayout locale={lang} title={home.meta.title} description={home.meta.description}>
@@ -27,6 +29,28 @@ const home = getHome(lang);
       ))}
     </div>
   </section>
+
+  {ai && (
+    <section class="section ai-workflow" id="ai-workflow" aria-labelledby="ai-workflow-heading">
+      <div class="container">
+        <p class="kicker">{ai.kicker}</p>
+        <h2 id="ai-workflow-heading" class="ai-workflow__heading">{ai.heading}</h2>
+        <p class="ai-workflow__lead">{ai.lead}</p>
+        <div class="ai-workflow__steps">
+          <SignalGrid signals={ai.steps} />
+        </div>
+        <p class="ai-workflow__evidence-label">{ai.evidenceLabel}</p>
+        <nav class="ai-workflow__evidence" aria-label={ai.evidenceLabel}>
+          {ai.evidence.map((item) => (
+            <a class="ai-workflow__case" href={withBase(`/${lang}/work/${item.slug}/`)}>
+              <span class="ai-workflow__case-name">{item.name}</span>
+              <span class="ai-workflow__case-label">{item.label} <span aria-hidden="true">→</span></span>
+            </a>
+          ))}
+        </nav>
+      </div>
+    </section>
+  )}
 
   <section class="section about-teaser">
     <div class="container container-narrow">
@@ -55,6 +79,78 @@ const home = getHome(lang);
   @media (max-width: 767px) {
     .selected-work {
       scroll-margin-top: var(--header-height-mobile);
+    }
+  }
+
+  .ai-workflow {
+    border-top: 1px solid var(--color-line);
+  }
+
+  .ai-workflow__heading {
+    font-size: var(--fs-h2);
+    margin-top: var(--space-sm);
+    max-width: 24ch;
+    text-wrap: balance;
+  }
+
+  :global([data-lang="zh"]) .ai-workflow__heading {
+    max-width: none;
+  }
+
+  .ai-workflow__lead {
+    margin-top: var(--space-md);
+    max-width: 62ch;
+    color: var(--color-ink-soft);
+    font-size: var(--fs-lead);
+  }
+
+  .ai-workflow__steps {
+    margin-top: var(--space-xl);
+  }
+
+  .ai-workflow__evidence-label {
+    margin-top: var(--space-xl);
+    font-size: var(--fs-small);
+    font-weight: 700;
+    color: var(--color-ink-soft);
+  }
+
+  .ai-workflow__evidence {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-sm);
+    margin-top: var(--space-sm);
+  }
+
+  .ai-workflow__case {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    padding: var(--space-md);
+    border: 1px solid var(--color-line-strong);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: border-color var(--duration-hover) var(--ease-out);
+  }
+
+  .ai-workflow__case:hover,
+  .ai-workflow__case:focus-visible {
+    border-color: var(--color-ink);
+  }
+
+  .ai-workflow__case-name {
+    font-size: var(--fs-small);
+    font-weight: 700;
+  }
+
+  .ai-workflow__case-label {
+    font-size: var(--fs-body);
+    line-height: 1.5;
+  }
+
+  @media (max-width: 767px) {
+    .ai-workflow__evidence {
+      grid-template-columns: 1fr;
     }
   }
 
