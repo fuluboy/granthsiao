@@ -4,7 +4,7 @@ export const home: HomeContent = {
   meta: {
     title: "Senior Product Manager",
     description:
-      "Grant Hsiao，資深產品經理。從零建立房產平台，上線三個月近 20 萬筆免費刊登；六個月免費期後推出付費刊登，付費刊登最高 5 萬筆。",
+      "Grant Hsiao，資深產品經理。最新作品 Shunfeng 一人 10 天完成，從研究、設計到 iPhone 實機驗證；過去從零建立房產平台，付費刊登最高 5 萬筆。",
   },
   profile: {
     name: "Grant Hsiao／蕭宏彬",
@@ -15,9 +15,9 @@ export const home: HomeContent = {
   },
   hero: {
     kicker: "HOME",
-    title: "從零建立房產平台，\n付費刊登最高 5 萬筆。",
-    lead: "上線三個月近 20 萬筆免費刊登；六個月免費期後推出付費刊登。",
-    eyebrow: "Product Strategy · UI/UX Leadership · AI-assisted Validation & Building",
+    title: "從零建立產品，\n現在用 AI 做得更快。",
+    lead: "最新作品 Shunfeng 一人 10 天完成，從研究、設計到 iPhone 實機驗證；過去從零建立房產平台，付費刊登最高 5 萬筆。",
+    eyebrow: "AI-native Product · Product Strategy · UI/UX Leadership",
   },
   selectedWork: {
     kicker: "SELECTED WORK",
