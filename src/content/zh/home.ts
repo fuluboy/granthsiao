@@ -24,44 +24,8 @@ export const home: HomeContent = {
     heading: "精選案例",
     cards: [
       {
-        slug: "house579",
-        index: "01",
-        eyebrow: "0-to-1 Product · Commercialization · Product Operations",
-        name: "House579",
-        title: "先降低房仲刊登門檻，再建立付費理由",
-        description:
-          "在沒有品牌知名度與大量客服資源的情況下，從註冊、刊登、資料搬移到手機管理一步步建立，讓平台從免費導入走向付費營運。",
-        tags: ["0-to-1 Product", "Commercialization", "Product Operations"],
-        metric: "三個月近 20 萬筆免費刊登 · 付費刊登最高 5 萬筆",
-        imageSide: "left",
-      },
-      {
-        slug: "rakuya-data-product",
-        index: "02",
-        eyebrow: "Product Strategy · B2B PropTech · Agent Intelligence",
-        name: "樂屋房仲案源情報",
-        title: "從分散刊登辨識同一間房，還原它的市場歷程",
-        description:
-          "以加權比對推定地址與物件關聯，再串接實價登錄、謄本和土地圖塊；每季抽樣驗證命中結果。",
-        tags: ["Product Strategy", "B2B PropTech", "Agent Intelligence"],
-        metric: "案源掃描 1–2 小時 → 5–10 分鐘 · 2 家品牌續約付費",
-        imageSide: "right",
-      },
-      {
-        slug: "design-system",
-        index: "03",
-        eyebrow: "Design Leadership · Design System · Team Transformation",
-        name: "Design System",
-        title: "把分散元件與體驗邏輯，整理成跨產品共同基礎",
-        description:
-          "利用 Figma 與 Vue 轉型，建立 Token、設計元件、前端元件與治理方式，讓三個產品團隊逐步共用同一套基礎。",
-        tags: ["Design Leadership", "Design System", "Team Transformation"],
-        metric: "3 個產品團隊導入 · 首批元件 2 週交付",
-        imageSide: "left",
-      },
-      {
         slug: "shunfeng",
-        index: "04",
+        index: "01",
         eyebrow: "AI-native Product · Accessibility · Design System",
         name: "Shunfeng 順風",
         title: "為聽障旅客聽機場廣播，只為你的航班震動",
@@ -69,6 +33,42 @@ export const home: HomeContent = {
           "Meta 全球 AI 開發者黑客松作品。一個人在 10 天內完成旅程研究、設計系統、動態規格、AI 協作開發與 iPhone 實機驗證。",
         tags: ["AI-native Product", "Accessibility", "Design System"],
         metric: "47/47 通知判斷全對 · 10 天一人完成",
+        imageSide: "left",
+      },
+      {
+        slug: "house579",
+        index: "02",
+        eyebrow: "0-to-1 Product · Commercialization · Product Operations",
+        name: "House579",
+        title: "先降低房仲刊登門檻，再建立付費理由",
+        description:
+          "在沒有品牌知名度與大量客服資源的情況下，從註冊、刊登、資料搬移到手機管理一步步建立，讓平台從免費導入走向付費營運。",
+        tags: ["0-to-1 Product", "Commercialization", "Product Operations"],
+        metric: "三個月近 20 萬筆免費刊登 · 付費刊登最高 5 萬筆",
+        imageSide: "right",
+      },
+      {
+        slug: "rakuya-data-product",
+        index: "03",
+        eyebrow: "Product Strategy · B2B PropTech · Agent Intelligence",
+        name: "樂屋房仲案源情報",
+        title: "從分散刊登辨識同一間房，還原它的市場歷程",
+        description:
+          "以加權比對推定地址與物件關聯，再串接實價登錄、謄本和土地圖塊；每季抽樣驗證命中結果。",
+        tags: ["Product Strategy", "B2B PropTech", "Agent Intelligence"],
+        metric: "案源掃描 1–2 小時 → 5–10 分鐘 · 2 家品牌續約付費",
+        imageSide: "left",
+      },
+      {
+        slug: "design-system",
+        index: "04",
+        eyebrow: "Design Leadership · Design System · Team Transformation",
+        name: "Design System",
+        title: "把分散元件與體驗邏輯，整理成跨產品共同基礎",
+        description:
+          "利用 Figma 與 Vue 轉型，建立 Token、設計元件、前端元件與治理方式，讓三個產品團隊逐步共用同一套基礎。",
+        tags: ["Design Leadership", "Design System", "Team Transformation"],
+        metric: "3 個產品團隊導入 · 首批元件 2 週交付",
         imageSide: "right",
       },
       {

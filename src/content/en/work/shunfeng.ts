@@ -7,8 +7,8 @@ export const shunfeng: CaseStudyContent = {
     description:
       "Built solo in 10 days for the Meta Global AI Developer Hackathon: journey research, a deaf-first design system, motion specs, AI-directed development, and on-device validation of an iPhone app that buzzes only for your flight.",
   },
-  caseNumber: "04",
-  kicker: "CASE STUDY 04 · SHUNFENG",
+  caseNumber: "01",
+  kicker: "CASE STUDY 01 · SHUNFENG",
   title: "Listening to airport announcements for deaf travelers, buzzing only for your flight",
   lead:
     "Gate changes, delays and final calls at airports are still mostly announced out loud. Travelers who can't hear them end up watching the people around them and guessing whether it was their flight. I built Shunfeng for the Meta Global AI Developer Hackathon, alone, in 10 days: research, design, AI-directed development, on-device testing and the demo. I made the product calls, the design principles and every trade-off; AI wrote most of the code, and I verified it with tests and a real iPhone.",
