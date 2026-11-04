@@ -7,8 +7,8 @@ export const shunfeng: CaseStudyContent = {
     description:
       "Meta 全球 AI 開發者黑客松作品。一個人在 10 天內，從聽障旅客的真實困境出發，完成旅程研究、設計系統、動態規格、AI 協作開發與 iPhone 實機驗證，做出只為你的航班震動的 App。",
   },
-  caseNumber: "04",
-  kicker: "CASE STUDY 04 · SHUNFENG",
+  caseNumber: "01",
+  kicker: "CASE STUDY 01 · SHUNFENG",
   title: "為聽障旅客聽機場廣播：只為你的航班震動",
   lead:
     "機場的換登機門、延誤和最後登機，大多還是用廣播說的。聽不到的旅客，只能看身邊的人起身，猜是不是自己的班機。這是我參加 Meta 全球 AI 開發者黑客松的作品：10 天內一個人完成研究、設計、AI 協作開發、實機測試和 Demo。產品方向、設計原則和每一次取捨由我決定；程式主要由 AI 撰寫，再由我用測試和實機驗收。",

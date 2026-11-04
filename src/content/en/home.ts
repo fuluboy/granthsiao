@@ -24,44 +24,8 @@ export const home: HomeContent = {
     heading: "Selected case studies",
     cards: [
       {
-        slug: "house579",
-        index: "01",
-        eyebrow: "0-to-1 Product · Commercialization · Product Operations",
-        name: "House579",
-        title: "Lowering agents’ listing effort before earning the right to charge",
-        description:
-          "With no established brand and limited support capacity, I helped build the journey from registration and listing migration to mobile management, moving the platform from free onboarding into paid operations.",
-        tags: ["0-to-1 Product", "Commercialization", "Product Operations"],
-        metric: "Nearly 200K free listings in 3 months · 50K paid listings at peak",
-        imageSide: "left",
-      },
-      {
-        slug: "rakuya-data-product",
-        index: "02",
-        eyebrow: "Product Strategy · B2B PropTech · Agent Intelligence",
-        name: "Rakuya Agent Intelligence",
-        title: "Matching the same property across platforms to reconstruct its history",
-        description:
-          "Weighted matching inferred addresses and property links, then connected sales records, title information, and land parcels; I sampled results each quarter to check accuracy.",
-        tags: ["Product Strategy", "B2B PropTech", "Agent Intelligence"],
-        metric: "Daily listing scan: 1–2 hours → 5–10 minutes · 2 paid brand renewals",
-        imageSide: "right",
-      },
-      {
-        slug: "design-system",
-        index: "03",
-        eyebrow: "Design Leadership · Design System · Team Transformation",
-        name: "Design System",
-        title: "Turning fragmented components and interaction patterns into a shared product foundation",
-        description:
-          "Using the shift to Figma and Vue, I helped establish shared tokens, design components, front-end components, and governance so three product teams could gradually work from the same foundation.",
-        tags: ["Design Leadership", "Design System", "Team Transformation"],
-        metric: "3 product teams adopted · First components shipped in 2 weeks",
-        imageSide: "left",
-      },
-      {
         slug: "shunfeng",
-        index: "04",
+        index: "01",
         eyebrow: "AI-native Product · Accessibility · Design System",
         name: "Shunfeng",
         title: "Listening to airport announcements for deaf travelers, buzzing only for your flight",
@@ -69,6 +33,42 @@ export const home: HomeContent = {
           "Built solo in 10 days for the Meta Global AI Developer Hackathon: journey research, a design system, motion specs, AI-directed development, and on-device validation on iPhone.",
         tags: ["AI-native Product", "Accessibility", "Design System"],
         metric: "47/47 alert decisions right · Built solo in 10 days",
+        imageSide: "left",
+      },
+      {
+        slug: "house579",
+        index: "02",
+        eyebrow: "0-to-1 Product · Commercialization · Product Operations",
+        name: "House579",
+        title: "Lowering agents’ listing effort before earning the right to charge",
+        description:
+          "With no established brand and limited support capacity, I helped build the journey from registration and listing migration to mobile management, moving the platform from free onboarding into paid operations.",
+        tags: ["0-to-1 Product", "Commercialization", "Product Operations"],
+        metric: "Nearly 200K free listings in 3 months · 50K paid listings at peak",
+        imageSide: "right",
+      },
+      {
+        slug: "rakuya-data-product",
+        index: "03",
+        eyebrow: "Product Strategy · B2B PropTech · Agent Intelligence",
+        name: "Rakuya Agent Intelligence",
+        title: "Matching the same property across platforms to reconstruct its history",
+        description:
+          "Weighted matching inferred addresses and property links, then connected sales records, title information, and land parcels; I sampled results each quarter to check accuracy.",
+        tags: ["Product Strategy", "B2B PropTech", "Agent Intelligence"],
+        metric: "Daily listing scan: 1–2 hours → 5–10 minutes · 2 paid brand renewals",
+        imageSide: "left",
+      },
+      {
+        slug: "design-system",
+        index: "04",
+        eyebrow: "Design Leadership · Design System · Team Transformation",
+        name: "Design System",
+        title: "Turning fragmented components and interaction patterns into a shared product foundation",
+        description:
+          "Using the shift to Figma and Vue, I helped establish shared tokens, design components, front-end components, and governance so three product teams could gradually work from the same foundation.",
+        tags: ["Design Leadership", "Design System", "Team Transformation"],
+        metric: "3 product teams adopted · First components shipped in 2 weeks",
         imageSide: "right",
       },
       {

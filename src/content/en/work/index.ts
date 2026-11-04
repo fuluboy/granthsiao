@@ -18,10 +18,10 @@ export const workBySlug: Record<string, CaseStudyContent> = {
 // Same order as the home page cards: previous/next case navigation looks up
 // cards by this order, so the two lists must stay aligned.
 export const workOrder = [
+  "shunfeng",
   "house579",
   "rakuya-data-product",
   "design-system",
-  "shunfeng",
   "speedmeter",
   "star-metric",
 ] as const;
