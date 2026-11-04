@@ -4,7 +4,7 @@ export const home: HomeContent = {
   meta: {
     title: "Senior Product Manager",
     description:
-      "Grant Hsiao is a Senior Product Manager who built a real estate listing platform from zero. It drew nearly 200K free listings in three months, and paid listings later peaked at 50K.",
+      "Grant Hsiao is a Senior Product Manager. His latest work, Shunfeng, went from research and design to on-device validation in 10 days, solo. Before that, he built a real estate platform from zero to 50K paid listings at peak.",
   },
   profile: {
     name: "Grant Hsiao / 蕭宏彬",
@@ -15,9 +15,9 @@ export const home: HomeContent = {
   },
   hero: {
     kicker: "HOME",
-    title: "Built from zero.\n50K paid listings at peak.",
-    lead: "Nearly 200K free listings in the first three months; paid listings launched after a six-month free period.",
-    eyebrow: "Product Strategy · UI/UX Leadership · AI-assisted Validation & Building",
+    title: "Built from zero.\nNow faster with AI.",
+    lead: "My latest work, Shunfeng, went from research and design to on-device validation in 10 days, solo. Before that, I built a real estate platform from zero to 50K paid listings at peak.",
+    eyebrow: "AI-native Product · Product Strategy · UI/UX Leadership",
   },
   selectedWork: {
     kicker: "SELECTED WORK",
