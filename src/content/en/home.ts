@@ -2,13 +2,13 @@ import type { HomeContent } from "../types";
 
 export const home: HomeContent = {
   meta: {
-    title: "Senior Product Manager",
+    title: "Product & Design Lead",
     description:
-      "Grant Hsiao is a Senior Product Manager. His latest work, Shunfeng, went from research and design to on-device validation in 10 days, solo. Before that, he built a real estate platform from zero to 50K paid listings at peak.",
+      "Grant Hsiao is a Product & Design Lead. His latest work, Shunfeng, went from research and design to on-device validation in 10 days, solo. Before that, he built a real estate platform from zero to 50K paid listings at peak.",
   },
   profile: {
     name: "Grant Hsiao / 蕭宏彬",
-    role: "Senior Product Manager",
+    role: "Product & Design Lead",
     location: "Taipei, Taiwan",
     primaryAction: "View featured work",
     secondaryAction: "Download resume",
@@ -97,11 +97,44 @@ export const home: HomeContent = {
       },
     ],
   },
+  aiWorkflow: {
+    kicker: "HOW I WORK WITH AI",
+    heading: "AI writes. I define, decide and verify.",
+    lead: "From SpeedMeter and Star Metric to Shunfeng, I work with AI the same way: it gets me to real results sooner, but what to build, what counts as right, and when it's ready stay my call.",
+    steps: [
+      {
+        number: "1",
+        heading: "Define the problem and the bar",
+        body: "Before any code, I map the journey and write down what success means. For Shunfeng: “buzz only for your flight, and say ‘maybe’ when unsure.” AI gets behavior rules and acceptance criteria, not vague requests.",
+      },
+      {
+        number: "2",
+        heading: "AI builds, I break down and review",
+        body: "AI (Claude) writes most of the code, assets and log analysis. I break down requirements, set the rules and review the output, and I make the trade-offs, such as which voices are licensed for public use.",
+      },
+      {
+        number: "3",
+        heading: "Let evaluation replace intuition",
+        body: "Every judgment becomes a test I can rerun: 61 automated tests, 47 test announcements and a held-out set of 10 for Shunfeng. The keyword hints that looked smarter were turned off because the evaluation said so.",
+      },
+      {
+        number: "4",
+        heading: "Validate on device, report honestly",
+        body: "I test on real devices in real conditions: locked screens, phone calls, lost signal, GPS simulation. Logs from filming day led to five fixes. Then I state what is validated and what isn't, and let real users shape the next step.",
+      },
+    ],
+    evidenceLabel: "Cases built this way",
+    evidence: [
+      { name: "Shunfeng", label: "Solo in 10 days, 47/47 alerts right", slug: "shunfeng" },
+      { name: "SpeedMeter", label: "Hypothesis to prototype, checked with GPS simulation", slug: "speedmeter" },
+      { name: "Star Metric", label: "From AI experiment to Android release", slug: "star-metric" },
+    ],
+  },
   aboutTeaser: {
     kicker: "ABOUT",
     heading: "Hi, I'm Grant.",
     paragraph:
-      "I'm a Senior Product Manager with a background in UX, front-end development, and team leadership. I've built a platform from zero through paid operations and worked on data products for real estate agents. I start by understanding how people work, then decide with the team what is worth building.",
+      "I'm a product and design lead with a background in UX, front-end development, and team leadership. I've built a platform from zero through paid operations and worked on data products for real estate agents. Now, with AI, I can take a product from research to on-device validation on my own. What hasn't changed: I start by understanding how people work, then decide what is worth building.",
     cta: "More about me",
   },
   contactCta: {

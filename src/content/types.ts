@@ -53,6 +53,15 @@ export interface HomeContent {
     heading: string;
     cards: WorkCardSummary[];
   };
+  /** Optional "how I work with AI" section: one pattern across cases, with links to the cases as evidence. */
+  aiWorkflow?: {
+    kicker: string;
+    heading: string;
+    lead: string;
+    steps: Signal[];
+    evidenceLabel: string;
+    evidence: { name: string; label: string; slug: string }[];
+  };
   aboutTeaser: {
     kicker: string;
     heading: string;

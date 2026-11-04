@@ -191,7 +191,7 @@ const resolveLink = (link: { href: string; external?: boolean }) =>
 
   .about__case-links {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
     gap: var(--space-sm);
     margin-top: var(--space-lg);
   }
@@ -250,8 +250,8 @@ const resolveLink = (link: { href: string; external?: boolean }) =>
   }
 
   .about__stats {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--space-lg) var(--space-2xl);
     margin-top: var(--space-xl);
     padding-top: var(--space-lg);
@@ -273,6 +273,12 @@ const resolveLink = (link: { href: string; external?: boolean }) =>
   .about__stats-label {
     font-size: var(--fs-small);
     color: var(--color-ink-soft);
+  }
+
+  @media (max-width: 599px) {
+    .about__stats {
+      grid-template-columns: 1fr;
+    }
   }
 
   @media (min-width: 1024px) {
