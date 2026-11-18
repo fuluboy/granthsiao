@@ -66,7 +66,6 @@ export interface HomeContent {
     kicker: string;
     heading: string;
     paragraph: string;
-    aiNote?: string;
     cta: string;
   };
   contactCta: {
