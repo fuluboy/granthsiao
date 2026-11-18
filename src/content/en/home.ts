@@ -102,6 +102,8 @@ export const home: HomeContent = {
     heading: "Hi, I'm Grant.",
     paragraph:
       "I'm a product and design lead with a background in UX, front-end development, and team leadership. I've built a platform from zero through paid operations and worked on data products for real estate agents. Now, with AI, I can take a product from research to on-device validation on my own. What hasn't changed: I start by understanding how people work, then decide what is worth building.",
+    aiNote:
+      "Building with AI is a lot like leading a team: it delivers its real value when your experience and decisions guide it and it executes with energy. That is why I keep widening my perspective and sharpening my sense of how the parts of a product interact.",
     cta: "More about me",
   },
   contactCta: {
