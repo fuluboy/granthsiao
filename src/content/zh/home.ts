@@ -97,39 +97,6 @@ export const home: HomeContent = {
       },
     ],
   },
-  aiWorkflow: {
-    kicker: "HOW I WORK WITH AI",
-    heading: "AI 負責寫，我負責定義、判斷與驗收",
-    lead: "從 SpeedMeter、Star Metric 到 Shunfeng，我用同一套方法和 AI 合作：AI 讓我更快看到真實結果，但做什麼、什麼算對、何時可以上線，由我決定。",
-    steps: [
-      {
-        number: "1",
-        heading: "先定義問題與驗收標準",
-        body: "動手前先畫旅程、寫下什麼算成功。以 Shunfeng 為例：「只為你的航班震動，不確定就說可能」。AI 拿到的是行為規則與驗收條件，不是模糊需求。",
-      },
-      {
-        number: "2",
-        heading: "AI 實作，我來審查",
-        body: "程式碼、素材與 log 分析多由 AI（Claude）完成。我負責拆需求、定規則、審查輸出，遇到取捨（例如能不能公開使用的授權）由我決定。",
-      },
-      {
-        number: "3",
-        heading: "用評估資料取代直覺",
-        body: "把判斷寫成可以重跑的測試：Shunfeng 有 61 個自動測試、47 則測試廣播與 10 則集外資料。看起來更聰明的關鍵字提示，就是被評估結果否決的。",
-      },
-      {
-        number: "4",
-        heading: "實機驗證，誠實標示",
-        body: "在真實裝置與情境測試：鎖屏、來電、斷線、GPS 模擬。拍片當天的 log 帶出 5 項修正。最後寫清楚哪些已驗證、哪些還沒，下一步交給真實使用者回饋。",
-      },
-    ],
-    evidenceLabel: "用這套方法做的案例",
-    evidence: [
-      { name: "Shunfeng 順風", label: "一人 10 天，47/47 判斷全對", slug: "shunfeng" },
-      { name: "SpeedMeter", label: "假設到原型，再用 GPS 模擬驗證", slug: "speedmeter" },
-      { name: "Star Metric", label: "AI 實驗到 Android 正式上架", slug: "star-metric" },
-    ],
-  },
   aboutTeaser: {
     kicker: "ABOUT",
     heading: "嗨，我是 Grant。",
