@@ -17,7 +17,7 @@ export const profile: ProfileCard = {
 
 export const footer: FooterContent = {
   name: "Grant Hsiao / 蕭宏彬",
-  role: "Product & Design Lead",
+  role: "AI Product Manager / Designer",
   location: "Taipei, Taiwan",
   actionsLabel: "Download resume / Contact me",
   resumeLabel: "Download resume",

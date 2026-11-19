@@ -1,7 +1,6 @@
 ---
 import type { HomeContent } from "../content/types";
 import { withBase, type Locale } from "../i18n/config";
-import { siteConfig } from "../content/siteConfig";
 
 interface Props {
   home: HomeContent;
@@ -19,7 +18,6 @@ const { home, locale } = Astro.props;
       <p class="vinyl-hero-lead">{home.hero.lead}</p>
       <div class="vinyl-hero-actions">
         <a class="btn" href="#selected-work">{home.profile.primaryAction}</a>
-        <a class="btn btn-outline" href={withBase(siteConfig.resumeHref[locale])}>{home.profile.secondaryAction}</a>
       </div>
     </div>
 

@@ -19,7 +19,6 @@ export const about: AboutContent = {
   links: [
     { label: "LinkedIn", href: "https://www.linkedin.com/in/grant-hsiao-b3143682/", external: true },
     { label: "Email", href: `mailto:${siteConfig.contactEmail}`, external: true },
-    { label: "Resume", href: siteConfig.resumeHref.en },
     { label: "SoundCloud", href: "https://soundcloud.com/grant-hsiao", external: true },
   ],
   writingLabel: "Recent writing",
