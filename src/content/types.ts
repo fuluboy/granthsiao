@@ -80,21 +80,17 @@ export interface AboutLink {
   label: string;
   href: string;
   external?: boolean;
-  icon?: "linkedin" | "soundcloud";
 }
 
 export interface AboutContent {
   meta: { title: string; description: string };
-  kicker: string;
-  heading: string;
+  name: string;
+  role: string;
+  availability: string;
   photoAlt: string;
   paragraphs: string[];
-  featuredCases: { name: string; label: string; slug: string }[];
-  quote: { text: string; source: string };
-  stats: Metric[];
   links: AboutLink[];
-  resumeLabel: string;
-  contactLabel: string;
+  writingLabel: string;
 }
 
 export interface ContactContent {

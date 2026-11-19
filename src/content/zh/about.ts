@@ -1,43 +1,25 @@
 import type { AboutContent } from "../types";
+import { siteConfig } from "../siteConfig";
 
 export const about: AboutContent = {
   meta: {
     title: "About",
-    description: "Grant Hsiao，Product & Design Lead。曾帶領 PM、UI／UX 與前端團隊，從零建立房產平台並推進付費、打造房仲資料產品；最近一人用 AI 在 10 天內完成 iPhone App Shunfeng。",
+    description:
+      "Grant Hsiao，AI Product Manager / Designer。帶過 7 人的 PM、UI／UX 與前端團隊，現在專注研究 AI 怎麼真正進到團隊的工作流程。",
   },
-  kicker: "ABOUT",
-  heading: "嗨，我是 Grant。",
+  name: "Grant Hsiao",
+  role: "AI Product Manager / Designer · 台北",
+  availability: "Open to work",
   photoAlt: "Grant Hsiao 的照片",
   paragraphs: [
-    "我帶過 7 人的 PM、UI／UX 與前端團隊。在 House579 從零建立房產刊登平台，推進到付費；在樂屋，和團隊把房仲每天找新案、追降價的工作做成資料產品。最近，我一個人用 10 天和 AI 做出給聽障旅客的 iPhone App Shunfeng。",
-    "做產品時，我會先看使用者實際怎麼工作、資料能說明什麼，再決定先解哪個問題。遇到流程或技術不確定的地方，就用原型、小規模實作與測試提早驗證。",
-    "UX 與前端背景讓我能和設計、工程直接討論流程、資料與實作限制；帶團隊時，我會把問題、決策依據和優先順序講清楚。現在和 AI 合作也是同樣的方式：我先寫清楚行為規則與驗收標準，讓 AI 實作，再用評估資料和實機測試驗收。在 Shunfeng，看起來更聰明的關鍵字提示，就是因為 47 則測試廣播的結果被我關掉的。",
-    "工作之外，我喜歡獨立音樂，也做一些自己的音樂創作。早期的視覺設計與插畫經驗，至今仍影響我看待畫面、資訊層級與產品質感的方式。我也喜歡持續接觸新的技術與工作方法，看看它們能為產品帶來什麼新的可能。",
-  ],
-  featuredCases: [
-    { name: "Shunfeng 順風", label: "一人 10 天，用 AI 做出 iPhone App", slug: "shunfeng" },
-    { name: "House579", label: "從零建立平台，推進付費", slug: "house579" },
-    { name: "樂屋房仲案源情報", label: "把找案做成資料產品", slug: "rakuya-data-product" },
-  ],
-  quote: {
-    text: "聽好了，所謂的排球，是在網這邊的全員都是夥伴啊！",
-    source: "《排球少年》",
-  },
-  stats: [
-    { value: "10 天", label: "Shunfeng 一人完成 App、設計系統與實機驗證" },
-    { value: "最高 5 萬筆", label: "House579 付費刊登" },
-    { value: "5–10 分鐘", label: "樂屋每日案源掃描，原約 1–2 小時（回饋）" },
-    { value: "3 個產品團隊", label: "Design System 跨團隊導入" },
+    "從上古時期的網頁設計起步，一路經歷 Flash、DIV/CSS、gulp，再隨浪潮走進 UI/UX 與 Vue 前端，最後闖進產品的世界，帶過七人的 PM、設計與前端團隊。每換一次跑道，都是想弄懂「這一切究竟是怎麼回事」，然後讓產品有更高的機率達成目標。",
+    "近期我把大量工作透過 AI 協助完成。專案前期，它協助我用 Python 有系統地蒐集資料，並把模糊的想法追問成清楚的需求與使用情境，解析出價值落在哪裡；後期，它幫我寫自動化測試，建立模擬內容，把容易漏掉的 edge case 都輕鬆跑過一輪。",
+    "在追逐產品進化的當下，我也喜歡探索獨立音樂。Indie music live forever 🤘",
   ],
   links: [
-    { label: "SoundCloud", href: "https://soundcloud.com/grant-hsiao", external: true, icon: "soundcloud" },
-    {
-      label: "LinkedIn",
-      href: "https://www.linkedin.com/in/grant-hsiao-b3143682/",
-      external: true,
-      icon: "linkedin",
-    },
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/grant-hsiao-b3143682/", external: true },
+    { label: "Email", href: `mailto:${siteConfig.contactEmail}`, external: true },
+    { label: "SoundCloud", href: "https://soundcloud.com/grant-hsiao", external: true },
   ],
-  resumeLabel: "下載履歷",
-  contactLabel: "與我聯絡",
+  writingLabel: "最近在寫",
 };
