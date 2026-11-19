@@ -174,4 +174,4 @@ Example: I like "status at the very top, the primary button most prominent, the 
 
 If you don't have the Figma MCP connector, paste a screenshot of your styles page instead (with hex codes written on it), and add: "Use the hex codes written on the image; don't sample colors from pixels."
 
-If you try it too, I'd love to know how many rounds your Group A took.
+Give it a try. I bet you'll find out pretty quickly how well it works~
