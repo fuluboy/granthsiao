@@ -74,7 +74,17 @@ export type LocalizedText = Record<Locale, string>;
 export const UI_TEXT: Record<
   Locale,
   {
-    nav: { about: string; work: string; contact: string };
+    nav: { about: string; work: string; writing: string; contact: string };
+    writing: {
+      kicker: string;
+      heading: string;
+      lead: string;
+      metaDescription: string;
+      readArticle: string;
+      backToWriting: string;
+      relatedWork: string;
+      published: string;
+    };
     langSwitchLabel: string;
     langSwitchLabelTo: (target: Locale) => string;
     menuOpen: string;
@@ -132,7 +142,17 @@ export const UI_TEXT: Record<
   }
 > = {
   zh: {
-    nav: { about: "ABOUT", work: "SELECTED WORK", contact: "CONTACT" },
+    nav: { about: "ABOUT", work: "SELECTED WORK", writing: "WRITING", contact: "CONTACT" },
+    writing: {
+      kicker: "WRITING",
+      heading: "文章",
+      lead: "關於產品、設計與 AI 協作的實戰紀錄。",
+      metaDescription: "Grant Hsiao 的文章：產品、設計與 AI 協作的實戰紀錄。",
+      readArticle: "閱讀文章",
+      backToWriting: "返回文章列表",
+      relatedWork: "相關案例",
+      published: "發佈於",
+    },
     langSwitchLabel: "切換語言",
     langSwitchLabelTo: (target) => (target === "en" ? "切換為英文網站" : "切換為中文網站"),
     menuOpen: "開啟選單",
@@ -189,7 +209,17 @@ export const UI_TEXT: Record<
     },
   },
   en: {
-    nav: { about: "ABOUT", work: "SELECTED WORK", contact: "CONTACT" },
+    nav: { about: "ABOUT", work: "SELECTED WORK", writing: "WRITING", contact: "CONTACT" },
+    writing: {
+      kicker: "WRITING",
+      heading: "Writing",
+      lead: "Hands-on notes on product, design and working with AI.",
+      metaDescription: "Writing by Grant Hsiao: hands-on notes on product, design and working with AI.",
+      readArticle: "Read article",
+      backToWriting: "Back to writing",
+      relatedWork: "Related case study",
+      published: "Published",
+    },
     langSwitchLabel: "Switch language",
     langSwitchLabelTo: (target) => (target === "zh" ? "Switch to Chinese site" : "Switch to English site"),
     menuOpen: "Open menu",

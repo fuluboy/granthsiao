@@ -15,6 +15,12 @@ Product & Design Lead 個人作品集網站，中英雙語，收錄三個完整�
 - **SpeedMeter** — 透過 AI 快速驗證產品假設
 - **Star Metric** — 從 AI 實驗到上架產品
 
+## 文章（Writing）
+
+與作品案例分開的文章區，中英雙語，Markdown 原稿放在 `src/content/writing/{zh,en}/`，圖片在 `public/images/writing/`。
+
+- **AI 幫你做設計之後，你成了你以前最討厭的甲方嗎？**：同一個畫面兩種交辦 AI 的方式實測，與四個讓 AI 做對設計的方法
+
 ## 技術架構
 
 以 [Astro](https://astro.build) 純靜態輸出打造，無 UI framework 依賴，樣式使用純 CSS Design Tokens；透過 GitHub Actions 自動部署至 GitHub Pages。
