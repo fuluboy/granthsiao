@@ -17,8 +17,8 @@ export const about: AboutContent = {
     "While chasing better products, I also love discovering independent music. Indie music live forever 🤘",
   ],
   links: [
-    { label: "LinkedIn", href: "https://www.linkedin.com/in/grant-hsiao-b3143682/", external: true },
     { label: "Email", href: `mailto:${siteConfig.contactEmail}`, external: true },
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/grant-hsiao-b3143682/", external: true },
     { label: "SoundCloud", href: "https://soundcloud.com/grant-hsiao", external: true },
   ],
   writingLabel: "Recent writing",
