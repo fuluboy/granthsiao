@@ -1,0 +1,138 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { LOCALES, UI_TEXT, withBase, type Locale } from "../../../i18n/config";
+import { getArticles, formatArticleDate } from "../../../content/writing";
+
+export function getStaticPaths() {
+  return LOCALES.map((lang) => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params as { lang: Locale };
+const t = UI_TEXT[lang].writing;
+const articles = getArticles(lang);
+---
+
+<BaseLayout locale={lang} title={t.heading} description={t.metaDescription}>
+  <section class="section">
+    <div class="container">
+      <header class="writing-index__header">
+        <p class="kicker">{t.kicker}</p>
+        <h1 class="writing-index__heading">{t.heading}</h1>
+        <p class="writing-index__lead">{t.lead}</p>
+      </header>
+
+      <ul class="writing-index__list">
+        {articles.map((article) => {
+          const href = withBase(`/${lang}/writing/${article.slug}/`);
+          return (
+            <li class="writing-card">
+              <a class="writing-card__link" href={href}>
+                {article.frontmatter.cover && (
+                  <img
+                    class="writing-card__cover"
+                    src={withBase(article.frontmatter.cover)}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  />
+                )}
+                <div class="writing-card__body">
+                  <time class="writing-card__date" datetime={article.frontmatter.date}>
+                    {formatArticleDate(article.frontmatter.date, lang)}
+                  </time>
+                  <h2 class="writing-card__title">{article.frontmatter.title}</h2>
+                  <p class="writing-card__desc">{article.frontmatter.description}</p>
+                  <span class="writing-card__cta">{t.readArticle} →</span>
+                </div>
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .writing-index__header {
+    max-width: var(--case-reading-width);
+    margin-bottom: var(--space-xl);
+  }
+
+  .writing-index__heading {
+    font-size: var(--fs-h1);
+    line-height: var(--lh-tight);
+  }
+
+  .writing-index__lead {
+    margin-top: var(--space-md);
+    font-size: var(--fs-lead);
+    color: var(--color-ink-soft);
+  }
+
+  .writing-index__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-lg);
+  }
+
+  .writing-card__link {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    gap: var(--space-lg);
+    align-items: center;
+    padding: var(--space-lg);
+    background: var(--color-paper-raised);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    transition: border-color var(--duration-hover) var(--ease-out);
+  }
+
+  .writing-card__link:hover {
+    border-color: var(--color-line-strong);
+  }
+
+  .writing-card__cover {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    object-position: top center;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-line);
+    background: #fff;
+  }
+
+  .writing-card__date {
+    font-size: var(--fs-small);
+    color: var(--color-ink-soft);
+  }
+
+  .writing-card__title {
+    margin-top: var(--space-xs);
+    font-size: var(--fs-h3);
+  }
+
+  .writing-card__desc {
+    margin-top: var(--space-sm);
+    color: var(--color-ink-soft);
+  }
+
+  .writing-card__cta {
+    display: inline-block;
+    margin-top: var(--space-md);
+    font-size: var(--fs-small);
+    font-weight: 600;
+    color: var(--color-mustard);
+  }
+
+  @media (max-width: 767px) {
+    .writing-card__link {
+      grid-template-columns: 1fr;
+      padding: var(--space-md);
+      gap: var(--space-md);
+    }
+  }
+</style>
