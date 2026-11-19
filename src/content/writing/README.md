@@ -25,6 +25,7 @@ figuresNote: "…"          # optional: a note under the title (EN uses it when 
 - **Images**: an image on its own line (`![caption](/images/writing/<slug>/x.webp)`) becomes a framed figure. Clicking it zooms, using the same PhotoSwipe lightbox as Selected Work. The alt text is shown as the caption under the image, so write the alt as a caption. Width and height are read from the file.
 - **GIFs**: a line `::giphy[<GIPHY id>|<caption>]` embeds that GIF with GIPHY's own player, plus the caption and a "via GIPHY" credit. Don't copy GIF files into the repo.
 - **Unlisted**: `unlisted: true` in the frontmatter builds the page but keeps it out of the Writing list (good for experiments).
+- **Headings** use the full reading width, fill each line before wrapping, and break only at punctuation or spaces, never mid-word. Very long runs with no punctuation still break anywhere on a phone, so in Chinese headings keep each run between punctuation marks to about 10 characters (break it up with ，、：).
 - **Lists**: `-` and `1.` lists show mustard markers (Markdown alone loses them because of the global reset).
 - **Quotes**: `>` blocks get the same mustard left rule as case-study quotes. Use them for copy-paste templates.
 - **Tables** scroll sideways on phones.

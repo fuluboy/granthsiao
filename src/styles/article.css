@@ -206,3 +206,19 @@
   color: var(--color-grey-500);
   white-space: nowrap;
 }
+
+/*
+  Headings: Chinese has no spaces, so the case-study rules (an 18em cap plus
+  text-wrap: balance) split headings mid-word (「…，一／個放飛…」). In articles,
+  headings use the full reading width, break only at spaces and punctuation
+  (keep-all), filling each line before wrapping (no balance, which wraps
+  early on purpose), and fall back to breaking anywhere only if a run would overflow.
+  Specificity beats CaseSection's scoped [data-lang="zh"] rule.
+*/
+html[data-lang] .article-page .case-section__heading,
+html[data-lang] .article-page .article-header__title {
+  max-width: none;
+  text-wrap: wrap;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
