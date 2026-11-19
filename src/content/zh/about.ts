@@ -5,16 +5,12 @@ export const about: AboutContent = {
   meta: {
     title: "About",
     description:
-      "Grant Hsiao，AI Product Designer / PM。帶過 7 人的 PM、UI／UX 與前端團隊，現在專注研究 AI 怎麼真正進到團隊的工作流程。",
+      "Grant Hsiao，AI Product Manager / Designer。帶過 7 人的 PM、UI／UX 與前端團隊，現在專注研究 AI 怎麼真正進到團隊的工作流程。",
   },
   name: "Grant Hsiao",
-  role: "AI Product Designer / PM · 台北",
-  availability: "正在找新機會",
+  role: "AI Product Manager / Designer · 台北",
+  availability: "Open to work",
   photoAlt: "Grant Hsiao 的照片",
-  timeline: [
-    { label: "現在", text: "研究 AI 怎麼進到團隊的工作流程，並寫成文章" },
-    { label: "之前", text: "樂屋網 產品與設計協理 · House579 從零建立平台" },
-  ],
   paragraphs: [
     "我做產品與設計十多年，帶過 7 人的 PM、UI／UX 與前端團隊。我習慣先看使用者實際怎麼工作，再決定什麼值得做；UX 與前端背景讓我能直接和工程討論怎麼做出來。",
     "現在我把帶團隊的方法用在和 AI 一起工作上：講清楚要什麼、怎樣才算做完，再判斷結果好不好。工作之外，我做一些自己的音樂。",

@@ -88,7 +88,6 @@ export interface AboutContent {
   role: string;
   availability: string;
   photoAlt: string;
-  timeline: { label: string; text: string }[];
   paragraphs: string[];
   links: AboutLink[];
   writingLabel: string;

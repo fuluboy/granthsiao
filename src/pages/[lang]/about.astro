@@ -37,14 +37,6 @@ const resolveHref = (link: { href: string; external?: boolean }) =>
 
       <p class="about__availability"><span class="about__dot" aria-hidden="true"></span>{about.availability}</p>
 
-      <dl class="about__timeline">
-        {about.timeline.map((row) => (
-          <div class="about__timeline-row">
-            <dt>{row.label}</dt>
-            <dd>{row.text}</dd>
-          </div>
-        ))}
-      </dl>
 
       <div class="about__body">
         {about.paragraphs.map((p) => <p>{p}</p>)}
@@ -121,27 +113,6 @@ const resolveHref = (link: { href: string; external?: boolean }) =>
     background: #3a9a5b;
   }
 
-  .about__timeline {
-    display: grid;
-    gap: var(--space-xs);
-    margin-top: var(--space-lg);
-  }
-
-  .about__timeline-row {
-    display: grid;
-    grid-template-columns: 4.5rem 1fr;
-    gap: var(--space-sm);
-  }
-
-  .about__timeline dt {
-    font-size: var(--fs-small);
-    color: var(--color-ink-soft);
-    padding-top: 0.1em;
-  }
-
-  .about__timeline dd {
-    margin: 0;
-  }
 
   .about__body {
     display: flex;
