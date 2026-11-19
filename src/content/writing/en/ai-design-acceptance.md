@@ -15,7 +15,7 @@ figuresNote: "The test ran on a Chinese-language app, so the screenshots and fig
 
 Anyone who designs for a living has been worn down by lines like these. What we used to dread most was feedback that can't explain itself, where all you can do is guess, round after round.
 
-Now AI executes the design for us. But look back at the instructions we give it, and they are often exactly these lines. **We seem to have become the client we used to hate.**
+Now AI executes the design for us. But look back at the instructions we give it, and they are often exactly these lines. **We seem to have become the very person we used to dread.**
 
 If you have used AI to make a social graphic or a banner, you have seen it: the logo stretched or recolored, the brand blue turned into a "close-enough blue". The whole thing looks great, yet it isn't your company's at all.
 
@@ -81,7 +81,7 @@ What struck me most:
 
 **With a system, polish doesn't knock things over.** After Group B scored 5, I asked for two refinements: a 50% dark overlay behind the notification when it pops up, and remove the "vibrates once" label. The AI simply took the existing body-text token (#111433) at 50% opacity for the overlay. Invented colors, shadows and gradients stayed at zero, and nothing else drifted. Group A, by contrast, sprouted new colors and shadows with every change.
 
-## Method 1: Lay the foundation, then let AI extend it
+## Rules 1: Lay the foundation, then let AI extend it
 
 We used to be unable to define a design system for every single project. With AI's help, that's now easy. So I always start by defining the brand colors and building a basic design system in Figma, then let AI apply that system to extend the design. When something needs to change, I change the token, and everything moves together.
 
@@ -95,7 +95,7 @@ Many people worry that rules will limit what AI can design. My experience is the
 
 ![Lay the foundation, then let AI extend: brand colors → Figma design system → tokens → AI uses only these to extend new screens](/images/writing/ai-design-acceptance/f1_foundation.webp)
 
-## Method 2: Turn your review order into the AI's pre-delivery self-check
+## Rules 2: Turn your review order into the AI's pre-delivery self-check
 
 When you hand off work, you need to explain more than "what to make". You also need to say **how to verify it was done right**.
 
@@ -113,9 +113,9 @@ The key is evidence. "Done" on its own is worthless. Make it produce something y
 
 Then add one more rule: **when you need a new component, stop and ask me first.** That single line turns the AI from "improvising" into "asking for design decisions".
 
-## Method 3: Want creativity? Give intentional references, and sketch first
+## Rules 3: Want creativity? Give intentional references, and sketch first
 
-"Can it be more creative?" is another classic client line. In real work, I first align on two things: what's already working, and where they want more creativity. When the other side can't explain it, I find five product screenshots that feel creative and ask them to pick, then communicate with sketches, and only then start building.
+"Can it be more creative?" is another classic piece of vague feedback. In real work, I first align on two things: what's already working, and where they want more creativity. When the other side can't explain it, I find five product screenshots that feel creative and ask them to pick, then communicate with sketches, and only then start building.
 
 With AI it's the same, just reversed: now I'm the one who knows exactly what I want. So I give **2 to 3 references** in the style I want, and say clearly what I like about each one.
 
@@ -127,7 +127,7 @@ Order matters as well: **ask for low-fidelity sketches first, blocks and hierarc
 
 ![Left: the reference image marked with the three things I liked and the "vibrates once" I didn't want. Right: Group B's two sketch directions, with direction A, which leads with the delay, chosen](/images/writing/ai-design-acceptance/f3_reference.webp)
 
-## Method 4: Hand hard rules to "assembly", not "generation"
+## Rules 4: Hand hard rules to "assembly", not "generation"
 
 The other place AI most easily goes wrong is applying and placing a company logo. A logo must not change in style, proportion or color, and its placement has to follow the guidelines: the distance from the logo to the left (or right) edge and the top (or bottom) edge, in proportion.
 
@@ -140,7 +140,7 @@ Both groups in the test used assembly. So Group A's problem wasn't "can't be pre
 
 ![A Shunfeng 600×600 Google Ads banner: only the top-left is correct; the other three show common logo mistakes: stretched, recolored, and given a glow and shadow with drifting placement](/images/writing/ai-design-acceptance/f4_logo.webp)
 
-**While writing this article, I became that client myself.** I asked AI to make the banner above. At first I gave it just a background image and "600×600, for Google Ads", then fixed it line by line: "the logo mockup isn't OK", "you didn't follow the design system", "the logo is clearly wrong, and so is the text color". Nine rounds later, the AI had fixed the previous problem each time, but guessed something new: type sizes outside the system, a home-made button, the wrong logo version. The design system was right there; it just didn't use it.
+**While writing this article, I became that annoying one myself.** I asked AI to make the banner above. At first I gave it just a background image and "600×600, for Google Ads", then fixed it line by line: "the logo mockup isn't OK", "you didn't follow the design system", "the logo is clearly wrong, and so is the text color". Nine rounds later, the AI had fixed the previous problem each time, but guessed something new: type sizes outside the system, a home-made button, the wrong logo version. The design system was right there; it just didn't use it.
 
 Then I stopped and wrote the brief as seven points: which logo node to use, which token for the headline and subhead, a white overlay at what % that must not cover the logo or button, the logo's distance from the edges, a button that follows Apple's guidelines, and fonts that follow the design system. After that, one more round with two changes, and it was final. **The cost of vague feedback isn't just in the test. It showed up in my own work too.**
 
