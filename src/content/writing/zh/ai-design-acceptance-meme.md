@@ -1,6 +1,6 @@
 ---
 title: "你對 AI 說的話，是不是跟當年客戶對你說的一樣？"
-description: "迷因版。同一個 App 畫面，模糊回饋改了 6 版還在地獄，給設計系統和驗收標準第 2 版就收工。附四個解法和可以直接抄的模板。"
+description: "你有沒有過同一個 App 的 UI 畫面，越改越災難？請回憶一下，你是不是不小心成為當年你那個最討厭的人了？"
 date: "2026-11-19"
 cover: "/images/writing/ai-design-acceptance/f_a2a3.webp"
 relatedWork: "shunfeng"
