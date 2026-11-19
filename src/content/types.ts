@@ -93,16 +93,6 @@ export interface AboutContent {
   writingLabel: string;
 }
 
-export interface ContactContent {
-  meta: { title: string; description: string };
-  kicker: string;
-  title: string;
-  lead: string;
-  resumeLabel: string;
-  contactLabel: string;
-  contactEmail: string;
-}
-
 export interface Signal {
   number: string;
   heading: string;

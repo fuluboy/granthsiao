@@ -3,8 +3,6 @@ import { home as homeZh } from "./zh/home";
 import { home as homeEn } from "./en/home";
 import { about as aboutZh } from "./zh/about";
 import { about as aboutEn } from "./en/about";
-import { contact as contactZh } from "./zh/contact";
-import { contact as contactEn } from "./en/contact";
 import { profile as profileZh, footer as footerZh, siteMeta as siteMetaZh } from "./zh/site";
 import { profile as profileEn, footer as footerEn, siteMeta as siteMetaEn } from "./en/site";
 import { workBySlug as workZh, workOrder } from "./zh/work";
@@ -20,9 +18,6 @@ export function getAbout(locale: Locale) {
   return locale === "zh" ? aboutZh : aboutEn;
 }
 
-export function getContact(locale: Locale) {
-  return locale === "zh" ? contactZh : contactEn;
-}
 
 export function getProfile(locale: Locale) {
   return locale === "zh" ? profileZh : profileEn;
