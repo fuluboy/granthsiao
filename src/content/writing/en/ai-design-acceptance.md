@@ -174,15 +174,4 @@ Example: I like "status at the very top, the primary button most prominent, the 
 
 If you don't have the Figma MCP connector, paste a screenshot of your styles page instead (with hex codes written on it), and add: "Use the hex codes written on the image; don't sample colors from pixels."
 
-If you try it too, I'd love to know how many rounds your Group A took.
-
-## Sources and disclosure
-
-**Test limits**: each group ran once; this is a demonstration, not a statistical experiment. Group A's feedback followed a fixed order and wasn't adjusted to each round's results; Group B's answers were mine, given live. The screenshots here were all re-rendered in Noto Sans TC, so both groups share the same conditions. "Over 30% different by step n" is my own estimate from experience, not a measurement.
-
-**Further reading**: this is the process I've always used when leading design teams. While writing this, I found that several people who often share hands-on AI practice on X have recently reached similar conclusions:
-
-- [Lenny Rachitsky: LLMs are trained toward the average, so designing with AI means deliberately freeing up creativity](https://x.com/lennysan/status/2094821687590375802) (2026-09-01)
-- [Boris Cherny: when instructing Claude, be clear about what to do, how much effort to spend, and how to verify](https://x.com/bcherny/status/2107565388250874193) (2026-10-06)
-- [Ethan Mollick: set checkpoints and have it report intermediate thinking or prototypes first](https://x.com/emollick/status/2115875693120676157) (2026-10-29)
-- [Alex Albert: say up front which things need your approval](https://x.com/alexalbert__/status/2119869724247077229) (2026-11-09)
+Give it a try. I bet you'll find out pretty quickly how well it works~

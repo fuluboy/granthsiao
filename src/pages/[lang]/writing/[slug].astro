@@ -1,200 +1,122 @@
 ---
+import "../../../styles/case-study.css";
+import "../../../styles/article.css";
 import BaseLayout from "../../../layouts/BaseLayout.astro";
+import CaseSection from "../../../components/CaseSection.astro";
+import SectionNavigation from "../../../components/SectionNavigation.astro";
+import ResponsiveMedia from "../../../components/ResponsiveMedia.astro";
+import type { MediaRatio } from "../../../components/MediaPlaceholder.astro";
+import CaseStudyGallery from "../../../components/CaseStudyGallery.astro";
+import CaseStudyLightbox from "../../../components/CaseStudyLightbox.astro";
 import { LOCALES, UI_TEXT, withBase, type Locale } from "../../../i18n/config";
-import { getArticles, getArticle, formatArticleDate } from "../../../content/writing";
+import { getAllArticles, getArticle, formatArticleDate } from "../../../content/writing";
+import { buildArticleSections } from "../../../content/writingRender";
 import { getHome } from "../../../content";
 
 export function getStaticPaths() {
-  return LOCALES.flatMap((lang) => getArticles(lang).map((a) => ({ params: { lang, slug: a.slug } })));
+  return LOCALES.flatMap((lang) => getAllArticles(lang).map((a) => ({ params: { lang, slug: a.slug } })));
 }
 
 const { lang, slug } = Astro.params as { lang: Locale; slug: string };
 const article = getArticle(lang, slug)!;
-const t = UI_TEXT[lang].writing;
+const t = UI_TEXT[lang];
+const tw = t.writing;
 const { frontmatter } = article;
 
-// Markdown uses root-relative paths ("/images/…", "/zh/work/…"); prefix them with the deploy base.
-const html = article.module
-  .compiledContent()
-  .replace(/(src|href)="\/(?!\/)/g, `$1="${withBase("/")}`)
-  .replace(/<img /g, '<img loading="lazy" decoding="async" ')
-  .replace(/<table>/g, '<div class="article__table"><table>')
-  .replace(/<\/table>/g, "</table></div>");
+const sections = await buildArticleSections(article.module.compiledContent());
+const navItems = sections
+  .filter((s) => s.heading)
+  .map((s) => ({ id: s.id, label: s.navLabel ?? s.heading ?? "" }));
 
 const related = frontmatter.relatedWork
   ? getHome(lang).selectedWork.cards.find((c) => c.slug === frontmatter.relatedWork)
   : undefined;
+
+let figureIndex = 0;
 ---
 
 <BaseLayout locale={lang} title={frontmatter.title} description={frontmatter.description}>
-  <article class="section article">
-    <div class="article__shell">
-      <a class="article__back" href={withBase(`/${lang}/writing/`)}>← {t.backToWriting}</a>
-      <header class="article__header">
-        <p class="kicker">{t.kicker}</p>
-        <h1 class="article__title">{frontmatter.title}</h1>
-        <p class="article__meta">
-          <time datetime={frontmatter.date}>{t.published} {formatArticleDate(frontmatter.date, lang)}</time>
+  <div class="case-shell">
+    <div class="case-sidebar">
+      <SectionNavigation locale={lang} items={navItems} variant="desktop" />
+    </div>
+
+    <div class="case-main">
+      <header class="case-reading article-header">
+        <a class="article-header__back" href={withBase(`/${lang}/writing/`)}>← {tw.backToWriting}</a>
+        <p class="kicker">{tw.kicker}</p>
+        <h1 class="article-header__title">{frontmatter.title}</h1>
+        <p class="article-header__meta">
+          <time datetime={frontmatter.date}>{tw.published} {formatArticleDate(frontmatter.date, lang)}</time>
         </p>
-        {frontmatter.figuresNote && <p class="article__note">{frontmatter.figuresNote}</p>}
+        {frontmatter.figuresNote && <p class="article-header__note">{frontmatter.figuresNote}</p>}
       </header>
 
-      <div class="article__body" set:html={html} />
+      <SectionNavigation locale={lang} items={navItems} variant="compact" />
+
+      {sections.map((section, i) => (
+        <CaseSection
+          id={section.id}
+          kicker={section.heading ? String(i).padStart(2, "0") : undefined}
+          heading={section.heading}
+          tone={i % 2 === 1 ? "subtle" : "default"}
+          fullBleed={i % 2 === 1}
+        >
+          <div class="article-prose">
+            {section.blocks.map((block) =>
+              block.type === "html" ? (
+                <Fragment set:html={block.html} />
+              ) : block.type === "giphy" ? (
+                <figure class="article-gif">
+                  <div class="article-gif__frame">
+                    <iframe
+                      src={`https://giphy.com/embed/${block.id}`}
+                      title={block.caption}
+                      loading="lazy"
+                      allowfullscreen
+                    />
+                  </div>
+                  <figcaption class="article-figure__caption">
+                    {block.caption}{" "}
+                    <a class="article-gif__credit" href={`https://giphy.com/gifs/${block.id}`} target="_blank" rel="noopener noreferrer">via GIPHY</a>
+                  </figcaption>
+                </figure>
+              ) : (
+                <figure class="article-figure">
+                  <CaseStudyGallery id={`${slug}-figure-${++figureIndex}`}>
+                    <ResponsiveMedia
+                      locale={lang}
+                      name={block.alt}
+                      src={block.src}
+                      width={block.width}
+                      height={block.height}
+                      ratio={`${block.width} / ${block.height}` as MediaRatio /* exact image ratio; only used as an aspect-ratio style */}
+                      display="contain"
+                      alt={block.alt}
+                      lightbox
+                      caption={block.alt}
+                      zoomLabel={t.lightbox.viewLargerImage}
+                    />
+                  </CaseStudyGallery>
+                  <figcaption class="article-figure__caption">{block.alt}</figcaption>
+                </figure>
+              )
+            )}
+          </div>
+        </CaseSection>
+      ))}
 
       {related && (
-        <aside class="article__related">
-          <p class="kicker">{t.relatedWork}</p>
-          <a class="article__related-link" href={withBase(`/${lang}/work/${related.slug}/`)}>
-            <span class="article__related-name">{related.name}</span>
-            <span class="article__related-title">{related.title}</span>
+        <aside class="case-reading article-related">
+          <p class="kicker">{tw.relatedWork}</p>
+          <a class="article-related__link" href={withBase(`/${lang}/work/${related.slug}/`)}>
+            <span class="article-related__name">{related.name}</span>
+            <span class="article-related__title">{related.title}</span>
           </a>
         </aside>
       )}
     </div>
-  </article>
+  </div>
+
+  <CaseStudyLightbox />
 </BaseLayout>
-
-<style>
-  .article__shell {
-    width: 100%;
-    max-width: calc(var(--case-reading-width) + 2 * var(--container-pad));
-    margin-inline: auto;
-    padding-inline: var(--container-pad);
-  }
-
-  .article__back {
-    display: inline-block;
-    margin-bottom: var(--space-lg);
-    font-size: var(--fs-small);
-    font-weight: 600;
-    text-decoration: none;
-    color: var(--color-ink-soft);
-  }
-
-  .article__back:hover {
-    color: var(--color-mustard);
-  }
-
-  .article__title {
-    font-size: var(--fs-h1);
-    line-height: var(--lh-tight);
-  }
-
-  .article__meta {
-    margin-top: var(--space-md);
-    font-size: var(--fs-small);
-    color: var(--color-ink-soft);
-  }
-
-  .article__note {
-    margin-top: var(--space-md);
-    padding: var(--space-sm) var(--space-md);
-    font-size: var(--fs-small);
-    color: var(--color-ink-soft);
-    background: var(--color-paper-sunken);
-    border-radius: var(--radius-sm);
-  }
-
-  .article__body {
-    margin-top: var(--space-xl);
-    font-size: var(--fs-case-body);
-  }
-
-  .article__body :global(p),
-  .article__body :global(ul),
-  .article__body :global(ol),
-  .article__body :global(blockquote),
-  .article__body :global(.article__table) {
-    margin: 0 0 var(--space-md);
-  }
-
-  .article__body :global(h2) {
-    margin: var(--space-xl) 0 var(--space-md);
-    font-size: var(--fs-case-h2);
-  }
-
-  .article__body :global(ul),
-  .article__body :global(ol) {
-    padding-left: 1.4em;
-  }
-
-  .article__body :global(li + li) {
-    margin-top: var(--space-2xs);
-  }
-
-  .article__body :global(strong) {
-    font-weight: 700;
-  }
-
-  .article__body :global(a) {
-    color: var(--color-mustard);
-    text-underline-offset: 0.2em;
-  }
-
-  .article__body :global(img) {
-    width: 100%;
-    height: auto;
-    margin: var(--space-lg) 0;
-    border: 1px solid var(--color-line);
-    border-radius: var(--radius-sm);
-    background: #fff;
-  }
-
-  .article__body :global(blockquote) {
-    padding: var(--space-sm) var(--space-md);
-    border-left: 3px solid var(--color-mustard-strong);
-    background: var(--color-paper-raised);
-  }
-
-  .article__body :global(blockquote p) {
-    margin: 0;
-  }
-
-  .article__body :global(.article__table) {
-    overflow-x: auto;
-  }
-
-  .article__body :global(table) {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: var(--fs-small);
-  }
-
-  .article__body :global(th),
-  .article__body :global(td) {
-    padding: var(--space-xs) var(--space-sm);
-    border-bottom: 1px solid var(--color-line);
-    text-align: left;
-    vertical-align: top;
-  }
-
-  .article__body :global(th) {
-    font-weight: 700;
-    border-bottom-color: var(--color-line-strong);
-  }
-
-  .article__related {
-    margin-top: var(--space-2xl);
-    padding-top: var(--space-lg);
-    border-top: 1px solid var(--color-line);
-  }
-
-  .article__related-link {
-    display: grid;
-    gap: var(--space-2xs);
-    text-decoration: none;
-  }
-
-  .article__related-name {
-    font-size: var(--fs-h4);
-    font-weight: 600;
-  }
-
-  .article__related-title {
-    color: var(--color-ink-soft);
-  }
-
-  .article__related-link:hover .article__related-name {
-    color: var(--color-mustard);
-  }
-</style>

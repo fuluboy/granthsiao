@@ -8,6 +8,8 @@ export interface ArticleFrontmatter {
   cover?: string;
   relatedWork?: string;
   figuresNote?: string;
+  /** Built and reachable by URL, but left out of the Writing list (e.g. a tone experiment). */
+  unlisted?: boolean;
 }
 
 export interface Article {
@@ -24,10 +26,15 @@ const articles: Article[] = Object.entries(modules).map(([path, module]) => {
   return { slug: file, locale: locale as Locale, frontmatter: module.frontmatter, module };
 });
 
-/** Articles for one locale, newest first. */
+/** Every article for one locale, including unlisted ones (used to build pages). */
+export function getAllArticles(locale: Locale): Article[] {
+  return articles.filter((a) => a.locale === locale);
+}
+
+/** Listed articles for one locale, newest first. */
 export function getArticles(locale: Locale): Article[] {
   return articles
-    .filter((a) => a.locale === locale)
+    .filter((a) => a.locale === locale && !a.frontmatter.unlisted)
     .sort((a, b) => b.frontmatter.date.localeCompare(a.frontmatter.date));
 }
 

@@ -1,0 +1,208 @@
+/*
+  Default styles for every Writing article (src/pages/[lang]/writing/[slug].astro).
+  Mirrors the Selected Work case pages so new articles need no per-article CSS:
+  prose in ink-soft at the case body size, paragraphs spaced like
+  .case-paragraph, lists with visible markers, quotes like <Quote>, figures
+  framed and zoomable like case media. Authoring rules: src/content/writing/README.md.
+*/
+
+.article-header {
+  padding-block: var(--case-section-space) 0;
+}
+
+.article-header__back {
+  display: inline-block;
+  margin-bottom: var(--space-lg);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--color-ink-soft);
+}
+
+.article-header__back:hover {
+  color: var(--color-mustard);
+}
+
+.article-header__title {
+  font-size: var(--fs-case-hero);
+  line-height: var(--lh-heading);
+}
+
+.article-header__meta {
+  margin-top: var(--space-md);
+  font-size: var(--fs-small);
+  color: var(--color-ink-soft);
+}
+
+.article-header__note {
+  margin-top: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
+  font-size: var(--fs-small);
+  color: var(--color-ink-soft);
+  background: var(--color-paper-sunken);
+  border-radius: var(--radius-sm);
+}
+
+/* ---- Prose ---- */
+.article-prose {
+  font-size: var(--fs-case-body);
+  color: var(--color-ink-soft);
+}
+
+.article-prose > * + * {
+  margin-top: var(--space-md);
+}
+
+.article-prose strong {
+  color: var(--color-ink);
+  font-weight: 700;
+}
+
+.article-prose a {
+  color: var(--color-mustard);
+  text-underline-offset: 0.2em;
+}
+
+.article-prose a:hover {
+  color: var(--color-ink);
+}
+
+/* Lists: the global reset removes markers; articles put them back. */
+.article-prose ul,
+.article-prose ol {
+  padding-left: 1.4em;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.article-prose ul {
+  list-style: disc;
+}
+
+.article-prose ol {
+  list-style: decimal;
+}
+
+.article-prose li::marker {
+  color: var(--color-mustard-strong);
+  font-weight: 700;
+}
+
+.article-prose li {
+  padding-left: 0.2em;
+}
+
+/* Quotes: same left rule as <Quote>. Used for copy-paste template blocks. */
+.article-prose blockquote {
+  margin: var(--space-sm) 0 0;
+  padding: var(--space-sm) var(--space-md) var(--space-sm) var(--space-lg);
+  border-left: 3px solid var(--color-mustard-strong);
+  background: var(--color-paper-raised);
+  color: var(--color-ink);
+}
+
+.article-prose blockquote p + p {
+  margin-top: var(--space-xs);
+}
+
+/* Tables */
+.article-table {
+  overflow-x: auto;
+}
+
+.article-prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-small);
+  line-height: 1.6;
+}
+
+.article-prose th,
+.article-prose td {
+  padding: var(--space-xs) var(--space-sm);
+  border-bottom: 1px solid var(--color-line);
+  text-align: left;
+  vertical-align: top;
+}
+
+.article-prose th {
+  color: var(--color-ink);
+  font-weight: 700;
+  border-bottom-color: var(--color-line-strong);
+}
+
+/* Figures: wider than the reading column would be cramped, so they fill the main column. */
+.article-figure {
+  margin: var(--case-inner-space) 0;
+}
+
+.article-prose > .article-figure + * {
+  margin-top: 0;
+}
+
+.article-figure .responsive-media {
+  border: 1px solid var(--color-line);
+  background: #fff;
+}
+
+.article-figure__caption {
+  margin-top: var(--space-sm);
+  font-size: var(--fs-case-caption);
+  line-height: 1.6;
+  color: var(--color-grey-600);
+}
+
+/* ---- Related case ---- */
+.article-related {
+  padding-block: var(--case-section-space);
+  border-top: 1px solid var(--color-line);
+}
+
+.article-related__link {
+  display: grid;
+  gap: var(--space-2xs);
+  text-decoration: none;
+}
+
+.article-related__name {
+  font-size: var(--fs-h4);
+  font-weight: 600;
+}
+
+.article-related__title {
+  color: var(--color-ink-soft);
+}
+
+.article-related__link:hover .article-related__name {
+  color: var(--color-mustard);
+}
+
+/* GIFs: `::giphy[id|caption]` lines, embedded with GIPHY's own player. */
+.article-gif {
+  margin: var(--space-lg) 0;
+  max-width: 420px;
+}
+
+.article-prose > .article-gif + * {
+  margin-top: 0;
+}
+
+.article-gif__frame {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: var(--color-paper-sunken);
+}
+
+.article-gif__frame iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+.article-gif__credit {
+  color: var(--color-grey-500);
+  white-space: nowrap;
+}

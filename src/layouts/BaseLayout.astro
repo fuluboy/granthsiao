@@ -4,6 +4,7 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import { HTML_LANG, OG_LOCALE, UI_TEXT, swapLocaleInPath, ensureBase, otherLocale, withBase, type Locale } from "../i18n/config";
 import { getSiteMeta, getWork } from "../content";
+import { getArticle } from "../content/writing";
 
 interface Props {
   locale: Locale;
@@ -17,7 +18,12 @@ const t = UI_TEXT[locale];
 const pathname = Astro.url.pathname;
 const altLocale = otherLocale(locale);
 const workSlug = pathname.match(/\/work\/([^/]+)\/?$/)?.[1];
-const hasAlternatePage = workSlug ? Boolean(getWork(altLocale, workSlug)) : true;
+const writingSlug = pathname.match(/\/writing\/([^/]+)\/?$/)?.[1];
+const hasAlternatePage = workSlug
+  ? Boolean(getWork(altLocale, workSlug))
+  : writingSlug
+    ? Boolean(getArticle(altLocale, writingSlug))
+    : true;
 const altPath = hasAlternatePage ? swapLocaleInPath(pathname, altLocale) : withBase(`/${altLocale}/`);
 const canonicalURL = new URL(ensureBase(pathname), Astro.site);
 const altURL = new URL(altPath, Astro.site);
