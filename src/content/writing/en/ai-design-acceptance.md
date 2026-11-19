@@ -146,7 +146,7 @@ Then I stopped and wrote the brief as seven points: which logo node to use, whic
 
 The same Shunfeng 600×600 Google Ads banner as an example: only the top-left is right; the other three are logo mistakes AI-made images commonly have.
 
-## Don't be the client. Be the one who writes the acceptance criteria
+## Don't be that annoying one. Be the one who writes the acceptance criteria
 
 AI has made execution cheap, so a designer's value moves to defining what counts as right. You can keep saying "more lively" and get something barely acceptable after six versions. Or you can write down the standard in your head first, and get the 5 you'd give yourself in two.
 
