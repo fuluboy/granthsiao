@@ -36,7 +36,13 @@ const H2 = /<h2 id="([^"]*)">([\s\S]*?)<\/h2>/g;
 
 const stripTags = (s: string) => s.replace(/<[^>]+>/g, "").trim();
 const decode = (s: string) =>
-  s.replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&");
+  s
+    .replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCodePoint(parseInt(h, 16)))
+    .replace(/&#(\d+);/g, (_, d) => String.fromCodePoint(Number(d)))
+    .replace(/&quot;/g, '"')
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&amp;/g, "&");
 
 function withBaseLinks(html: string): string {
   return html
