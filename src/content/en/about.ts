@@ -12,8 +12,9 @@ export const about: AboutContent = {
   availability: "Open to work",
   photoAlt: "Photo of Grant Hsiao",
   paragraphs: [
-    "I've worked in product and design for over ten years and led a seven-person team across product, UX and front-end. I start by seeing how people actually work, then decide what's worth building. My UX and front-end background lets me talk implementation directly with engineers.",
-    "Now I bring the way I lead teams to working with AI: be clear about what we want and what done looks like, then judge whether the result is good. Outside of work, I make some music of my own.",
+    "I started in web design back in the prehistoric days of the web, rode through Flash, DIV/CSS and gulp, moved into UI/UX and Vue front-end, and eventually landed in product, where I led a seven-person team of PMs, designers and front-end engineers. Every switch has been about figuring out how all of this actually works, so the product has a better chance of hitting its goals.",
+    "These days I get a lot of my work done with AI. Early in a project, it helps me collect data systematically with Python, push fuzzy ideas until they become clear requirements and scenarios, and work out where the value is. Later, it writes automated tests and builds simulated content, so the edge cases that usually slip through all get a run.",
+    "While chasing better products, I also love discovering independent music. Indie music live forever 🤘",
   ],
   links: [
     { label: "LinkedIn", href: "https://www.linkedin.com/in/grant-hsiao-b3143682/", external: true },
