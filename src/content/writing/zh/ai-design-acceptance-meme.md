@@ -4,7 +4,6 @@ description: "迷因版。同一個 App 畫面，模糊回饋改了 6 版還在�
 date: "2026-11-19"
 cover: "/images/writing/ai-design-acceptance/f_a2a3.webp"
 relatedWork: "shunfeng"
-unlisted: true
 ---
 
 「這個字再大一點。」

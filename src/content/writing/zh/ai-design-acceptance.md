@@ -4,6 +4,8 @@ description: "同一個 App 畫面，兩種交辦 AI 的方式：模糊回饋改
 date: "2026-11-19"
 cover: "/images/writing/ai-design-acceptance/f_a6b3.webp"
 relatedWork: "shunfeng"
+# Replaced in the ZH Writing list by the meme version (Grant, 2026-11-19); still live at its URL.
+unlisted: true
 ---
 
 「這個字再大一點。」
