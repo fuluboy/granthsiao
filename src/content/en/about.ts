@@ -1,46 +1,29 @@
 import type { AboutContent } from "../types";
+import { siteConfig } from "../siteConfig";
 
 export const about: AboutContent = {
   meta: {
     title: "About",
     description:
-      "Grant Hsiao is an AI Product Designer / PM who led cross-functional teams, built a real estate platform through paid operations, developed data products for agents, and recently built an iPhone app solo with AI in 10 days.",
+      "Grant Hsiao is an AI Product Designer / PM who has led product, UX and front-end teams, and now focuses on how AI actually fits into the way teams work.",
   },
-  kicker: "ABOUT",
-  heading: "Hi, I'm Grant.",
-  tagline: "AI Product Designer / PM. I've led a seven-person product team, and I now focus on how AI actually fits into the way teams work.",
+  name: "Grant Hsiao",
+  role: "AI Product Designer / PM · Taipei",
+  availability: "Open to new roles",
   photoAlt: "Photo of Grant Hsiao",
+  timeline: [
+    { label: "Now", text: "Exploring how AI fits into team workflows, and writing about it" },
+    { label: "Before", text: "Director of Product & Design at Rakuya · Built House579 from zero" },
+  ],
   paragraphs: [
-    "I've led a seven-person team across product, UX, and front-end. At House579, I built a listing platform from zero through paid operations. At Rakuya, my team and I turned agents' daily search for new listings and price drops into a data product. Most recently, I built Shunfeng, an iPhone app for deaf travelers, on my own with AI in 10 days.",
-    "I start by seeing how people actually work and what the data can tell us, then decide which problem to solve first. When a workflow or technical assumption is uncertain, I use prototypes, small implementations, and tests to check it early.",
-    "My UX and front-end background helps me work directly with designers and engineers on workflows, data, and implementation constraints. Leading teams, most of my job was deciding what was worth doing, making the problem and priorities clear, and agreeing up front on what done looks like. Working with AI uses the same skills: AI makes building cheap, but someone still owns the direction, the split of work, and the quality bar. I'm writing up how I do this in practice, starting with how to review design work once AI has made it.",
-    "Outside of work, I'm into independent music and make some of my own. My early background in visual design and illustration still shapes how I think about layout, information hierarchy, and product craft. I also enjoy experimenting with new technologies and ways of working to see what they can make possible.",
-  ],
-  featuredCases: [
-    { name: "Shunfeng", label: "An iPhone app built solo with AI in 10 days", slug: "shunfeng" },
-    { name: "House579", label: "From zero to paid listings", slug: "house579" },
-    { name: "Rakuya Agent Intelligence", label: "A daily data product for agents", slug: "rakuya-data-product" },
-  ],
-  quote: {
-    text: "Listen up — in volleyball, everyone on this side of the net is an ally!",
-    source: "Haikyuu!!",
-  },
-  stats: [
-    { value: "10 days", label: "Shunfeng app, design system and on-device tests, solo" },
-    { value: "50K at peak", label: "House579 paid listings" },
-    { value: "5–10 min", label: "Rakuya daily listing scan, down from 1–2 hours (feedback)" },
-    { value: "3 product teams", label: "Design System rollout" },
+    "I've worked in product and design for over ten years and led a seven-person team across product, UX and front-end. I start by seeing how people actually work, then decide what's worth building. My UX and front-end background lets me talk implementation directly with engineers.",
+    "Now I bring the way I lead teams to working with AI: be clear about what we want and what done looks like, then judge whether the result is good. Outside of work, I make some music of my own.",
   ],
   links: [
-    { label: "SoundCloud", href: "https://soundcloud.com/grant-hsiao", external: true, icon: "soundcloud" },
-    {
-      label: "LinkedIn",
-      href: "https://www.linkedin.com/in/grant-hsiao-b3143682/",
-      external: true,
-      icon: "linkedin",
-    },
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/grant-hsiao-b3143682/", external: true },
+    { label: "Email", href: `mailto:${siteConfig.contactEmail}`, external: true },
+    { label: "Resume", href: siteConfig.resumeHref.en },
+    { label: "SoundCloud", href: "https://soundcloud.com/grant-hsiao", external: true },
   ],
-  writing: { kicker: "WRITING", heading: "Recent writing", allLabel: "All writing" },
-  resumeLabel: "Download resume",
-  contactLabel: "Get in touch",
+  writingLabel: "Recent writing",
 };
