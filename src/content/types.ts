@@ -87,12 +87,14 @@ export interface AboutContent {
   meta: { title: string; description: string };
   kicker: string;
   heading: string;
+  tagline: string;
   photoAlt: string;
   paragraphs: string[];
   featuredCases: { name: string; label: string; slug: string }[];
   quote: { text: string; source: string };
   stats: Metric[];
   links: AboutLink[];
+  writing: { kicker: string; heading: string; allLabel: string };
   resumeLabel: string;
   contactLabel: string;
 }

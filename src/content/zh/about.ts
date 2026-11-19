@@ -3,15 +3,16 @@ import type { AboutContent } from "../types";
 export const about: AboutContent = {
   meta: {
     title: "About",
-    description: "Grant Hsiao，Product & Design Lead。曾帶領 PM、UI／UX 與前端團隊，從零建立房產平台並推進付費、打造房仲資料產品；最近一人用 AI 在 10 天內完成 iPhone App Shunfeng。",
+    description: "Grant Hsiao，AI Product Designer / PM。曾帶領 PM、UI／UX 與前端團隊，從零建立房產平台並推進付費、打造房仲資料產品；最近一人用 AI 在 10 天內完成 iPhone App Shunfeng。",
   },
   kicker: "ABOUT",
   heading: "嗨，我是 Grant。",
+  tagline: "AI Product Designer / PM。帶過 7 人的產品團隊，現在專注研究 AI 怎麼真正進到團隊的工作流程。",
   photoAlt: "Grant Hsiao 的照片",
   paragraphs: [
     "我帶過 7 人的 PM、UI／UX 與前端團隊。在 House579 從零建立房產刊登平台，推進到付費；在樂屋，和團隊把房仲每天找新案、追降價的工作做成資料產品。最近，我一個人用 10 天和 AI 做出給聽障旅客的 iPhone App Shunfeng。",
     "做產品時，我會先看使用者實際怎麼工作、資料能說明什麼，再決定先解哪個問題。遇到流程或技術不確定的地方，就用原型、小規模實作與測試提早驗證。",
-    "UX 與前端背景讓我能和設計、工程直接討論流程、資料與實作限制；帶團隊時，我會把問題、決策依據和優先順序講清楚。現在和 AI 合作也是同樣的方式：我先寫清楚行為規則與驗收標準，讓 AI 實作，再用評估資料和實機測試驗收。在 Shunfeng，看起來更聰明的關鍵字提示，就是因為 47 則測試廣播的結果被我關掉的。",
+    "UX 與前端背景讓我能和設計、工程直接討論流程、資料與實作限制。帶團隊這些年，我最常做的是判斷什麼值得做、把問題和優先順序講清楚，並且事先講好怎樣才算做完。現在和 AI 一起工作，用的也是同一套能力：AI 讓動手變便宜，但方向、分工和品質還是要有人負責。我把這些實際做法整理成文章，例如 AI 幫忙做設計之後，要怎麼驗收它的成果。",
     "工作之外，我喜歡獨立音樂，也做一些自己的音樂創作。早期的視覺設計與插畫經驗，至今仍影響我看待畫面、資訊層級與產品質感的方式。我也喜歡持續接觸新的技術與工作方法，看看它們能為產品帶來什麼新的可能。",
   ],
   featuredCases: [
@@ -38,6 +39,7 @@ export const about: AboutContent = {
       icon: "linkedin",
     },
   ],
+  writing: { kicker: "WRITING", heading: "最近在寫", allLabel: "看全部文章" },
   resumeLabel: "下載履歷",
   contactLabel: "與我聯絡",
 };
