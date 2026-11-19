@@ -1,5 +1,5 @@
 ---
-title: "Now That AI Does Your Design, Have You Become the Client You Used to Hate?"
+title: "Is What You Tell AI the Same Thing Clients Used to Tell You?"
 description: "One app screen, two ways of briefing AI: vague feedback took 6 rounds to reach barely usable, while a design system plus acceptance criteria scored 5/5 by version 2. Four methods for getting AI to design right, and a brief template you can copy."
 date: "2026-11-19"
 cover: "/images/writing/ai-design-acceptance/f_a6b3.webp"

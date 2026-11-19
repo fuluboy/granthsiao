@@ -1,5 +1,5 @@
 ---
-title: "AI 幫你做設計之後，你成了你以前最討厭的甲方嗎？"
+title: "你對 AI 說的話，是不是跟當年客戶對你說的一樣？"
 description: "同一個 App 畫面，兩種交辦 AI 的方式：模糊回饋改了 6 版勉強可用，給設計系統和驗收標準第 2 版就拿 5 分。四個讓 AI 做對設計的方法，和可以直接套用的模板。"
 date: "2026-11-19"
 cover: "/images/writing/ai-design-acceptance/f_a6b3.webp"
