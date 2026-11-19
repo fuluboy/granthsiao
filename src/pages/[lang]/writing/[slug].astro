@@ -9,12 +9,12 @@ import type { MediaRatio } from "../../../components/MediaPlaceholder.astro";
 import CaseStudyGallery from "../../../components/CaseStudyGallery.astro";
 import CaseStudyLightbox from "../../../components/CaseStudyLightbox.astro";
 import { LOCALES, UI_TEXT, withBase, type Locale } from "../../../i18n/config";
-import { getArticles, getArticle, formatArticleDate } from "../../../content/writing";
+import { getAllArticles, getArticle, formatArticleDate } from "../../../content/writing";
 import { buildArticleSections } from "../../../content/writingRender";
 import { getHome } from "../../../content";
 
 export function getStaticPaths() {
-  return LOCALES.flatMap((lang) => getArticles(lang).map((a) => ({ params: { lang, slug: a.slug } })));
+  return LOCALES.flatMap((lang) => getAllArticles(lang).map((a) => ({ params: { lang, slug: a.slug } })));
 }
 
 const { lang, slug } = Astro.params as { lang: Locale; slug: string };
@@ -66,6 +66,21 @@ let figureIndex = 0;
             {section.blocks.map((block) =>
               block.type === "html" ? (
                 <Fragment set:html={block.html} />
+              ) : block.type === "giphy" ? (
+                <figure class="article-gif">
+                  <div class="article-gif__frame">
+                    <iframe
+                      src={`https://giphy.com/embed/${block.id}`}
+                      title={block.caption}
+                      loading="lazy"
+                      allowfullscreen
+                    />
+                  </div>
+                  <figcaption class="article-figure__caption">
+                    {block.caption}{" "}
+                    <a class="article-gif__credit" href={`https://giphy.com/gifs/${block.id}`} target="_blank" rel="noopener noreferrer">via GIPHY</a>
+                  </figcaption>
+                </figure>
               ) : (
                 <figure class="article-figure">
                   <CaseStudyGallery id={`${slug}-figure-${++figureIndex}`}>

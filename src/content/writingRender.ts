@@ -16,7 +16,8 @@ import { withBase } from "../i18n/config";
 
 export type ArticleBlock =
   | { type: "html"; html: string }
-  | { type: "image"; src: string; alt: string; width: number; height: number };
+  | { type: "image"; src: string; alt: string; width: number; height: number }
+  | { type: "giphy"; id: string; caption: string };
 
 export interface ArticleSection {
   id: string;
@@ -28,6 +29,9 @@ export interface ArticleSection {
 // Builds run from the repo root, so public/ files resolve relative to it.
 const PUBLIC_DIR = "./public";
 const IMAGE_PARAGRAPH = /<p>\s*<img\s+src="([^"]+)"\s+alt="([^"]*)"\s*\/?>\s*<\/p>/g;
+// `::giphy[<GIPHY id>|<caption>]` on its own line embeds that GIF with GIPHY's official
+// player (hosted and attributed by GIPHY, nothing copied into the repo).
+const GIPHY_PARAGRAPH = /<p>::giphy\[([A-Za-z0-9]+)\|([^\]]*)\]<\/p>/g;
 const H2 = /<h2 id="([^"]*)">([\s\S]*?)<\/h2>/g;
 
 const stripTags = (s: string) => s.replace(/<[^>]+>/g, "").trim();
@@ -42,6 +46,16 @@ function withBaseLinks(html: string): string {
 }
 
 async function toBlocks(html: string): Promise<ArticleBlock[]> {
+  const blocks: ArticleBlock[] = [];
+  for (const part of html.split(/(<p>::giphy\[[A-Za-z0-9]+\|[^\]]*\]<\/p>)/)) {
+    const gif = [...part.matchAll(GIPHY_PARAGRAPH)][0];
+    if (gif) blocks.push({ type: "giphy", id: gif[1], caption: decode(gif[2]) });
+    else if (part.trim()) blocks.push(...(await imageBlocks(part)));
+  }
+  return blocks;
+}
+
+async function imageBlocks(html: string): Promise<ArticleBlock[]> {
   const blocks: ArticleBlock[] = [];
   let last = 0;
   for (const m of html.matchAll(IMAGE_PARAGRAPH)) {

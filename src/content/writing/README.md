@@ -23,6 +23,8 @@ figuresNote: "…"          # optional: a note under the title (EN uses it when 
 
 - **Sections**: each `## heading` becomes a section like a case-study section. It gets a numbered kicker (01, 02…), alternating paper and subtle backgrounds, and an entry in the "On this page" nav. The nav label is the text before "：" or ":" when the heading has one (「解法一：…」 shows as 「解法一」). Text before the first `##` is the intro.
 - **Images**: an image on its own line (`![caption](/images/writing/<slug>/x.webp)`) becomes a framed figure. Clicking it zooms, using the same PhotoSwipe lightbox as Selected Work. The alt text is shown as the caption under the image, so write the alt as a caption. Width and height are read from the file.
+- **GIFs**: a line `::giphy[<GIPHY id>|<caption>]` embeds that GIF with GIPHY's own player, plus the caption and a "via GIPHY" credit. Don't copy GIF files into the repo.
+- **Unlisted**: `unlisted: true` in the frontmatter builds the page but keeps it out of the Writing list (good for experiments).
 - **Lists**: `-` and `1.` lists show mustard markers (Markdown alone loses them because of the global reset).
 - **Quotes**: `>` blocks get the same mustard left rule as case-study quotes. Use them for copy-paste templates.
 - **Tables** scroll sideways on phones.
