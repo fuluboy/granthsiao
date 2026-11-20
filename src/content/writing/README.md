@@ -35,3 +35,11 @@ figuresNote: "…"          # optional: a note under the title (EN uses it when 
 
 - Export figures as WebP, about 1600px wide, in Noto Sans TC.
 - Leave platform-only material out of the web version, such as Threads/X short versions and internal file paths.
+
+## Share image (og:image)
+
+Every article gets its own 1200×630 share image for Threads, X, LINE and Facebook previews.
+After adding or retitling an article, run `node scripts/og-writing.cjs` and commit the PNGs in
+`public/og/writing/<lang>/<slug>.png`. The image shows the title on the left and the `cover`
+figure on the right (set `ogFigure` in frontmatter to use a different figure). Pages without a
+PNG fall back to the site-wide image.

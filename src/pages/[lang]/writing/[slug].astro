@@ -32,10 +32,21 @@ const related = frontmatter.relatedWork
   ? getHome(lang).selectedWork.cards.find((c) => c.slug === frontmatter.relatedWork)
   : undefined;
 
+// Share image made by `node scripts/og-writing.cjs`; falls back to the site-wide image if missing.
+const ogPath = `/og/writing/${lang}/${slug}.png`;
+const ogFiles = import.meta.glob("/public/og/writing/*/*.png");
+const ogImage = `/public${ogPath}` in ogFiles ? ogPath : undefined;
+
 let figureIndex = 0;
 ---
 
-<BaseLayout locale={lang} title={frontmatter.title} description={frontmatter.description}>
+<BaseLayout
+  locale={lang}
+  title={frontmatter.title}
+  description={frontmatter.description}
+  ogImage={ogImage}
+  ogImageAlt={ogImage ? frontmatter.title : undefined}
+>
   <div class="case-shell article-page">
     <div class="case-sidebar">
       <SectionNavigation locale={lang} items={navItems} variant="desktop" />

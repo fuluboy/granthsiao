@@ -10,9 +10,12 @@ interface Props {
   locale: Locale;
   title: string;
   description: string;
+  /** Site-relative path of a 1200x630 share image; defaults to the site-wide one. */
+  ogImage?: string;
+  ogImageAlt?: string;
 }
 
-const { locale, title, description } = Astro.props;
+const { locale, title, description, ogImage: ogImagePath, ogImageAlt: ogImageAltProp } = Astro.props;
 const siteMeta = getSiteMeta(locale);
 const t = UI_TEXT[locale];
 const pathname = Astro.url.pathname;
@@ -28,8 +31,10 @@ const altPath = hasAlternatePage ? swapLocaleInPath(pathname, altLocale) : withB
 const canonicalURL = new URL(ensureBase(pathname), Astro.site);
 const altURL = new URL(altPath, Astro.site);
 const fullTitle = `${title}${siteMeta.titleSuffix}`;
-const ogImage = new URL(withBase(`/og/og-${locale}.png`), Astro.site).href;
-const ogImageAlt = locale === "zh" ? "Grant Hsiao 作品集：Product & Design Lead" : "Grant Hsiao portfolio: Product & Design Lead";
+const ogImage = new URL(withBase(ogImagePath ?? `/og/og-${locale}.png`), Astro.site).href;
+const ogImageAlt =
+  ogImageAltProp ??
+  (locale === "zh" ? "Grant Hsiao 作品集：Product & Design Lead" : "Grant Hsiao portfolio: Product & Design Lead");
 ---
 
 <!doctype html>
